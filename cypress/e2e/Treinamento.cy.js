@@ -52,6 +52,7 @@ describe("Treinamento", () => {
       cy.get('[ng-show="modal.useVersioning"] > .modal > :nth-child(3) > .checkbox > .icon-checkbox').click(); //selecionar versionamento
       cy.get('[ng-show="modal.useVersioning"] > .modal > .end > .ml-10').click();                              //salvar versionamento
 
+   
 
     });
   });

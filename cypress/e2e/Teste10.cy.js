@@ -90,14 +90,15 @@ cy.contains('tr', /apostila sobre investimentos/i, { timeout: 30000 })
     cy.get('button[ng-click="accessContent(content);"]:visible', { timeout: 10000 })
       .should('be.enabled')
       .click({ force: true });  // força o clique caso tenha overlay/scroll
-      
-      //Clica em voltar
-cy.contains('button', /^Voltar$/i, { timeout: 10000 })
-  .filter('.hide-resource')
+cy.wait(5000) //Espera alguns para abaixar o documento
+
+cy.get('#modal-trail-open-frame', { timeout: 20000 }).should('be.visible');
+cy.contains('#modal-trail-open-frame button', 'Voltar')
   .click({ force: true });
 
 
 
+      
 }); 
 
 });
