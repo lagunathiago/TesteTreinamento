@@ -19,6 +19,7 @@ describe("Teste - Login", () => {
      cy.get('[data-nodeid="1"]').click()
      cy.get(':nth-child(1) > .card-items > .between > .flex > .btn-transparent').click()
      
+     
 
      cy.wait(15000) //Espera alguns segundos para digitar um nome e a data
      cy.get('.new-block > .btn-swipe-accent').click() //Clica em novo bloqueio

@@ -12,6 +12,8 @@ describe("Teste - Login", () => {
 
 });
 
+
+
   context("Criando Treinamento", () => {
     it("Aba Geral", () => {
      
@@ -110,6 +112,8 @@ describe("Teste - Login", () => {
       //Gravação
       cy.log('DIGITE UMA GRAVAÇAO E SELECIONE')
       cy.wait(10000)
+      cy.get(".weight").type("1");                                                   // Selecionar peso
+      cy.get(".open > .ui-select-choices > :nth-child(2)").click();                  // Selecionar peso 1
       cy.get(".editing-resource > .end > .btn-swipe-accent").click();                // Clica em adicionar
   /*    
       //Documento PDF
@@ -210,7 +214,7 @@ describe("Teste - Login", () => {
   .should('be.visible')                                                                //coloca o link
   .scrollIntoView({ block: 'center' })
   .click({ force: true })
-  .type('{selectall}{backspace}https://www.youtube.com/watch?v=M1pYAx1aU9U', { delay: 0 });
+  .type('{selectall}{backspace}https://www.youtube.com/watch?v=DfcXJYv_dxE', { delay: 0 });
 
       cy.log('DIGITE O NOME DO VIDEO ')
       cy.wait(10000)
@@ -232,7 +236,7 @@ describe("Teste - Login", () => {
   .should('be.visible')                                                                //coloca o link
   .scrollIntoView({ block: 'center' })
   .click({ force: true })
-  .type('{selectall}{backspace}https://vimeo.com/1123545258?fl=pl&fe=sh', { delay: 0 });
+  .type('{selectall}{backspace}https://vimeo.com/100716497?fl=pl&fe=sh', { delay: 0 });
 
       cy.log('DIGITE O NOME DO VIDEO ')
       cy.wait(10000)
@@ -458,6 +462,7 @@ cy.get('body .ui-select-choices-row', { timeout: 10000 })
      
     });
  */
+
     it('Adicionando o Treinamento na Vitrine', () => { 
      //Role até aparecer vitrines
     cy.log('ROLE ATÉ APARECER A VITRINES NA ABA')
@@ -477,7 +482,7 @@ cy.get('body .ui-select-choices-row', { timeout: 10000 })
         cy.get(':nth-child(2) > .actions > .actions-line > :nth-child(1) > .btn').click()
         //Adicione o seu treinamento criado
         cy.log('SELECIONE O SEU TREINAMENTO CRIADO')
-        cy.wait(10000)
+        cy.wait(15000)
 
         // Clica no botão "Adicionar"
 cy.contains('button.btn-swipe-accent.btn-small.small.ng-binding', 'Adicionar')
@@ -494,10 +499,23 @@ cy.contains('button.btn-swipe-accent.ng-scope', 'Salvar')
   .should('be.visible')
   .click({ force: true });
 
+   //Clica no icone da foto para abrir o modal e trocar o perfil
+    cy.get('.button > [src="/img/svg/avatar.svg"]').click()
+    cy.wait(2000)
 
+    //Clica em selecionar perfil
+    cy.get('.icon-pointer-right').click()
+
+    // Clica em 'Aluno - Todos'
+    cy.contains('div.option.item.ng-scope.btn-swipe-lgray', 'Aluno - Todos')
+      .scrollIntoView()
+      .click({ force: true });
+
+      
 
 
     });
+
 
   });
 });
