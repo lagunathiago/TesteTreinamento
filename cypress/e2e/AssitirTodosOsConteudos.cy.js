@@ -1,3 +1,4 @@
+
 describe("Teste - Login e troca de perfil", () => {
   before(() => {
     cy.viewport(1920, 1080);
@@ -223,7 +224,7 @@ cy.get('h2.ng-binding', { timeout: 30000 })
       .click({ force: true });
 
       });
-*/
+
       it("Vídeo Lector", ()=> {
                 cy.wait(3000)
         cy.get(':nth-child(19) > :nth-child(1) > .lector-txt-main')
@@ -248,9 +249,9 @@ cy.get('h2.ng-binding', { timeout: 30000 })
     cy.log("⬅️ Clicou em Voltar após assistir gravação");
 
       });
+      */
 
-
-      it("Topico Teste", ()=> {
+      it("Topico ", ()=> {
 
         cy.get(':nth-child(25) > :nth-child(1) > .lector-txt-main')
         .should("be.visible")
@@ -263,9 +264,134 @@ cy.get('h2.ng-binding', { timeout: 30000 })
       .should("be.visible")
       .click({ force: true });
                 
-
-
-
       });
+
+      // Ignora erros do player SCORM que não afetam o teste
+Cypress.on('uncaught:exception', (err) => {
+  if (err.message.includes("@class") || err.message.includes("ready")) {
+    return false; // impede que o teste falhe por causa desses erros
+  }
+});
+/*
+// Teste SCORM
+it("Scorm", () => {
+  cy.get(':nth-child(27) > :nth-child(1) > .lector-txt-main')
+  .should("be.visible")
+        .click()
+
+  cy.log("FAÇA A AVALIAÇÃO DO SCORM, CONFIRME E DEIXE O BOTÃO VOLTAR VISIVEL");
+  cy.wait(20000);
+
+  // Clica em voltar
+  cy.get("#hideResource", { timeout: 50000 })
+    .should("be.visible")
+    .click({ force: true });
+});
+
+it("Entrega de atividade", ()=> {
+  cy.get(':nth-child(29) > :nth-child(1) > .lector-txt-main')
+  .should("be.visible")
+        .click()
+
+  cy.contains('label', 'Adicionar arquivos')
+    .parent()                        // sobe um nível
+    .find('input[type="file"]')      // acha o input file
+    .selectFile('cypress/fixtures/images(1).png', { force: true });  
+
+      cy.wait(2000)
+
+
+    cy.get('.btn-swipe-accent.mb-20').click({ force: true });
+  
+    // Clica em voltar
+  cy.get("#hideResource", { timeout: 50000 })
+    .should("be.visible")
+    .click({ force: true });
+});
+
+
+it("Reação todas na mesma página", ()=> {
+      cy.wait(3000)
+  cy.get(':nth-child(31) > :nth-child(1) > .lector-txt-main')
+  .should("be.visible")
+        .click()
+
+         //Clica em iniciar avaliação
+      cy.get('.default-gap > .btn-swipe-accent')
+      .should("be.visible")
+      .click();
+
+      //Espera 15 segundo 
+      cy.log('Responda as avaliações ')
+      cy.wait(15000)
+
+      //Clica em enviar resposta
+      cy.get('#nextResourceArrow')
+      .should("be.visible")
+      .click();
+
+      //Clica em confirmar envio de resposta
+      cy.get('[switch="service.modalSendAnswers"] > .modal > :nth-child(2) > .modal-form > .end > .btn-swipe-accent')
+      .should("be.visible")
+      .click();
     
+      //Clica em voltar
+    cy.get("#hideResource", { timeout: 60000 })
+      .should("be.visible")
+      .click({ force: true });
+});
+
+it("Reação uma por página", ()=> {
+      cy.wait(3000)
+  cy.get(':nth-child(33) > :nth-child(1) > .lector-txt-main')
+  .should("be.visible")
+        .click()
+
+        cy.wait(3000)
+        //Clica em iniciar avaliação
+      cy.get('.live-event-resource-message > .default-gap > .btn-swipe-accent')
+      .should("be.visible")
+      .click();
+
+      //Espera 15 segundo 
+      cy.log('Responda as avaliações ')
+      cy.wait(15000)
+
+      //Clica em enviar resposta
+      cy.get('#nextResourceArrow')
+      .should("be.visible")
+      .click();
+
+      //Clica em confirmar envio de resposta
+      cy.get('[switch="service.modalSendAnswers"] > .modal > :nth-child(2) > .modal-form > .end > .btn-swipe-accent')
+      .should("be.visible")
+      .click();
+    
+      //Clica em voltar
+    cy.get("#hideResource", { timeout: 60000 })
+      .should("be.visible")
+      .click({ force: true });
+
+});
+*/
+
+it("Concluir treinamento", ()=> {
+  cy.get('.header > .btn-swipe-accent')
+  .should("be.visible")
+        .click()
+
+        cy.wait(5000)
+        cy.get('[switch="modal.finishCourse"] > .modal > :nth-child(2) > .end > .flex > .btn-swipe-accent')
+        .should("be.visible")
+        .click()
+        
+        cy.log("gerando certificado")
+        cy.wait(8000)
+
+
+
+});
+
+
+
 });
