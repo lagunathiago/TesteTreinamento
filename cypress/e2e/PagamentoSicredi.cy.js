@@ -48,10 +48,26 @@ describe("Teste - Login", () => {
         cy.get(".open > .ui-select-choices > :nth-child(2)").click();                  // Selecionar documentos como tipo de conteúdo
         cy.get(".weight").type("1");                                                   // Selecionar peso
         cy.get(".open > .ui-select-choices > :nth-child(2)").click();                  // Selecionar peso 1
-        cy.log('DIGITE UM DOCUMENTO E SELECIONE')
-        cy.wait(10000)
-        cy.get(".editing-resource > .end > .btn-swipe-accent").click();  
 
+       cy.contains('.ui-select-container', 'Escolha um documento')
+  .should('be.visible')
+  .click()
+  .within(() => {
+    cy.get('input.ui-select-search')
+      .should('be.visible')
+      .type('Manual Vitrines.pdf')
+  })
+
+  cy.contains(
+  '.ui-select-choices-row',
+  'Manual Vitrines.pdf',
+  { timeout: 10000 }
+)
+  .should('be.visible')
+  .click()
+
+cy.get(".editing-resource > .end > .btn-swipe-accent").click();
+        
     })
 
     it('Turma Paga á vista sem aprovação', () => {
@@ -66,12 +82,22 @@ describe("Teste - Login", () => {
   .clear()
   .type('{selectall}1.00');   
       
+      cy.get('.navigation-controls > .ml-20').click()//botao prximo
+      cy.get('.navigation-controls > .ml-20').click()//botao prximo
       
-      cy.get('.navigation-controls > .ml-20').click()//botao prximo
-      cy.get('.navigation-controls > .ml-20').click()//botao prximo
-      cy.log('REMOVE GRUPO TODOS')
-      cy.log('MANUALMENTE ADICIONE UM GRUPO/PERFIL')
-      cy.wait(10000)
+       cy.get('tr.ng-scope > :nth-child(4) > .middle > .btn').click()
+      cy.get('.step2 > .permission-select > [ng-show="showUser"] > .column > .multiselect > .border > .ui-select-match > .btn-default').type("thiago laguna")
+      cy.get('.ui-select-dropdown')
+  .should('be.visible')
+
+cy.contains('.ui-select-choices-row', 'Thiago Laguna')
+  .click()
+
+      cy.contains('button', 'Adicionar')
+  .should('be.visible')
+  .click()
+
+      cy.wait(1000)
      
       // Clica no botão "Salvar Turma"
       
@@ -110,9 +136,25 @@ describe("Teste - Login", () => {
         cy.get(".open > .ui-select-choices > :nth-child(2)").click();                  // Selecionar documentos como tipo de conteúdo
         cy.get(".weight").type("1");                                                   // Selecionar peso
         cy.get(".open > .ui-select-choices > :nth-child(2)").click();                  // Selecionar peso 1
-        cy.log('DIGITE UM DOCUMENTO E SELECIONE')
-        cy.wait(10000)
-        cy.get(".editing-resource > .end > .btn-swipe-accent").click();  
+        
+         cy.contains('.ui-select-container', 'Escolha um documento')
+  .should('be.visible')
+  .click()
+  .within(() => {
+    cy.get('input.ui-select-search')
+      .should('be.visible')
+      .type('Manual Vitrines.pdf')
+  })
+
+  cy.contains(
+  '.ui-select-choices-row',
+  'Manual Vitrines.pdf',
+  { timeout: 10000 }
+)
+  .should('be.visible')
+  .click()
+
+cy.get(".editing-resource > .end > .btn-swipe-accent").click();
 
     })
 
@@ -129,9 +171,20 @@ describe("Teste - Login", () => {
       
       cy.get('.navigation-controls > .ml-20').click()//botao prximo
       cy.get('.navigation-controls > .ml-20').click()//botao prximo
-      cy.log('REMOVE GRUPO TODOS')
-      cy.log('MANUALMENTE ADICIONE UM GRUPO/PERFIL')
-      cy.wait(10000)
+
+      cy.get('tr.ng-scope > :nth-child(4) > .middle > .btn').click()
+      cy.get('.step2 > .permission-select > [ng-show="showUser"] > .column > .multiselect > .border > .ui-select-match > .btn-default').type("thiago laguna")
+      cy.get('.ui-select-dropdown')
+  .should('be.visible')
+
+cy.contains('.ui-select-choices-row', 'Thiago Laguna')
+  .click()
+
+      cy.contains('button', 'Adicionar')
+  .should('be.visible')
+  .click()
+
+      cy.wait(1000)
      
       // Clica no botão "Salvar Turma"
       
@@ -169,9 +222,25 @@ describe("Teste - Login", () => {
         cy.get(".open > .ui-select-choices > :nth-child(2)").click();                  // Selecionar documentos como tipo de conteúdo
         cy.get(".weight").type("1");                                                   // Selecionar peso
         cy.get(".open > .ui-select-choices > :nth-child(2)").click();                  // Selecionar peso 1
-        cy.log('DIGITE UM DOCUMENTO E SELECIONE')
-        cy.wait(10000)
-        cy.get(".editing-resource > .end > .btn-swipe-accent").click();  
+        
+         cy.contains('.ui-select-container', 'Escolha um documento')
+  .should('be.visible')
+  .click()
+  .within(() => {
+    cy.get('input.ui-select-search')
+      .should('be.visible')
+      .type('Manual Vitrines.pdf')
+  })
+
+  cy.contains(
+  '.ui-select-choices-row',
+  'Manual Vitrines.pdf',
+  { timeout: 10000 }
+)
+  .should('be.visible')
+  .click()
+
+cy.get(".editing-resource > .end > .btn-swipe-accent").click();
 
     })
 
@@ -183,10 +252,21 @@ describe("Teste - Login", () => {
       
       cy.get('.navigation-controls > .ml-20').click()//botao prximo
       cy.get('.navigation-controls > .ml-20').click()//botao prximo
-      cy.log('REMOVE GRUPO TODOS')
-      cy.log('MANUALMENTE ADICIONE UM GRUPO/PERFIL')
-      cy.wait(10000)
-     
+
+      cy.get('tr.ng-scope > :nth-child(4) > .middle > .btn').click()
+      cy.get('.step2 > .permission-select > [ng-show="showUser"] > .column > .multiselect > .border > .ui-select-match > .btn-default').type("thiago laguna")
+      cy.get('.ui-select-dropdown')
+  .should('be.visible')
+
+cy.contains('.ui-select-choices-row', 'Thiago Laguna')
+  .click()
+
+      cy.contains('button', 'Adicionar')
+  .should('be.visible')
+  .click()
+
+      cy.wait(1000)
+      
       // Clica no botão "Salvar Turma"
       
       cy.get('.add-content > .end > .btn-swipe-accent').click()
@@ -224,9 +304,25 @@ describe("Teste - Login", () => {
         cy.get(".open > .ui-select-choices > :nth-child(2)").click();                  // Selecionar documentos como tipo de conteúdo
         cy.get(".weight").type("1");                                                   // Selecionar peso
         cy.get(".open > .ui-select-choices > :nth-child(2)").click();                  // Selecionar peso 1
-        cy.log('DIGITE UM DOCUMENTO E SELECIONE')
-        cy.wait(10000)
-        cy.get(".editing-resource > .end > .btn-swipe-accent").click();  
+        
+         cy.contains('.ui-select-container', 'Escolha um documento')
+  .should('be.visible')
+  .click()
+  .within(() => {
+    cy.get('input.ui-select-search')
+      .should('be.visible')
+      .type('Manual Vitrines.pdf')
+  })
+
+  cy.contains(
+  '.ui-select-choices-row',
+  'Manual Vitrines.pdf',
+  { timeout: 10000 }
+)
+  .should('be.visible')
+  .click()
+
+cy.get(".editing-resource > .end > .btn-swipe-accent").click();
 
     })
 
@@ -239,9 +335,20 @@ describe("Teste - Login", () => {
       
       cy.get('.navigation-controls > .ml-20').click()//botao prximo
       cy.get('.navigation-controls > .ml-20').click()//botao prximo
-      cy.log('REMOVE GRUPO TODOS')
-      cy.log('MANUALMENTE ADICIONE UM GRUPO/PERFIL')
-      cy.wait(10000)
+      
+      cy.get('tr.ng-scope > :nth-child(4) > .middle > .btn').click()
+      cy.get('.step2 > .permission-select > [ng-show="showUser"] > .column > .multiselect > .border > .ui-select-match > .btn-default').type("thiago laguna")
+      cy.get('.ui-select-dropdown')
+  .should('be.visible')
+
+cy.contains('.ui-select-choices-row', 'Thiago Laguna')
+  .click()
+
+      cy.contains('button', 'Adicionar')
+  .should('be.visible')
+  .click()
+
+      cy.wait(1000)
      
       // Clica no botão "Salvar Turma"
       

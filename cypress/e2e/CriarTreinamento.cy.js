@@ -4,14 +4,13 @@ describe("Teste - Login", () => {
   before(() => {
     cy.viewport(1920, 1080); // Define a dimensão da tela para o teste.
 
-    cy.visit("https://hml.lector.live/landing");
+    cy.visit("https://hml.lector.live/lector_suporte/subscribe/login");
     cy.contains("button", "Entrar").click();
     cy.get('form.ng-pristine > [type="text"]').type("thiagosuporte@uorak.com");
     cy.get("ng-transclude > .border").type("123");
-    cy.get(":nth-child(4) > .btn-swipe-accent").click();
+     cy.get('#btn-entrar').click();
 
 });
-
 
 
   context("Criando Treinamento", () => {
@@ -20,11 +19,10 @@ describe("Teste - Login", () => {
 
      // Clicando na aba Treinamento
       cy.get('[title="Treinamentos"] > .sideitem').click()
-      cy.wait(3000) //espera alguns segundos para carregar a pagina
+      cy.wait(5000) //espera alguns segundos para carregar a pagina
 
-      //Categoria
-      cy.log('CRIE MANUALMENTE UMA CATEGORIA E UMA SUBCATEGORIA, E EM SEGUIDA, RETORNE PARA A ABA PRINCIPAL DA CATEGORIA RECÉM-CRIADA.')
-      cy.wait(15000)
+      cy.contains('li.list-group-item', 'Teste Automação')
+  .click({ force: true })
 
       //Editando Nome do treinamento e o Idioma
       cy.get('.title-bar > .btn-icon').click()
@@ -34,7 +32,7 @@ describe("Teste - Login", () => {
       cy.get('div.ui-select-container[title="Idioma"]') //Idioma 
   .should('be.visible')
   .click();
-
+    
       cy.log('SELECIONE UM IDIOMA MANUALMENTE')
       cy.wait(3000) //Espera alguns segundo para selecionar o idioma
     
@@ -45,16 +43,9 @@ describe("Teste - Login", () => {
 
       cy.get('[max="9999"] > .ng-pristine').type('1')  //Horas
       cy.get('[model="editingCourse.workload.minutes"] > .ng-pristine').type('30')//Minutos
-
-      //cy.get('[min-grade=""] > .input-number > .ng-pristine').type('50') //Aproveitamento minimo
       
-      cy.get('[mail-interested=""] > .checkbox > .icon-checkbox').click() //Enviar e-mail aos usuários da lista de espera quando uma vaga for disponibilizada
       cy.get('[accessibility=""] > .checkbox > .icon-checkbox').click()  // Acessebilidade
       
-      cy.get('[terms-of-use] input[type="checkbox"]') //Termo aceite
-  .scrollIntoView({ block: 'center' })
-  .check({ force: true });        
-
   //Aguarda 30 segundos pra prencher algumas informações manualmente
   //-Descrição
   //-Resumo
@@ -64,10 +55,8 @@ describe("Teste - Login", () => {
   //Aproveitamento
       cy.log('PREENCHER IMFORMAÇOES MANUALMENTE DESCRIÇÃO|RESUMO|TIPO|PROGRESSO|APROVEITAMENTO')
       cy.wait(5000)
-      /*
+      
     });
-
-    
 
     it('Autores', () => {
 
@@ -102,7 +91,7 @@ describe("Teste - Login", () => {
   .scrollIntoView({ block: 'center' })
   .click({ force: true });
 
-*/
+
     })
 
     it('Conteúdos', () => {
@@ -110,18 +99,55 @@ describe("Teste - Login", () => {
       cy.get('ui-view.ng-scope > .flex > .btn-swipe-accent').click()                 // Clica em novo 
       
       //Gravação
-      cy.log('DIGITE UMA GRAVAÇAO E SELECIONE')
-      cy.wait(10000)
-      cy.get(".weight").type("1");                                                   // Selecionar peso
-      cy.get(".open > .ui-select-choices > :nth-child(2)").click();                  // Selecionar peso 1
-      cy.get(".editing-resource > .end > .btn-swipe-accent").click();                // Clica em adicionar
-  /*    
+      // Abre o select de Gravações
+cy.contains('.ui-select-container', 'Informe o nome do evento')
+  .should('be.visible')
+  .click()
+
+// Digita no campo de busca do ui-select
+cy.contains('.ui-select-container', 'Informe o nome do evento')
+  .within(() => {
+    cy.get('input.ui-select-search')
+      .should('be.visible')
+      .clear()
+      .type('Relatório Faturamento Philips')
+  })
+
+// Clica na gravação quando aparecer
+cy.contains(
+  '.ui-select-choices-row',
+  'Relatório Faturamento Philips',
+  { timeout: 10000 }
+)
+  .should('be.visible')
+  .click()
+
+  cy.get(".editing-resource > .end > .btn-swipe-accent").click();
+  
       //Documento PDF
+      
       cy.get('ui-view.ng-scope > .flex > .btn-swipe-accent').click()                 // Clica em novo conteudo
       cy.get('.editing-resource > :nth-child(2) > .w-100').click()                   // Clicou na aba
       cy.get(".open > .ui-select-choices > :nth-child(2)").click();                  // Selecionar documentos como tipo de conteúdo
-      cy.log('DIGITE UM DOCUMENTO EM PDF E SELECIONE')
-      cy.wait(10000)
+
+      y.contains('.ui-select-container', 'Escolha um documento')
+  .should('be.visible')
+  .click()
+  .within(() => {
+    cy.get('input.ui-select-search')
+      .should('be.visible')
+      .type('Chamada.pdf')
+  })
+
+ cy.contains(
+  '.ui-select-choices-row',
+  'Chamada.pdf',
+  { timeout: 10000 }
+)
+  .should('be.visible')
+  .click()
+      /*cy.log('DIGITE UM DOCUMENTO EM PDF E SELECIONE')
+      cy.wait(10000)*/
       cy.get(".editing-resource > .end > .btn-swipe-accent").click();                // Clica em adicionar 
       
       //Documento xlsx
@@ -330,7 +356,7 @@ cy.get('body .ui-select-choices-row', { timeout: 10000 })
        cy.log('INSIRA UM NOME PARA O CERTIFICADO E ADICIONE')
       cy.wait(10000)
       cy.get(".editing-resource > .end > .btn-swipe-accent").click();                // Clica em adicionar
-      */
+      
     })
     it('Turma Gratuita/Paga', () => {
       //Turma Gratuita
@@ -339,7 +365,7 @@ cy.get('body .ui-select-choices-row', { timeout: 10000 })
       cy.get("#className").type("Teste turma Gratuita"); //nome da turma
       cy.log('MANUALMENTE ATIVE E DESATIVE A APROVAÇÃO DO GESTOR, DEIXE A TURMA A TURMA COMO GRATUITA,DEFINE UM PERIODO DE REALIZAÇÃO E INCRIÇÃO, ADICIONE UM GESTOR')
       cy.wait(3000)
-      /*
+      
       cy.get('.navigation-controls > .ml-20').click()//botao prximo
       cy.log('REALIZE O AGENDAMENTO')
       cy.wait(20000)
@@ -352,14 +378,14 @@ cy.get('body .ui-select-choices-row', { timeout: 10000 })
   .click({ force: true });
       cy.log('MANUALMENTE ADICIONE UM BLOQUEIO DE VISUALIZAÇÃO')
       cy.wait(15000)
-      */
+      
       // Clica no botão "Salvar Turma"
     
       cy.get('.add-content > .end > .btn-swipe-accent').click()
       cy.get('.content-box-footer > .flex > .btn-swipe-accent').click()
       cy.get('[ng-show="modal.useVersioning"] > .modal > :nth-child(3) > .checkbox > .icon-checkbox').click(); //selecionar versionamento
       cy.get('[ng-show="modal.useVersioning"] > .modal > .end > .ml-10').click(); //salvar sem versionamento
-      /*
+      
       cy.get('[title="Clonar turma"] > .icon-copy').click()
       cy.log('TURMA CLONADA !!! EDITE O NOME|SELECIONE TURMA PAGA|ALTERE AS PERMISOES|VERIFICAR SE TEM OS AGENDAMENTOS')
       cy.wait(10000)
@@ -395,10 +421,10 @@ cy.get('body .ui-select-choices-row', { timeout: 10000 })
       cy.get('[ng-show="modal.useVersioning"] > .modal > :nth-child(3) > .checkbox > .icon-checkbox').click(); //selecionar versionamento
       cy.get('[ng-show="modal.useVersioning"] > .modal > .end > .ml-10').click(); //salvar sem versionamento
       
-      */
+      
 
     })
-/*
+
     it('Campo personalizado', () => {
 
         cy.wait(4000)
@@ -461,7 +487,7 @@ cy.get('body .ui-select-choices-row', { timeout: 10000 })
      cy.contains('Fazer inscrição') //Verifica se é possivel fazer a incrição
      
     });
- */
+ 
 
     it('Adicionando o Treinamento na Vitrine', () => { 
      //Role até aparecer vitrines
@@ -515,8 +541,6 @@ cy.contains('button.btn-swipe-accent.ng-scope', 'Salvar')
 
 
     });
-
-
   });
 });
 
