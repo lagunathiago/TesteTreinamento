@@ -91,7 +91,6 @@ describe("Teste - Login", () => {
   .scrollIntoView({ block: 'center' })
   .click({ force: true });
 
-
     })
 
     it('Conteúdos', () => {
@@ -122,15 +121,16 @@ cy.contains(
   .should('be.visible')
   .click()
 
-  cy.get(".editing-resource > .end > .btn-swipe-accent").click();
-  
+  cy.get('.editing-resource > .end > .btn-swipe-accent').click()
+
       //Documento PDF
       
-      cy.get('ui-view.ng-scope > .flex > .btn-swipe-accent').click()                 // Clica em novo conteudo
-      cy.get('.editing-resource > :nth-child(2) > .w-100').click()                   // Clicou na aba
-      cy.get(".open > .ui-select-choices > :nth-child(2)").click();                  // Selecionar documentos como tipo de conteúdo
+     cy.get('[ui-sref="accessLink.content.courses.edit.id.contents"]').click()      // Clica em conteudos
+        cy.get('ui-view.ng-scope > .flex > .btn-swipe-accent').click()                 // Clica em novo
+        cy.get('.editing-resource > :nth-child(2) > .w-100').click()                   // Clicou na aba
+        cy.get(".open > .ui-select-choices > :nth-child(2)").click();                  // Selecionar documentos como tipo de conteúdo
 
-      y.contains('.ui-select-container', 'Escolha um documento')
+      cy.contains('.ui-select-container', 'Escolha um documento')
   .should('be.visible')
   .click()
   .within(() => {
