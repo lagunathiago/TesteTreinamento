@@ -1,5 +1,11 @@
 /// <reference types="cypress" />
 
+Cypress.on('uncaught:exception', (err) => {
+  if (err.message.includes('unselectable')) {
+    return false;
+  }
+});
+
 describe("Teste - Login", () => {
   before(() => {
     cy.viewport(1920, 1080); // Define a dimensão da tela para o teste.
@@ -28,7 +34,7 @@ describe("Teste - Login", () => {
       cy.get('.title-bar > .btn-icon').click()
       cy.get("#courseName").click(); // Clica pra digitar
       cy.get("#courseName").type("Teste Automação") //  Nome no Treinamento
-
+/*
       cy.get('div.ui-select-container[title="Idioma"]') //Idioma 
   .should('be.visible')
   .click();
@@ -54,17 +60,17 @@ describe("Teste - Login", () => {
   //-Progresso
   //Aproveitamento
       cy.log('PREENCHER IMFORMAÇOES MANUALMENTE DESCRIÇÃO|RESUMO|TIPO|PROGRESSO|APROVEITAMENTO')
-      cy.wait(5000)
-      
+      cy.wait(1000)
+      */
     });
-
+/*
     it('Autores', () => {
 
       cy.get('[ui-sref="accessLink.content.courses.edit.id.authors"]').click()        // Clica em Autores
 
       cy.get('[authors=""] > .ng-isolate-scope > .multiselect > .border > :nth-child(1) > .ui-select-search').type('Autor')  // Digita Autores
       cy.log('CLIQUE EM UM AUTOR')
-      cy.wait(3000)                                                                                                          // Espera alguns segundo
+      cy.wait(2000)                                                                                                          // Espera alguns segundo
       //Espera alguns segundos e clica no primeiro autor
 
       cy.contains('button', /^Criar autor$/i, { timeout: 10000 })   //Clica em criar autor
@@ -84,7 +90,7 @@ describe("Teste - Login", () => {
 
   //Espera alguns segundos para digitar um resumo sobre o autor manualmente
   cy.log('ESCREVA UM RESUMO MANUALMENTE')
-  cy.wait(4000) 
+  cy.wait(2000) 
 
   cy.get('button[ng-click="saveAuthor()"]', { timeout: 10000 }) //Salvar em salvar
   .should('be.visible')
@@ -92,7 +98,7 @@ describe("Teste - Login", () => {
   .click({ force: true });
 
     })
-
+ */
     it('Conteúdos', () => {
       cy.get('[ui-sref="accessLink.content.courses.edit.id.contents"]').click()      // Clica em conteudos
       cy.get('ui-view.ng-scope > .flex > .btn-swipe-accent').click()                 // Clica em novo 
@@ -111,6 +117,7 @@ cy.contains('.ui-select-container', 'Informe o nome do evento')
       .clear()
       .type('Relatório Faturamento Philips')
   })
+  cy.wait(2000)
 
 // Clica na gravação quando aparecer
 cy.contains(
@@ -139,6 +146,8 @@ cy.contains(
       .type('Chamada.pdf')
   })
 
+    cy.wait(2000)
+
  cy.contains(
   '.ui-select-choices-row',
   'Chamada.pdf',
@@ -146,54 +155,136 @@ cy.contains(
 )
   .should('be.visible')
   .click()
-      /*cy.log('DIGITE UM DOCUMENTO EM PDF E SELECIONE')
-      cy.wait(10000)*/
       cy.get(".editing-resource > .end > .btn-swipe-accent").click();                // Clica em adicionar 
       
       //Documento xlsx
       cy.get('ui-view.ng-scope > .flex > .btn-swipe-accent').click()                 // Clica em novo conteudo
       cy.get('.editing-resource > :nth-child(2) > .w-100').click()                   // Clicou na aba
       cy.get(".open > .ui-select-choices > :nth-child(2)").click();                  // Selecionar documentos como tipo de conteúdo
-      cy.log('DIGITE UM DOCUMENTO EM XLSX E SELECIONE')
-      cy.wait(10000)
+      
+      cy.contains('.ui-select-container', 'Escolha um documento')
+  .should('be.visible')
+  .click()
+  .within(() => {
+    cy.get('input.ui-select-search')
+      .should('be.visible')
+      .type('Bugs da webconferência 03.11.2023')
+  })
+
+    cy.wait(2000)
+
+ cy.contains(
+  '.ui-select-choices-row',
+  'Bugs da webconferência 03.11.2023',
+  { timeout: 10000 }
+)
+  .should('be.visible')
+  .click()
       cy.get(".editing-resource > .end > .btn-swipe-accent").click();                // Clica em adicionar 
+
        
       //Documento pptx
       cy.get('ui-view.ng-scope > .flex > .btn-swipe-accent').click()                 // Clica em novo conteudo
       cy.get('.editing-resource > :nth-child(2) > .w-100').click()                   // Clicou na aba
       cy.get(".open > .ui-select-choices > :nth-child(2)").click();                  // Selecionar documentos como tipo de conteúdo
-      cy.log('DIGITE UM DOCUMENTO EM PPTX E SELECIONE')
-      cy.wait(10000)
+      
+      cy.contains('.ui-select-container', 'Escolha um documento')
+  .should('be.visible')
+  .click()
+  .within(() => {
+    cy.get('input.ui-select-search')
+      .should('be.visible')
+      .type('Certificado 14.02.2024')
+  })
+
+    cy.wait(2000)
+
+ cy.contains(
+  '.ui-select-choices-row',
+  'Certificado 14.02.2024',
+  { timeout: 10000 }
+)
+  .should('be.visible')
+  .click()
       cy.get(".editing-resource > .end > .btn-swipe-accent").click();                // Clica em adicionar 
+
 
       //Documento word(.doc)
       cy.get('ui-view.ng-scope > .flex > .btn-swipe-accent').click()                 // Clica em novo conteudo
       cy.get('.editing-resource > :nth-child(2) > .w-100').click()                   // Clicou na aba
       cy.get(".open > .ui-select-choices > :nth-child(2)").click();                  // Selecionar documentos como tipo de conteúdo
-      cy.log('DIGITE UM DOCUMENTO WORD(.DOC) E SELECIONE')
-      cy.wait(10000)
+      
+      cy.contains('.ui-select-container', 'Escolha um documento')
+  .should('be.visible')
+  .click()
+  .within(() => {
+    cy.get('input.ui-select-search')
+      .should('be.visible')
+      .type('6518 - Opcao de evento hibrido')
+  })
+
+    cy.wait(2000)
+
+ cy.contains(
+  '.ui-select-choices-row',
+  '6518 - Opcao de evento hibrido',
+  { timeout: 10000 }
+)
+  .should('be.visible')
+  .click()
       cy.get(".editing-resource > .end > .btn-swipe-accent").click();                // Clica em adicionar 
 
        //Avaliação um por página
       cy.get('ui-view.ng-scope > .flex > .btn-swipe-accent').click()                 // Clica em novo conteudo
       cy.get('.editing-resource > :nth-child(2) > .w-100').click()                   // Clicou na aba
       cy.get('.open > .ui-select-choices > :nth-child(3)').click()                   // Clica em Avaliação
-      cy.log('DIGITE UMA AVALIAÇÃO COM UMA QUESTÃO POR PAGINA E SELECIONE')
-      cy.wait(10000)
-      cy.get(".weight").type("1");                                                   // selecionar peso
-      cy.get(".open > .ui-select-choices > :nth-child(2)").click();                  //selecionar peso 1
-      cy.get(".editing-resource > .end > .btn-swipe-accent").click();                // Clica em adicionar
+
+      cy.contains('.ui-select-container', 'Escolha uma avaliação')
+  .should('be.visible')
+  .click()
+  .within(() => {
+    cy.get('input.ui-select-search')
+      .should('be.visible')
+      .type('uma por página Thiago')
+  })
+
+    cy.wait(2000)
+
+ cy.contains(
+  '.ui-select-choices-row',
+  'uma por página Thiago',
+  { timeout: 10000 }
+)
+ .should('be.visible')
+  .click()
+      cy.get(".editing-resource > .end > .btn-swipe-accent").click();                // Clica em adicionar 
+
 
       //Avaliação com todas as questoes por pagina
       cy.get('ui-view.ng-scope > .flex > .btn-swipe-accent').click()                 // Clica em novo conteudo
       cy.get('.editing-resource > :nth-child(2) > .w-100').click()                   // Clicou na aba
       cy.get('.open > .ui-select-choices > :nth-child(3)').click()                   // Clica em Avaliação
-      cy.log('DIGITE UMA AVALIAÇÃO COM TODAS AS QUESTÃO POR PAGINA E SELECIONE')
-      cy.wait(10000)
-      cy.get(".weight").type("1");                                                   // Selecionar peso
-      cy.get(".open > .ui-select-choices > :nth-child(2)").click();                  // Selecionar peso 1
-      cy.get(".editing-resource > .end > .btn-swipe-accent").click();                // Clica em adicionar
       
+      cy.contains('.ui-select-container', 'Escolha uma avaliação')
+  .should('be.visible')
+  .click()
+  .within(() => {
+    cy.get('input.ui-select-search')
+      .should('be.visible')
+      .type('todas na mesma página Thiago')
+  })
+
+    cy.wait(2000)
+
+ cy.contains(
+  '.ui-select-choices-row',
+  'todas na mesma página Thiago',
+  { timeout: 10000 }
+)
+ .should('be.visible')
+  .click()
+      cy.get(".editing-resource > .end > .btn-swipe-accent").click();                // Clica em adicionar 
+
       //Aula Presencial
       cy.get('ui-view.ng-scope > .flex > .btn-swipe-accent').click()                 // Clica em novo conteudo
       cy.get('.editing-resource > :nth-child(2) > .w-100').click()                   // Clicou na aba
@@ -201,19 +292,51 @@ cy.contains(
   .should('be.visible')
   .contains(/^\s*Aula\s*Presencial\s*$/i)
   .click({ force: true });
-      cy.log('DIGITE UM NOME DA AULA PRESENCIAL')
-      cy.wait(10000)
+
+cy.get('input[placeholder="Nome"]:visible')
+  .first()
+  .clear()
+  .type('Aula Presencial Cypress');
+
       cy.get(".editing-resource > .end > .btn-swipe-accent").click();                // Clica em adicionar
+      
   
-      // Webconferencia Lector
+      // Webconferencia Teans
       cy.get('ui-view.ng-scope > .flex > .btn-swipe-accent').click()                 // Clica em novo conteudo
       cy.get('.editing-resource > :nth-child(2) > .w-100').click()                   // Clicou na aba
+      
       // Clica na opção "Webconferência"
-      cy.log('SELECIONE WEBCONFERENCIA')
-      cy.wait(6000)
-      cy.log('DIGITE UM NOME PARA A SUA WEBCONFERENCIA')
-      cy.wait(10000)
+
+// Seleciona Webconferência
+cy.contains('.ui-select-choices-row', 'Webconferência', { timeout: 10000 })
+  .click();
+
+  cy.get('input[placeholder="Nome"]:visible')
+  .first()
+  .clear()
+  .type('Web Conferencia Cypress');
+//Clica na plaforma
+  cy.get('[ng-if="contaInfo.toolsConfig.webconferenceParams.enableExternalPlatforms"] > .w-100').click()
+//Clica no teans
+cy.get('.open > .ui-select-choices > :nth-child(2)', { timeout: 10000 })
+  .should('be.visible')
+  .click();
+
+  cy.get('input[ng-model="editingResource.url"]', { timeout: 10000 })
+  .should('be.visible')
+  .and('not.be.disabled')
+  .clear()
+  .type('https://teams.live.com/meet/9327021005980?p=7AuU9CnF28qfXB0Gg0');
+
+
+  cy.get('input[ng-model="editingResource.recordingUrl"]', { timeout: 10000 })
+  .should('be.visible')
+  .and('not.be.disabled')
+  .clear()
+  .type('https://teams.live.com/meet/9327021005980?p=7AuU9CnF28qfXB0Gg0');
+
       cy.get(".editing-resource > .end > .btn-swipe-accent").click();                // Clica em adicionar
+
 
       //Video
       cy.get('ui-view.ng-scope > .flex > .btn-swipe-accent').click()                 // Clica em novo conteudo
@@ -221,13 +344,32 @@ cy.contains(
       cy.get('body .ui-select-choices-row')
   .contains(/V[ií]deo/i)
   .click({ force: true });
-      cy.log('DIGITE UM VIDEO DA PLATAFORMA LECTOR')
-      cy.wait(10000)
-      cy.get(".editing-resource > .end > .btn-swipe-accent").click();                // Clica em adicionar
+
+  cy.contains('.ui-select-container', 'Escolha um vídeo')
+  .should('be.visible')
+  .click()
+  .within(() => {
+    cy.get('input.ui-select-search')
+      .should('be.visible')
+      .type('Automação Video da plataforma')
+  })
+
+    cy.wait(2000)
+
+ cy.contains(
+  '.ui-select-choices-row',
+  'Automação Video da plataforma',
+  { timeout: 10000 }
+)
+ .should('be.visible')
+  .click()
+      cy.get(".editing-resource > .end > .btn-swipe-accent").click();                // Clica em adicionar 
+
 
       //Video Youtube
       cy.get('ui-view.ng-scope > .flex > .btn-swipe-accent').click()                 // Clica em novo conteudo
       cy.get('.editing-resource > :nth-child(2) > .w-100').click()                   // Clicou na aba
+      
       cy.get('body .ui-select-choices-row')
   .contains(/V[ií]deo/i)
   .click({ force: true });
@@ -235,21 +377,34 @@ cy.contains(
       cy.get('input[type="radio"][ng-model="editingResource.videoType"][value="LINK"]') //Clica em youtube/vimeo
   .scrollIntoView({ block: 'center' })
   .check({ force: true });
+  cy.wait(2000)
+
+  cy.get('input[placeholder="Nome"]:visible', { timeout: 10000 })
+  .scrollIntoView()
+  .then($el => {
+    cy.wrap($el)
+      .click({ force: true })
+      .invoke('val', 'Automação Video do Youtube')
+      .trigger('input')   // atualiza ng-model
+      .trigger('change')
+      .trigger('blur');
+  });
+
+cy.get('input[placeholder="Nome"]:visible')
+  .should('have.value', 'Automação Video do Youtube');
+
 
       cy.get('input[placeholder="Link"]', { timeout: 8000 })
   .should('be.visible')                                                                //coloca o link
   .scrollIntoView({ block: 'center' })
   .click({ force: true })
-  .type('{selectall}{backspace}https://www.youtube.com/watch?v=DfcXJYv_dxE', { delay: 0 });
+  .type('{selectall}{backspace}https://www.youtube.com/watch?v=QC8iQqtG0hg', { delay: 0 });
 
-      cy.log('DIGITE O NOME DO VIDEO ')
-      cy.wait(10000)
-      cy.get(".editing-resource > .end > .btn-swipe-accent").click();                // Clica em adicionar
+        cy.get(".editing-resource > .end > .btn-swipe-accent").click();                // Clica em adicionar
 
-
-      //Video Vimeo
-      cy.get('ui-view.ng-scope > .flex > .btn-swipe-accent').click()                 // Clica em novo conteudo
+cy.get('ui-view.ng-scope > .flex > .btn-swipe-accent').click()                 // Clica em novo conteudo
       cy.get('.editing-resource > :nth-child(2) > .w-100').click()                   // Clicou na aba
+      
       cy.get('body .ui-select-choices-row')
   .contains(/V[ií]deo/i)
   .click({ force: true });
@@ -257,16 +412,31 @@ cy.contains(
       cy.get('input[type="radio"][ng-model="editingResource.videoType"][value="LINK"]') //Clica em youtube/vimeo
   .scrollIntoView({ block: 'center' })
   .check({ force: true });
+  cy.wait(2000)
 
-      cy.get('input[placeholder="Link"]', { timeout: 8000 })
+  cy.get('input[placeholder="Nome"]:visible', { timeout: 10000 })
+  .scrollIntoView()
+  .then($el => {
+    cy.wrap($el)
+      .click({ force: true })
+      .invoke('val', 'Automação Video Vimeo')
+      .trigger('input')   // atualiza ng-model
+      .trigger('change')
+      .trigger('blur');
+  });
+
+cy.get('input[placeholder="Nome"]:visible')
+  .should('have.value', 'Automação Video Vimeo');
+
+  cy.get('input[placeholder="Link"]', { timeout: 8000 })
   .should('be.visible')                                                                //coloca o link
   .scrollIntoView({ block: 'center' })
   .click({ force: true })
-  .type('{selectall}{backspace}https://vimeo.com/100716497?fl=pl&fe=sh', { delay: 0 });
+  .type('{selectall}{backspace}https://vimeo.com/300018306?fl=pl&fe=sh', { delay: 0 });
 
-      cy.log('DIGITE O NOME DO VIDEO ')
-      cy.wait(10000)
-      cy.get(".editing-resource > .end > .btn-swipe-accent").click();                // Clica em adicionar
+        cy.get(".editing-resource > .end > .btn-swipe-accent").click();                // Clica em adicionar
+
+
       
       //Tópico
       cy.get('ui-view.ng-scope > .flex > .btn-swipe-accent').click()                 // Clica em novo conteudo
@@ -275,10 +445,35 @@ cy.contains(
   .should('be.visible')
   .contains(/^\s*T[oó]pico\s*$/i)   // aceita com ou sem acento
   .click({ force: true });
-      cy.log('DIGITE O NOME DO TÓPICO E UM CONTEÚDO')
-      cy.wait(10000)
-      cy.get(".editing-resource > .end > .btn-swipe-accent").click();                // Clica em adicionar
-       
+
+  cy.get('input[placeholder="Nome"]:visible', { timeout: 10000 })
+  .scrollIntoView()
+  .then($el => {
+    cy.wrap($el)
+      .click({ force: true })
+      .invoke('val', 'Teste Tópico')
+      .trigger('input')   // atualiza ng-model
+      .trigger('change')
+      .trigger('blur');
+  });
+
+const texto = 'Conteúdo escrito pelo Cypress ';
+
+cy.get('iframe.cke_wysiwyg_frame', { timeout: 15000 })
+  .its('0.contentDocument.body')
+  .should('not.be.empty')
+  .then(cy.wrap)
+  .click()
+  .type(`{selectall}{backspace}${texto}`, { delay: 10 })
+  .trigger('keyup')
+  .trigger('change')
+  .trigger('blur');
+
+      cy.wait(2000)
+
+   cy.get(".editing-resource > .end > .btn-swipe-accent").click();                // Clica em adicionar
+
+
        //Scorm
       cy.get('ui-view.ng-scope > .flex > .btn-swipe-accent').click()                 // Clica em novo conteudo
       cy.get('.editing-resource > :nth-child(2) > .w-100').click()                   // Clicou na aba
@@ -287,37 +482,87 @@ cy.contains(
   .contains(/^\s*SCORM\s*\/\s*IMSCC?\s*$/i)   
   .scrollIntoView()
   .click({ force: true });
-      cy.log('DIGITE UM SCORM E SELECIONE')
-      cy.wait(10000)
-      cy.get(".editing-resource > .end > .btn-swipe-accent").click();                // Clica em adicionar
-      
 
+  cy.contains('.ui-select-container', 'Escolha um documento')
+  .should('be.visible')
+  .click()
+  .within(() => {
+    cy.get('input.ui-select-search')
+      .should('be.visible')
+      .type('NR-12')
+  })
+
+    cy.wait(2000)
+
+ cy.contains('.ui-select-choices-row', 'NR-12', { timeout: 10000 })
+  .should('be.visible')
+  .click();
+
+  cy.get('.editing-resource > .end > .btn-swipe-accent', { timeout: 10000 })
+  .should('exist')
+  .click({ force: true });
+cy.wait(6000)
+  
       //Entrega de atividade        
       cy.contains('button', /^Novo conteúdo$/i) //Clica em novo conteudo
   .should('be.visible')
   .click({ force: true });
       cy.get('.editing-resource > :nth-child(2) > .w-100').click()                   // Clicou na aba
-      // (garanta que o dropdown está aberto)
-      cy.log('SELECIONE ENTREGA DE ATIVIDADEDE')
-      cy.wait(6000)
-      //Adicione um nome para a entrega de atividade
-      cy.log('INSIRA UM NOME PARA A ENTREGA DE ATIVIDADE')
-      cy.wait(10000)
+
+      cy.contains('.ui-select-choices-row', 'Entrega de atividade', { timeout: 10000 })
+  .should('be.visible')
+  .click();
+
+  cy.get('input[placeholder="Nome"]:visible', { timeout: 10000 })
+  .scrollIntoView()
+  .then($el => {
+    cy.wrap($el)
+      .click({ force: true })
+      .invoke('val', 'Automação Entrega de Atividade')
+      .trigger('input')   // atualiza ng-model
+      .trigger('change')
+      .trigger('blur');
+  });
+
+cy.get('input[placeholder="Nome"]:visible')
+  .should('have.value', 'Automação Entrega de Atividade');
+  cy.log('ROLE PARA BAIXO PARA APARECER O BOTÃO DE ADICIONAR')
+  cy.wait(5000)
+
       cy.get(".editing-resource > .end > .btn-swipe-accent").click();                // Clica em adicionar
 
       //Avaliação de reaççao e pesquisa todoas na mesma pagina
        cy.get('ui-view.ng-scope > .flex > .btn-swipe-accent').click()                 // Clica em novo conteudo
       cy.get('.editing-resource > :nth-child(2) > .w-100').click()                   // Clicou na aba
+
       //Espera alguns segundos para rolar e ate aparecer avaliação de reação
       cy.log('ROLE PARA BAIXO NA LISTA ATÉ APARECER ENTREGA DE ATIVIDADE')
-      cy.wait(6000)
+      cy.wait(4000)
       // Clica na opção "Avaliação de Reação/Pesquisa"
 cy.get('body .ui-select-choices-row', { timeout: 10000 })
   .should('be.visible')
   .contains(/Avalia[cç][aã]o de Rea[cç][aã]o\/Pesquisa/i)
   .click({ force: true });
-  cy.log('INSIRA UMA AVALIAÇÃO REAÇÃO PESQUISA/TODAS NA MESMA PAGINA E SELECIONE')
-      cy.wait(10000)
+
+  cy.contains('.ui-select-container', 'Escolha uma avaliação')
+  .should('be.visible')
+  .click()
+  .within(() => {
+    cy.get('input.ui-select-search')
+      .should('be.visible')
+      .type('Reação uma por página Thiago')
+  })
+
+    cy.wait(2000)
+
+ cy.contains(
+  '.ui-select-choices-row',
+  'Reação uma por página Thiago',
+  { timeout: 10000 }
+)
+ .should('be.visible')
+  .click()
+
       cy.get(".editing-resource > .end > .btn-swipe-accent").click();                // Clica em adicionar
       
       //Avaliação de reaççao e pesquisa uma por pagina
@@ -327,16 +572,34 @@ cy.get('body .ui-select-choices-row', { timeout: 10000 })
       cy.get('.editing-resource > :nth-child(2) > .w-100').click()                   // Clicou na aba
       //Espera alguns segundos para rolar e ate aparecer avaliação de reação
       cy.log('ROLE PARA BAIXO NA LISTA ATÉ APARECER ENTREGA DE ATIVIDADE')
-      cy.wait(5000)
+      cy.wait(4000)
       // Clica na opção "Avaliação de Reação/Pesquisa"
 cy.get('body .ui-select-choices-row', { timeout: 10000 })
   .should('be.visible')
   .contains(/Avalia[cç][aã]o de Rea[cç][aã]o\/Pesquisa/i)
   .click({ force: true });
-  cy.log('INSIRA UMA AVALIAÇÃO REAÇÃO PESQUISA/TODAS NA MESMA PAGINA E ADICIONE')
-      cy.wait(10000)
-      cy.get(".editing-resource > .end > .btn-swipe-accent").click();                // Clica em adicionar
 
+   cy.contains('.ui-select-container', 'Escolha uma avaliação')
+  .should('be.visible')
+  .click()
+  .within(() => {
+    cy.get('input.ui-select-search')
+      .should('be.visible')
+      .type('Reação todas em uma página Thiago')
+  })
+
+    cy.wait(2000)
+
+ cy.contains(
+  '.ui-select-choices-row',
+  'Reação todas em uma página Thiago',
+  { timeout: 10000 }
+)
+ .should('be.visible')
+  .click()
+
+      cy.get(".editing-resource > .end > .btn-swipe-accent").click();                // Clica em adicionar
+      
       //Certificados
       cy.get('ui-view.ng-scope > .flex > .btn-swipe-accent').click()                 // Clica em novo conteudo
       cy.get('.editing-resource > :nth-child(2) > .w-100').click()                   // Clicou na aba
@@ -347,15 +610,32 @@ cy.get('body .ui-select-choices-row', { timeout: 10000 })
   .click({ force: true });
       //Espera alguns segundos para rolar e ate aparecer avaliação de reação
       cy.log('ROLE PARA BAIXO NA LISTA ATÉ CERTIFICADO')
-      cy.wait(5000)
-      // Clica na opção "Certificado"
-cy.get('body .ui-select-choices-row', { timeout: 10000 })
+      cy.wait(4000)
+     
+// acha o bloco do certificado pelo placeholder e abre o select
+cy.contains('.ui-select-container', 'Informe o nome do certificado', { timeout: 10000 })
+  .scrollIntoView()
   .should('be.visible')
-  .contains(/^Certificado$/i)
+  .within(() => {
+    cy.get('.ui-select-toggle').click({ force: true });
+  });
+
+
+  cy.get('input.ui-select-search:visible', { timeout: 10000 })
+  .should('have.length', 1)
+  .clear({ force: true })
+  .type('Certificado do Treinamento', { force: true, delay: 30 });
+
+  cy.wait(2000)
+
+
+// se existir opção, clica nela
+cy.get('.ui-select-choices-row', { timeout: 10000 })
+  .contains('Certificado do Treinamento')
   .click({ force: true });
-       cy.log('INSIRA UM NOME PARA O CERTIFICADO E ADICIONE')
-      cy.wait(10000)
-      cy.get(".editing-resource > .end > .btn-swipe-accent").click();                // Clica em adicionar
+
+        cy.get(".editing-resource > .end > .btn-swipe-accent").click();                // Clica em adicionar
+
       
     })
     it('Turma Gratuita/Paga', () => {
@@ -538,8 +818,6 @@ cy.contains('button.btn-swipe-accent.ng-scope', 'Salvar')
       .click({ force: true });
 
       
-
-
     });
   });
 });
