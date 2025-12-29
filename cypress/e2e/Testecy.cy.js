@@ -24,20 +24,17 @@ context("Criando Treinamento", { testIsolation: false }, () => {
     
      // Clicando na aba Treinamento
       cy.get('[title="Treinamentos"] > .sideitem').click()
-      cy.wait(5000) //espera alguns segundos para carregar a pagina
+      cy.wait(7000) //espera alguns segundos para carregar a pagina
 
       cy.contains('li.list-group-item', 'Teste Automação')
   .click({ force: true })
-/*
+
       //Editando Nome do treinamento e o Idioma
       cy.get('.title-bar > .btn-icon').click()
       cy.get("#courseName").click(); // Clica pra digitar
       cy.get("#courseName").type("Teste Automação") //  Nome no Treinamento
-*/
-  });
 
-  /*
-      cy.get('div.ui-select-container[title="Idioma"]') //Idioma 
+        cy.get('div.ui-select-container[title="Idioma"]') //Idioma 
   .should('be.visible')
   .click();
     
@@ -62,9 +59,11 @@ context("Criando Treinamento", { testIsolation: false }, () => {
   //-Progresso
   //Aproveitamento
       cy.log('PREENCHER IMFORMAÇOES MANUALMENTE DESCRIÇÃO|RESUMO|TIPO|PROGRESSO|APROVEITAMENTO')
-      cy.wait(1000)
-      */ /*
-    });
+      cy.wait(20000)
+
+  });
+
+  
 
     it('Autores', () => {
 
@@ -100,8 +99,8 @@ context("Criando Treinamento", { testIsolation: false }, () => {
   .click({ force: true });
 
     })
- */
-/*
+
+
   // ✅ Helper simples (opcional) - mantém o código bem parecido
   const abrirConteudosENovo = () => {
     cy.get('[ui-sref="accessLink.content.courses.edit.id.contents"]').click();
@@ -142,11 +141,11 @@ context("Criando Treinamento", { testIsolation: false }, () => {
       .should('be.visible')
       .click();
 
-    cy.get('input.ui-select-search:visible', { timeout: 10000 })
+    cy.get('input.ui-select-search:visible', { timeout: 30000 })
       .should('have.length', 1)
       .type('Chamada.pdf', { delay: 10 });
 
-    cy.contains('.ui-select-choices-row', 'Chamada.pdf', { timeout: 10000 })
+    cy.contains('.ui-select-choices-row', 'Chamada.pdf', { timeout: 30000 })
       .should('be.visible')
       .click({ force: true });
 
@@ -292,19 +291,10 @@ context("Criando Treinamento", { testIsolation: false }, () => {
     cy.get('[ng-if="contaInfo.toolsConfig.webconferenceParams.enableExternalPlatforms"] > .w-100')
       .click({ force: true });
 
-    cy.get('.open > .ui-select-choices > :nth-child(2)', { timeout: 10000 })
+    cy.get('.open > .ui-select-choices > :nth-child(1)', { timeout: 10000 })
       .should('be.visible')
       .click({ force: true });
 
-    cy.get('input[ng-model="editingResource.url"]', { timeout: 10000 })
-      .should('be.visible')
-      .clear({ force: true })
-      .type('https://teams.live.com/meet/9327021005980?p=7AuU9CnF28qfXB0Gg0', { force: true });
-
-    cy.get('input[ng-model="editingResource.recordingUrl"]', { timeout: 10000 })
-      .should('be.visible')
-      .clear({ force: true })
-      .type('https://teams.live.com/meet/9327021005980?p=7AuU9CnF28qfXB0Gg0', { force: true });
 
     cy.get(".editing-resource > .end > .btn-swipe-accent").click();
   });
@@ -431,6 +421,8 @@ context("Criando Treinamento", { testIsolation: false }, () => {
       .should('have.length', 1)
       .type('NR-12', { delay: 10 });
 
+      cy.wait(3000)
+
     cy.contains('.ui-select-choices-row', 'NR-12', { timeout: 10000 })
       .should('be.visible')
       .click({ force: true });
@@ -439,7 +431,6 @@ context("Criando Treinamento", { testIsolation: false }, () => {
       .should('exist')
       .click({ force: true });
 
-    cy.wait(6000);
   });
 
   it('Conteúdo - Entrega de atividade', () => {
@@ -547,10 +538,8 @@ context("Criando Treinamento", { testIsolation: false }, () => {
     cy.get(".editing-resource > .end > .btn-swipe-accent").click();
   });
 
-
     it('Turma Gratuita', () => {
       //Turma Gratuita
-
       // Garante que está na aba de Turmas
 cy.get('[ui-sref="accessLink.content.courses.edit.id.classes"]')
   .should('be.visible')
@@ -558,8 +547,7 @@ cy.get('[ui-sref="accessLink.content.courses.edit.id.classes"]')
 
 // Espera renderizar a área
 cy.wait(2000);
-
-
+       cy.get('[ng-click="editClass()"]').click() //Nova turma
       cy.get("#className").type("Turma Gratuita"); //nome da turma
       cy.get('.column > :nth-child(1) > .icon-checkbox').click(); // desativa aprovação
 
@@ -568,7 +556,7 @@ cy.wait(2000);
 
       cy.get('.navigation-controls > .ml-20').click()//botao prximo
       cy.log('REALIZE O AGENDAMENTO')
-      cy.wait(20000)
+      cy.wait(35000)
 
         cy.get('.navigation-controls > .ml-20').click()//botao prximo
 
@@ -585,46 +573,12 @@ cy.contains('.ui-select-choices-row', 'Aluno')
   .click()
       // Clica no botão "Salvar Turma"
       cy.get('.add-content > .end > .btn-swipe-accent').click()
-      cy.get('.content-box-footer > .flex > .btn-swipe-accent').click()
-      cy.get('[ng-show="modal.useVersioning"] > .modal > :nth-child(3) > .checkbox > .icon-checkbox').click(); //selecionar versionamento
-      cy.get('[ng-show="modal.useVersioning"] > .modal > .end > .ml-10').click(); //salvar sem versionamento
-
+  
+     
     });
 
     it('Turma paga', () => {
       //Turma Paga
-//Clica no treinamento
-      cy.contains('.card-items', 'Teste Automação', { timeout: 30000 })
-  .should('be.visible')
-  .scrollIntoView()
-  .click({ force: true });
-
-  //Clica em editar no treinamento
-  cy.get('button[title="Editar treinamento"]', { timeout: 30000 })
-  .should('be.visible')
-  .scrollIntoView()
-  .click({ force: true });
-
-
-      // Garante que está na aba das turmas
-cy.get('button[title="Editar treinamento"]', { timeout: 30000 })
-  .filter(':visible')
-  .first()
-  .scrollIntoView()
-  .click({ force: true });
-
-
-// Espera renderizar a área
-cy.wait(2000);
-
-// Força o clique no botão de editar/criar turma
-cy.url({ timeout: 30000 }).should('include', '/courses/edit/');
-cy.get('body', { timeout: 30000 }).should('be.visible');
-
-// 2) Vai pra aba Turmas
-cy.get('[ui-sref="accessLink.content.courses.edit.id.classes"]', { timeout: 30000 })
-  .scrollIntoView()
-  .click({ force: true });
 
   // 4)  clica em "Nova turma"
 cy.get('[ng-click="editClass()"]', { timeout: 30000 })
@@ -643,10 +597,9 @@ cy.get('[ng-click="editClass()"]', { timeout: 30000 })
 
       cy.wait(3000)
 
-
       cy.get('.navigation-controls > .ml-20').click()//botao prximo
       cy.log('REALIZE O AGENDAMENTO')
-      cy.wait(5000)
+      cy.wait(35000)
 
         cy.get('.navigation-controls > .ml-20').click()//botao prximo
 
@@ -662,40 +615,13 @@ cy.contains('.ui-select-choices-row', 'Aluno')
   .should('be.visible')
   .click()
       // Clica no botão "Salvar Turma"
-      cy.get('.add-content > .end > .btn-swipe-accent').click()
-      cy.get('.content-box-footer > .flex > .btn-swipe-accent').click()
+      cy.wait(2000)
+      cy.get('.add-content > .end > .btn-swipe-accent').click() 
+     
 
     });
 
    it('Duplicar Turma Gratuita para Paga', () => {
-      //Turma Paga
-//Clica no treinamento
-      cy.contains('.card-items', 'Teste Automação', { timeout: 30000 })
-  .should('be.visible')
-  .scrollIntoView()
-  .click({ force: true });
-
-  //Clica em editar no treinamento
-  cy.get('button[title="Editar treinamento"]', { timeout: 30000 })
-  .should('be.visible')
-  .scrollIntoView()
-  .click({ force: true });
-
-
-      // Garante que está na aba das turmas
-cy.get('button[title="Editar treinamento"]', { timeout: 30000 })
-  .filter(':visible')
-  .first()
-  .scrollIntoView()
-  .click({ force: true });
-
-// Espera renderizar a área
-cy.wait(2000);
-
-// 2) Vai pra aba Turmas
-cy.get('[ui-sref="accessLink.content.courses.edit.id.classes"]', { timeout: 30000 })
-  .scrollIntoView()
-  .click({ force: true });
 
   //Clicar em clonar turma
 cy.contains('tr', 'Turma Gratuita', { timeout: 20000 })
@@ -717,7 +643,94 @@ cy.contains('tr', 'Turma Gratuita', { timeout: 20000 })
 
       cy.get('.navigation-controls > .ml-20').click()//botao prximo
       cy.log('REALIZE O AGENDAMENTO')
-      cy.wait(5000)
+      cy.wait(35000)
+
+        cy.get('.navigation-controls > .ml-20').click()//botao prximo
+
+      cy.get('tr.ng-scope > :nth-child(4) > .middle > .btn').click()
+      cy.get('.step2 > .permission-select > [ng-show="showUser"] > .column > .multiselect > .border > .ui-select-match > .btn-default').type("Aluno")
+      cy.get('.ui-select-dropdown')
+  .should('be.visible')
+
+cy.contains('.ui-select-choices-row', 'Aluno')
+  .click()
+
+      cy.contains('button', 'Adicionar')
+  .should('be.visible')
+  .click()
+      // Clica no botão "Salvar Turma"
+            cy.wait(2000)
+      cy.get('.add-content > .end > .btn-swipe-accent').click()
+      
+ 
+    });
+
+     it('Duplicar Turma Paga para Gratuita', () => {
+      //Turma Paga
+
+  //Clicar em clonar turma
+cy.contains('tr', 'Turma Paga', { timeout: 20000 })
+  .should('be.visible')
+  .within(() => {
+    cy.get('button[title="Clonar turma"]')
+      .should('exist')
+      .click({ force: true });
+  });
+
+       cy.get("#className").type("Para Gratuita"); //nome da turma
+      cy.get('.column > :nth-child(1) > .icon-checkbox').click(); // desativa aprovação
+      cy.get('.left-radius > .checkbox > .icon-radio').click()
+
+      cy.wait(3000)
+
+      cy.get('.navigation-controls > .ml-20').click()//botao prximo
+      cy.log('REALIZE O AGENDAMENTO')
+      cy.wait(35000)
+
+        cy.get('.navigation-controls > .ml-20').click()//botao prximo
+
+      cy.get('tr.ng-scope > :nth-child(4) > .middle > .btn').click()
+      cy.get('.step2 > .permission-select > [ng-show="showUser"] > .column > .multiselect > .border > .ui-select-match > .btn-default').type("Aluno")
+      cy.get('.ui-select-dropdown')
+  .should('be.visible')
+
+cy.contains('.ui-select-choices-row', 'Aluno')
+  .click()
+
+      cy.contains('button', 'Adicionar')
+  .should('be.visible')
+  .click()
+      // Clica no botão "Salvar Turma"
+            cy.wait(2000)
+      cy.get('.add-content > .end > .btn-swipe-accent').click()
+            
+      cy.get('.content-box-footer > .flex > .btn-swipe-accent').click()
+      cy.get('[ng-show="modal.useVersioning"] > .modal > :nth-child(3) > .checkbox > .icon-checkbox').click(); //selecionar versionamento
+      cy.get('[ng-show="modal.useVersioning"] > .modal > .end > .ml-10').click(); //salvar sem versionamento
+
+    });
+
+
+/*
+    it('Turma Gratuita', () => {
+      //Turma Gratuita
+      // Garante que está na aba de Turmas
+cy.get('[ui-sref="accessLink.content.courses.edit.id.classes"]')
+  .should('be.visible')
+  .click({ force: true });
+
+// Espera renderizar a área
+cy.wait(2000);
+       cy.get('[ng-click="editClass()"]').click() //Nova turma
+      cy.get("#className").type("Turma Gratuita"); //nome da turma
+      cy.get('.column > :nth-child(1) > .icon-checkbox').click(); // desativa aprovação
+
+      cy.wait(3000)
+
+
+      cy.get('.navigation-controls > .ml-20').click()//botao prximo
+      cy.log('REALIZE O AGENDAMENTO')
+      cy.wait(35000)
 
         cy.get('.navigation-controls > .ml-20').click()//botao prximo
 
@@ -735,7 +748,150 @@ cy.contains('.ui-select-choices-row', 'Aluno')
       // Clica no botão "Salvar Turma"
       cy.get('.add-content > .end > .btn-swipe-accent').click()
       cy.get('.content-box-footer > .flex > .btn-swipe-accent').click()
+      
+      cy.get('[ng-show="modal.useVersioning"] > .modal > :nth-child(3) > .checkbox > .icon-checkbox').click(); //selecionar versionamento
+      cy.get('[ng-show="modal.useVersioning"] > .modal > .end > .ml-10').click(); //salvar sem versionamento
 
+     
+    });
+
+    it('Turma paga', () => {
+      //Turma Paga
+//Clica no treinamento
+      cy.contains('.card-items', 'Teste Automação', { timeout: 30000 })
+  .should('be.visible')
+  .scrollIntoView()
+  .click()
+
+  //Clica em editar no treinamento
+  cy.get('button[title="Editar treinamento"]', { timeout: 30000 })
+  .should('be.visible')
+  .scrollIntoView()
+  .click({ force: true });
+      
+   // Garante que está na aba de Turmas
+cy.get('[ui-sref="accessLink.content.courses.edit.id.classes"]', {timeout: 30000 })
+  .should('exist')
+  .should('be.visible')
+  .click();
+
+// Espera renderizar a área
+cy.wait(2000);
+
+
+  // 4)  clica em "Nova turma"
+cy.get('[ng-click="editClass()"]', { timeout: 30000 })
+  .filter(':visible')
+  .first()
+  .scrollIntoView()
+  .click({ force: true });
+
+      cy.get("#className").type("Turma Paga"); //nome da turma
+      cy.get('.column > :nth-child(1) > .icon-checkbox').click(); // desativa aprovação
+      cy.get('.price-box-container > :nth-child(2) > .price-box > .checkbox > .icon-radio').click() //Clica em fixo
+      cy.get('#price-fixed').click() //Clica no valor
+      cy.get('#price-fixed') //Valor Treinamento
+  .clear()
+  .type('{selectall}3.91'); 
+
+      cy.wait(3000)
+
+
+      cy.get('.navigation-controls > .ml-20').click()//botao prximo
+      cy.log('REALIZE O AGENDAMENTO')
+      cy.wait(35000)
+
+        cy.get('.navigation-controls > .ml-20').click()//botao prximo
+
+      cy.get('tr.ng-scope > :nth-child(4) > .middle > .btn').click()
+      cy.get('.step2 > .permission-select > [ng-show="showUser"] > .column > .multiselect > .border > .ui-select-match > .btn-default').type("Aluno")
+      cy.get('.ui-select-dropdown')
+  .should('be.visible')
+
+cy.contains('.ui-select-choices-row', 'Aluno')
+  .click()
+
+      cy.contains('button', 'Adicionar')
+  .should('be.visible')
+  .click()
+      // Clica no botão "Salvar Turma"
+      cy.wait(2000)
+      cy.get('.add-content > .end > .btn-swipe-accent').click() 
+      cy.wait(2000)
+      cy.get('.content-box-footer > .flex > .btn-swipe-accent').click()
+
+    });
+
+   it('Duplicar Turma Gratuita para Paga', () => {
+
+//Turma Paga
+//Clica no treinamento
+      cy.contains('.card-items', 'Teste Automação', { timeout: 30000 })
+  .should('be.visible')
+  .scrollIntoView()
+  .click()
+
+  //Clica em editar no treinamento
+  cy.get('button[title="Editar treinamento"]', { timeout: 30000 })
+  .should('be.visible')
+  .scrollIntoView()
+  .click({ force: true });
+      
+   // Garante que está na aba de Turmas
+cy.get('[ui-sref="accessLink.content.courses.edit.id.classes"]', {timeout: 30000 })
+  .should('exist')
+  .should('be.visible')
+  .click();
+
+
+// Espera renderizar a área
+cy.wait(2000);
+
+
+  //Clicar em clonar turma
+cy.contains('tr', 'Turma Gratuita', { timeout: 20000 })
+  .should('be.visible')
+  .within(() => {
+    cy.get('button[title="Clonar turma"]')
+      .should('exist')
+      .click({ force: true });
+  });
+       cy.get("#className").type("Para gratuita"); //nome da turma
+      cy.get('.column > :nth-child(1) > .icon-checkbox').click(); // desativa aprovação
+      cy.get('.price-box-container > :nth-child(2) > .price-box > .checkbox > .icon-radio').click() //Clica em fixo
+      cy.get('#price-fixed').click() //Clica no valor
+      cy.get('#price-fixed') //Valor Treinamento
+  .clear()
+  .type('{selectall}3.91'); 
+
+      cy.wait(3000)
+
+      cy.get('.navigation-controls > .ml-20').click()//botao prximo
+      cy.log('REALIZE O AGENDAMENTO')
+      cy.wait(35000)
+
+        cy.get('.navigation-controls > .ml-20').click()//botao prximo
+
+      cy.get('tr.ng-scope > :nth-child(4) > .middle > .btn').click()
+      cy.get('.step2 > .permission-select > [ng-show="showUser"] > .column > .multiselect > .border > .ui-select-match > .btn-default').type("Aluno")
+      cy.get('.ui-select-dropdown')
+  .should('be.visible')
+
+cy.contains('.ui-select-choices-row', 'Aluno')
+  .click()
+
+      cy.contains('button', 'Adicionar')
+  .should('be.visible')
+  .click()
+      // Clica no botão "Salvar Turma"
+            cy.wait(2000)
+
+      cy.get('.add-content > .end > .btn-swipe-accent').click()
+            cy.wait(2000)
+
+      cy.get('.content-box-footer > .flex > .btn-swipe-accent').click()
+
+ 
     });
 
      it('Duplicar Turma Paga para Gratuita', () => {
@@ -755,11 +911,6 @@ cy.contains('.ui-select-choices-row', 'Aluno')
 // Espera renderizar a área
 cy.wait(2000);
 
-// 2) Vai pra aba Turmas
-cy.get('[ui-sref="accessLink.content.courses.edit.id.classes"]', { timeout: 30000 })
-  .scrollIntoView()
-  .click({ force: true });
-
   //Clicar em clonar turma
 cy.contains('tr', 'Turma Paga', { timeout: 20000 })
   .should('be.visible')
@@ -777,7 +928,7 @@ cy.contains('tr', 'Turma Paga', { timeout: 20000 })
 
       cy.get('.navigation-controls > .ml-20').click()//botao prximo
       cy.log('REALIZE O AGENDAMENTO')
-      cy.wait(5000)
+      cy.wait(35000)
 
         cy.get('.navigation-controls > .ml-20').click()//botao prximo
 
@@ -793,13 +944,16 @@ cy.contains('.ui-select-choices-row', 'Aluno')
   .should('be.visible')
   .click()
       // Clica no botão "Salvar Turma"
+            cy.wait(2000)
+
       cy.get('.add-content > .end > .btn-swipe-accent').click()
+            cy.wait(2000)
       cy.get('.content-box-footer > .flex > .btn-swipe-accent').click()
 
     });
-
+    */
+   /*
     it('Material Complementar', () => {
-      //Turma Paga
 //Clica no treinamento
       cy.contains('.card-items', 'Teste Automação', { timeout: 30000 })
   .should('be.visible')
@@ -838,6 +992,7 @@ cy.get('a[ui-sref="accessLink.content.courses.edit.id.archive"]', { timeout: 200
   .and('not.be.disabled')
   .clear({ force: true })
   .type('Pasta criada pelo Cypress', { delay: 30 });
+
 
 
   //Clica em Salvar
@@ -906,116 +1061,8 @@ cy.wait(2000);
         cy.contains('button.btn-swipe-accent', 'Salvar')
   .should('be.visible')
   .click({ force: true });
-
-    });
-  */
-
-    it("Bloqueio de incrição", () => {
-     //clica no treinamento
-     cy.contains('.card-items', 'Teste Automação', { timeout: 30000 })
-  .should('be.visible')
-  .scrollIntoView()
-  .click({ force: true });
-
-  //Clica em editar no treinamento
-  cy.get('button[title="Editar treinamento"]', { timeout: 30000 })
-  .should('be.visible')
-  .scrollIntoView()
-  .click({ force: true });
-
-//Clica em Bloqueio de Incrição
-     cy.get('[ui-sref="accessLink.content.courses.edit.id.subscription-block"]', { timeout: 20000 })
-  .should('be.visible')
-  .scrollIntoView()
-  .click({ force: true });
-
-  cy.contains('th, div, span', 'USUÁRIO', { timeout: 20000 })
-  .parents('div')
-  .find('div.ui-select-match[placeholder="Escolha um usuário"]')
-  .first()
-  .click({ force: true });
-
-
-
-cy.get('.ui-select-search')
-  .should('be.visible')
-  .type('thiagosuporte@uorak.com', { delay: 50 });
-
-
-
-     cy.get('.new-block > .btn-swipe-accent').click() //Clica em novo bloqueio
-     cy.contains('button', /^Salvar$/i, { timeout: 10000 })
-       .should('be.visible')
-       .click({ force: true });
-     cy.wait(3000)
-
-     cy.get('.card-items').click()
-     cy.wait(2000)
-     cy.contains('Inscrição bloqueada') //Verifica se a incrição no treinamento realmente está bloqueda 
-
-     cy.get('.end.ng-scope > .icon-edit').click() // Clica em editar
-     cy.get('[ui-sref="accessLink.content.courses.edit.id.subscription-block"]').click() 
-     cy.get('button.btn.icon-discard').first().click(); //Clica na lixeira do primeiro nome da lista de bloqueio de incrição
-
-     cy.contains('button', /^Salvar$/i, { timeout: 10000 })
-       .should('be.visible')
-       .click({ force: true });
-    
-     cy.get('.card-items').click()
-     cy.contains('Fazer inscrição') //Verifica se é possivel fazer a incrição
-     
-    });
- 
-/*
-    it('Adicionando o Treinamento na Vitrine', () => { 
-     //Role até aparecer vitrines
-    cy.log('ROLE ATÉ APARECER A VITRINES NA ABA')
-    cy.wait(4000)
-thiagosuporte@uorak.
-        //Clica na vitrine
-        cy.get('a.sideitem[ui-sref="accessLink.content.showcases"]')
-  .should('be.visible')
-  .click({ force: true });
-        cy.wait(3000)
-        //Clica na primeira vitrine
-        cy.get('button.btn.round.icon-edit.ng-scope')
-  .first()
-  .should('be.visible')
-  .click({ force: true });
-        //Clica no carrossel
-        cy.get(':nth-child(2) > .actions > .actions-line > :nth-child(1) > .btn').click()
-        //Adicione o seu treinamento criado
-        cy.log('SELECIONE O SEU TREINAMENTO CRIADO')
-        cy.wait(15000)
-
-        // Clica no botão "Adicionar"
-cy.contains('button.btn-swipe-accent.btn-small.small.ng-binding', 'Adicionar')
-  .should('be.visible')
-  .click({ force: true });
-
-// Clica no botão "Salvar" no carrosel
-cy.contains('button.btn-swipe-accent.ng-binding', 'Salvar')
-  .should('be.visible')
-  .click({ force: true });
-
-//clica em salvar novamente
-cy.contains('button.btn-swipe-accent.ng-scope', 'Salvar')
-  .should('be.visible')
-  .click({ force: true });
-
-   //Clica no icone da foto para abrir o modal e trocar o perfil
-    cy.get('.button > [src="/img/svg/avatar.svg"]').click()
-    cy.wait(2000)
-
-    //Clica em selecionar perfil
-    cy.get('.icon-pointer-right').click()
-
-    // Clica em 'Aluno - Todos'
-    cy.contains('div.option.item.ng-scope.btn-swipe-lgray', 'Aluno - Todos')
-      .scrollIntoView()
-      .click({ force: true });
-
-    });
-    */
+   
   });
+  */
+ }); 
 });

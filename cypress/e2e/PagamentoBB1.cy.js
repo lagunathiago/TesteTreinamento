@@ -24,7 +24,7 @@ describe("Teste - Login", () => {
       cy.get('[data-nodeid="40"]').click()
       
     });
-    /*
+    
     
     it("Criando Turma paga á vista sem aprovação", () => {
 
@@ -454,7 +454,7 @@ it("Criar turma paga com pagamento em 5x sem aprovação", () => {
       cy.get('[ng-show="modal.useVersioning"] > .modal > :nth-child(3) > .checkbox > .icon-checkbox').click(); //selecionar versionamento
       cy.get('[ng-show="modal.useVersioning"] > .modal > .end > .ml-10').click(); //salvar sem versionamento
      })
-*/
+
      it('Colocando a Categoria do Treinamento na Vitrine', () => { 
      //Role até aparecer vitrines
     cy.log('ROLE ATÉ APARECER A VITRINES NA ABA')

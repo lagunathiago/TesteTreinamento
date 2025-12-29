@@ -325,16 +325,15 @@ cy.get('.open > .ui-select-choices > :nth-child(2)', { timeout: 10000 })
   cy.get('input[ng-model="editingResource.url"]', { timeout: 10000 })
   .should('be.visible')
   .and('not.be.disabled')
-  .clear()
   .type('https://teams.live.com/meet/9327021005980?p=7AuU9CnF28qfXB0Gg0');
 
-
+/*
   cy.get('input[ng-model="editingResource.recordingUrl"]', { timeout: 10000 })
   .should('be.visible')
   .and('not.be.disabled')
   .clear()
   .type('https://teams.live.com/meet/9327021005980?p=7AuU9CnF28qfXB0Gg0');
-
+*/
       cy.get(".editing-resource > .end > .btn-swipe-accent").click();                // Clica em adicionar
 
 
