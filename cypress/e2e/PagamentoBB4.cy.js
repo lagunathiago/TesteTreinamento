@@ -13,16 +13,6 @@ describe("Teste - Login", () => {
 });
 
   context("Aprovação ESMP", () => {
-    it("Login", () => {
-        
-        //clicar em carrosel
-        cy.get(':nth-child(6) > .carousel-container > .showcase-title-container > .middle > .show-all',{ timeout: 600000 }) // até 10 minutos
-    .should('exist')
-    .should('be.visible')
-    .click({ force: true });
-  
-    });
-
   it ("Gratuito sem aprrovação", () => {
 
 //Clica no treinamento
@@ -44,18 +34,25 @@ describe("Teste - Login", () => {
 cy.contains('.classes-actions .btn-swipe-accent', 'Acessar', { timeout: 60000 })
   .should('be.visible')
   .scrollIntoView()
-  .click();
+  .click(); 
 
   //Espera 4 segundos
   cy.wait(4000);
 
-  //Clica no botão voltar
-    cy.get("#hideResource", { timeout: 60000 })
-      .should("be.visible")
-      .click({ force: true });
+  //Espera 4 segundos
+    cy.wait(4000);
 
+    //Clica em voltar
+cy.get('#hideResource', { timeout: 60000 })
+  .should('be.visible')
+  .scrollIntoView()
+  .click();
 
-
+  //Clica em concluido
+  cy.get('.header > .btn-swipe-accent', { timeout: 60000 })
+  .should('be.visible')
+  .scrollIntoView()
+  .click();
 
 
   });
