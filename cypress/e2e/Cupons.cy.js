@@ -7,7 +7,6 @@ Cypress.on('uncaught:exception', (err) => {
   }
 });
 
-
 describe("Teste - Login", () => {
   before(() => {
     cy.viewport(1920, 1080);
@@ -45,7 +44,7 @@ describe("Teste - Login", () => {
         .should('be.visible')
         .click()
    });
-/*
+
      it("Remover Cupon", () => {
 
         cy.get('.edit-coupon-btn', { timeout: 20000 })
@@ -195,7 +194,7 @@ cy.get('[switch="modal.coupons"] > .modal > :nth-child(2) > .modal-form > .end >
   .click();
   
    });
-*/
+
    it("Criar cupom %", () => {
         //Clica em criar cupons
         cy.get('.title-bar > .btn-icon',{timeout: 60000})
@@ -264,16 +263,13 @@ cy.get('input[ng-model="coupon.endDate"]', { timeout: 20000 })
   .trigger('input')
   .trigger('change');
 
-
- //C onfirma
+ //Confirma
 cy.get('[switch="modal.coupons"] > .modal > :nth-child(2) > .modal-form > .end > .btn-swipe-accent')
  .should('be.visible')
   .click();
 
   
    });
-
-
   });
 });
   

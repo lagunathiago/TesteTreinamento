@@ -126,7 +126,6 @@ cy.get('.open > .ui-select-choices > :nth-child(4)', { timeout: 60000 })
   .click();
         cy.wait(12000)
         
-      
         //Clica em Cards
         cy.get('.title-bar > .filter').click()
         cy.wait(2000)

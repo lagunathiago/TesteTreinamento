@@ -419,11 +419,11 @@ context("Criando Treinamento", { testIsolation: false }, () => {
 
     cy.get('input.ui-select-search:visible', { timeout: 10000 })
       .should('have.length', 1)
-      .type('NR-12', { delay: 10 });
+      .type('Contratos - CIGAM 11', { delay: 10 });
 
       cy.wait(3000)
 
-    cy.contains('.ui-select-choices-row', 'NR-12', { timeout: 10000 })
+    cy.contains('.ui-select-choices-row', 'Contratos - CIGAM 11', { timeout: 10000 })
       .should('be.visible')
       .click({ force: true });
 
