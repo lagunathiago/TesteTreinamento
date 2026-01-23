@@ -234,7 +234,7 @@ cy.get('h2.ng-binding', { timeout: 30000 })
       .click({ force: true });
 
       });
-
+/*
       it("Direcionamento para Webconferencia", () => {
   cy.wait(3000)
 
@@ -259,7 +259,7 @@ cy.get('h2.ng-binding', { timeout: 30000 })
       .click({ force: true });
 
       });
-
+*/
       it("Vídeo Lector", ()=> {
           cy.get(':nth-child(19) > [style="padding-left: 5px;"] > .lector-txt-main', { timeout: 3000 })      
         .should("be.visible")

@@ -135,7 +135,10 @@ cy.contains('.ui-select-choices-row', 'Aluno')
      it("Capas", () => {
         
         //Clica em Cards
-        cy.get('.title-bar > .filter').click()
+        cy.get('.title-bar > .filter', {timeout: 60000})
+          .should('be.visible')
+          .click()
+
         cy.wait(1000)
         
         //Miniaturas

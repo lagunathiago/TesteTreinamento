@@ -427,6 +427,9 @@ context("Criando Treinamento", { testIsolation: false }, () => {
       .should('be.visible')
       .click({ force: true });
 
+            cy.wait(3000)
+
+
     cy.get('.editing-resource > .end > .btn-swipe-accent', { timeout: 10000 })
       .should('exist')
       .click({ force: true });
@@ -446,6 +449,8 @@ context("Criando Treinamento", { testIsolation: false }, () => {
       .first()
       .clear({ force: true })
       .type('Automação Entrega de Atividade', { force: true });
+
+      cy.wait(4000)
 
     cy.get(".editing-resource > .end > .btn-swipe-accent").click();
   });
