@@ -25,20 +25,21 @@ describe("Teste - Login", () => {
 
     cy.get('form.ng-pristine > [type="text"]', { timeout: 60000 })
       .should("be.visible")
-      .type("thiagosuporte@uorak.com");
+      .type("qualidade2@lectortec.com.br");
 
     cy.get("ng-transclude > .border", { timeout: 60000 })
       .should("be.visible")
-      .type("123");
+      .type("2006lrnrgr");
 
     cy.get("#btn-entrar", { timeout: 60000 }).should("be.visible").click();
 
     // opcional: garante que saiu da tela de login
     cy.url({ timeout: 60000 }).should("not.include", "/subscribe/login");
+
   });
 
   context("Teste Cupons", () => {
-    /*
+    
       it("Clica na Vitrine", () => {
 
         // Clicando no icon da vitrine
@@ -46,15 +47,17 @@ describe("Teste - Login", () => {
         .should('be.visible')
         .click();
 
+        cy.wait(3000)
+
         //Clica na vitrine Automação
-        cy.get('.showcase-navigation-menu > :nth-child(8)', { timeout: 60000 })
+        cy.get('.showcase-navigation-menu > :nth-child(9)', { timeout: 60000 })
         .should('be.visible')
         .click();
-
        
    });
 
-     it("Compra Teste Automação Recorrente 1", () => {
+   
+   it("Compra Teste Automação Recorrente 1", () => {
 
         //Clica no Treinamento
         cy.get(':nth-child(1) > .card-container > [ng-init="course = content.entity"] > a.ng-scope > .showcase-card-container', { timeout: 60000 })
@@ -96,6 +99,8 @@ describe("Teste - Login", () => {
 
    });
    
+  
+   
     it("Sai do perfil de compra", () => {
 
      //Clioca no icon
@@ -109,7 +114,7 @@ describe("Teste - Login", () => {
   .click()
 
     });
-*/
+
     it('Entra em outro perfil para aceitar a solicitão e aplicar matricula',()=> {
 
         cy.visit("https://hml.lector.live/esmp/subscribe/login");
@@ -130,7 +135,6 @@ describe("Teste - Login", () => {
     // opcional: garante que saiu da tela de login
     cy.url({ timeout: 60000 }).should('not.include', '/subscribe/login');
   });
-/*
 
  it("Aceita a primeira solicitação", () => {
 
@@ -166,13 +170,13 @@ describe("Teste - Login", () => {
   .should('be.visible')
   .click()
 
-  //Envia para analise
-  cy.get('[ladda="pendingSubscriptionsReport.loadingApprovals.true"]',{ timeout: 60000 })
-  .should('be.visible')
-  .click()
-  
-  //Aprova matricula
-  cy.get('[ng-show="modal.approveBatchSubscriptions"] > .modal > .content-box-footer > .btn-swipe-accent',{ timeout: 60000 })
+  //Envia pra analise
+  cy.get('button.btn-swipe-accent', { timeout: 60000 })
+  .contains('Análise financeira')
+  .click();
+
+  //Confirma analise
+  cy.get('#confirmModalConfirm', { timeout: 20000 })
   .should('be.visible')
   .click()
 
@@ -180,10 +184,8 @@ describe("Teste - Login", () => {
   cy.get('[switch="modal.manageSubscriptions"] > .modal > .modal-header > .btn',{ timeout: 60000 })
   .should('be.visible')
   .click()
-
   
    });
-
 
  it("Aceita a segunda solicitação", () => {
 
@@ -214,23 +216,24 @@ describe("Teste - Login", () => {
   .should('be.visible')
   .click()
 
-  //Aceita matricula
-  cy.get('[ladda="pendingSubscriptionsReport.loadingApprovals.true"]',{ timeout: 60000 })
-  .should('be.visible')
-  .click()
 
-  //Envia para analise
-  cy.get('[ladda="pendingSubscriptionsReport.loadingApprovals.true"]',{ timeout: 60000 })
+//Envia para analise
+  cy.get('button.btn-swipe-accent', { timeout: 60000 })
+  .contains('Análise financeira')
+  .click();
+
+ //Confirma analise
+ cy.get('#confirmModalConfirm', { timeout: 20000 })
   .should('be.visible')
   .click()
 
  //Fecha modal
   cy.get('[switch="modal.manageSubscriptions"] > .modal > .modal-header > .btn',{ timeout: 60000 })
   .should('be.visible')
-  .click()
+  .click();
 
     });
-*/
+
     it("Vai até os relatóros", ()=> {
 
     //Clica em relatórios
@@ -246,7 +249,7 @@ describe("Teste - Login", () => {
   .should('be.visible')
   .click({ force: true });
 
-    cy.wait(4000)
+    cy.wait(3000)
 
   //Escreve
         cy.get('.report-filters', { timeout: 10000 })
@@ -257,7 +260,7 @@ describe("Teste - Login", () => {
   .clear()
   .type('Teste Automação Recorrente 1', { delay: 30 });
 
-    cy.wait(5000)
+    cy.wait(3000)
 
   //Clique em pesquisar
   cy.get(':nth-child(2) > div.ng-scope > .text-filter > .multiselect > .btn', { timeout: 10000 })
@@ -266,19 +269,18 @@ describe("Teste - Login", () => {
 
     });
 
-    it('Aplica cupom 10% no primeiro treinamento', ()=> {
-/*
-        cy.contains('button', 'Revisar pagamentos', { timeout: 10000 })
-  .scrollIntoView()
-  .should('be.visible')
-  .click()
-  */
 
-  cy.contains('button', 'Revisar pagamentos', { timeout: 10000 })
+    it('Aplica cupom 10% no primeiro treinamento', ()=> {
+
+      cy.wait(5000)
+
+  cy.get('button')
+  .filter(':contains("Revisar pagamentos")')
   .last()
   .scrollIntoView()
-  .should('be.visible')
-  .click()
+  .click({ force: true });
+
+  cy.wait(10000)
 
   //Clica em alterar cupom
   cy.get('.ph-5 > .middle > .btn-swipe-accent', { timeout: 10000 })
@@ -286,8 +288,12 @@ describe("Teste - Login", () => {
   .should('be.visible')
   .click()
 
+    cy.wait(2000)
+
 //Clica em 'selecionar um cupom' para abrir o modal com os cupom
   cy.get('.modal-body > .ng-isolate-scope > .multiselect > .border > .ui-select-match > .btn-default').click()
+
+    cy.wait(2000)
 
 //Clica no cupom CUPOM 10 quando ficvar visivel
 cy.contains('.ui-select-choices-row', 'CUPOM10', { timeout: 60000 })
@@ -309,27 +315,21 @@ cy.contains('R$3.52').should('be.visible')
 // validar valor total com desconto
 cy.contains('R$17.60').should('be.visible')
 
-  cy.wait(2000)
-
-  /*
-//Fecha Modas
-cy.get('.modal-overlay.ng-scope > .modal > .modal-header > .btn', { timeout: 60000 })
-  .should('be.visible')
-  .click()
-*/
+  cy.wait(3000)
 
 //Clica em aprvovar compra
 cy.contains('button', 'Aprovar compra', { timeout: 10000 })
   .scrollIntoView()
   .should('be.visible')
   .click()
-    cy.wait(2000)
+
+  cy.wait(5000)
 
  });
 
   it('Pesquisa segundo treinamento',() => {
 
-    cy.wait(2000)
+cy.wait(3000)
 
   cy.get('.report-filters', { timeout: 10000 })
   .find('input[ng-model="filter.text"]')
@@ -350,19 +350,13 @@ cy.contains('button', 'Aprovar compra', { timeout: 10000 })
 
     it(' Aplica cupom R$2 no segundo treinamento', ()=> {
 
-        cy.wait(2000)
-        
-        /*
-        cy.contains('button', 'Revisar pagamentos', { timeout: 10000 })
-  .scrollIntoView()
-  .should('be.visible')
-  .click()
-*/
-  cy.contains('button', 'Revisar pagamentos', { timeout: 10000 })
+cy.wait(3000)
+   
+  cy.get('button',{timeout:20000})
+  .filter(':contains("Revisar pagamentos")')
   .last()
   .scrollIntoView()
-  .should('be.visible')
-  .click()
+  .click({ force: true });
 
   //Clica em alterar cupom
   cy.get('.ph-5 > .middle > .btn-swipe-accent', { timeout: 10000 })
@@ -393,22 +387,17 @@ cy.contains('R$2.91').should('be.visible')
 // validar valor total com desconto
 cy.contains('R$5.82').should('be.visible')
 
-  cy.wait(2000)
+    cy.wait(2000)
 
-  //clica em aprovar compra
-  cy.contains('button', 'Aprovar compra', { timeout: 10000 })
+    //Clica em aprvovar compra
+cy.contains('button', 'Aprovar compra', { timeout: 10000 })
   .scrollIntoView()
   .should('be.visible')
   .click()
 
-
-/*
-//Fecha Modas
-cy.get('.modal-overlay.ng-scope > .modal > .modal-header > .btn', { timeout: 60000 })
-  .should('be.visible')
-  .click()
-  */
-    });
+  cy.wait(5000)
+  
+    }); 
 
     it('Sai do Perfil adm', () => {
 
@@ -428,11 +417,11 @@ it('Entra no perfil aluno para validar os boletos',()=> {
 
     cy.get('form.ng-pristine > [type="text"]', { timeout: 60000 })
       .should('be.visible')
-      .type("thiagosuporte@uorak.com");
+      .type("qualidade2@lectortec.com.br");
 
     cy.get("ng-transclude > .border", { timeout: 60000 })
       .should('be.visible')
-      .type("123");
+      .type("2006lrnrgr");
 
     cy.get('#btn-entrar', { timeout: 60000 })
       .should('be.visible')
@@ -443,7 +432,6 @@ it('Entra no perfil aluno para validar os boletos',()=> {
 
     });
 
-
 it('Emite o primeiro boleto no treinamento Teste Automação Recorrente 1', ()=> {
         // Clicando no icon da vitrine
       cy.get('.active > .icon-next', { timeout: 60000 })
@@ -451,7 +439,7 @@ it('Emite o primeiro boleto no treinamento Teste Automação Recorrente 1', ()=>
         .click();
 
         //Clica na vitrine Automação
-        cy.get('.showcase-navigation-menu > :nth-child(8)', { timeout: 60000 })
+        cy.get('.showcase-navigation-menu > :nth-child(9)', { timeout: 60000 })
         .should('be.visible')
         .click();
 
@@ -518,7 +506,6 @@ it('Emite o primeiro boleto no treinamento Teste Automação Recorrente 1', ()=>
         .should("be.visible")
         .click();
     });
-
     it("Valida a primeira compra", () => {
       //Digita o treinamernto
       cy.get('input[ng-model="searchFilter.text"]', { timeout: 10000 })
@@ -590,15 +577,19 @@ it('Emite o primeiro boleto no treinamento Teste Automação Recorrente 1', ()=>
         .should("be.visible")
         .click({ force: true });
 
-      cy.get("iframe#bb-boleto", { timeout: 20000 })
-        .its("0.contentDocument.body")
-        .should("not.be.empty")
-        .then(cy.wrap)
-        .contains("label", "Valor Cobrado")
-        .parent()
-        .should("contain.text", "3.52");
+       cy.get('iframe#bb-boleto', { timeout: 30000 })
+  .its('0.contentDocument.body')
+  .should('not.be.empty')
+  .then(cy.wrap)
+  .contains('div.cell.texto-a-direita', 'Valor Cobrado', { timeout: 30000 })
+  .should(($cell) => {
+    const txt = $cell.text().replace(/\s/g, '');
+    expect(txt).to.include('3.52');
+  });
 
-      cy.wait(7000);
+         cy.log('VALIDE SE O SEU NOME E CPF ESTÁ CERTO')
+        cy.wait(7000);
+         cy.log('VALIDE SE O SEU NOME E CPF ESTÁ CERTO')
 
       //Fecha o boleto
       cy.get("#modal-paymentBB", { timeout: 20000 }).should("exist");
@@ -609,9 +600,27 @@ it('Emite o primeiro boleto no treinamento Teste Automação Recorrente 1', ()=>
       cy.get("#bbSlipsDialog > .modal > .between > .btn", { timeout: 20000 })
         .should("be.visible")
         .click({ force: true });
+
     });
 
     it("Valida a segunda compra", () => {
+
+      cy.get('.showcase-head-2 > .btn', { timeout: 20000 })
+        .should("be.visible")
+        .click({ force: true });
+
+        cy.contains("span", "Minha Área", { timeout: 60000 })
+        .should("be.visible")
+        .click();
+
+      //Minhas compras
+      cy.contains("button.showcase-home-menu-item", "Minhas Compras", {
+        timeout: 60000,
+      })
+        .should("be.visible")
+        .click();
+  
+
       //Digita o treinamernto
       cy.get('input[ng-model="searchFilter.text"]', { timeout: 10000 })
         .should("be.visible")
@@ -637,7 +646,7 @@ it('Emite o primeiro boleto no treinamento Teste Automação Recorrente 1', ()=>
       cy.get("table#mypurchases-table tbody tr", { timeout: 20000 }).then(
         ($rows) => {
           const $last = $rows.last();
-          expect($last.find("td.couponColumn").text()).to.contain("R$2.91");
+          expect($last.find("td.couponColumn").text()).to.contain("R$2.00");
           expect($last.find("td.priceColumn").text()).to.contain("R$ 5.82");
         },
       );
@@ -679,20 +688,29 @@ it('Emite o primeiro boleto no treinamento Teste Automação Recorrente 1', ()=>
         timeout: 10000,
       }).should("be.visible");
 
+
       //Abri o boleto
       cy.get(".icon-download", { timeout: 20000 })
         .should("be.visible")
         .click({ force: true });
 
-      cy.get("iframe#bb-boleto", { timeout: 20000 })
-        .its("0.contentDocument.body")
-        .should("not.be.empty")
-        .then(cy.wrap)
-        .contains("label", "Valor Cobrado")
-        .parent()
-        .should("contain.text", "7.82");
+       cy.log('VALIDE O VALOR DE 2.91 NO BOLETO')
 
-      cy.wait(7000);
+      cy.wait(1000);
+
+       cy.get('iframe#bb-boleto', { timeout: 30000 })
+  .its('0.contentDocument.body')
+  .should('not.be.empty')
+  .then(cy.wrap)
+  .contains('div.cell.texto-a-direita', 'Valor Cobrado', { timeout: 30000 })
+  .should(($cell) => {
+    const txt = $cell.text().replace(/\s/g, '');
+    expect(txt).to.include('2.91');
+  });
+
+        cy.log('VALIDE SE O SEU NOME E CPF ESTÁ CERTO')
+        cy.wait(7000);
+         cy.log('VALIDE SE O SEU NOME E CPF ESTÁ CERTO')
 
       //Fecha o boleto
       cy.get("#modal-paymentBB", { timeout: 20000 }).should("exist");
@@ -703,7 +721,6 @@ it('Emite o primeiro boleto no treinamento Teste Automação Recorrente 1', ()=>
       cy.get("#bbSlipsDialog > .modal > .between > .btn", { timeout: 20000 })
         .should("be.visible")
         .click({ force: true });
-
 
     });
   });
