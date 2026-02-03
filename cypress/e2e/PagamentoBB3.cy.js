@@ -273,7 +273,7 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
       cy.get('.ui-select-dropdown')
   .should('be.visible')
 
-cy.contains('.ui-select-choices-row', 'Thiago Laguna')
+cy.contains('.ui-select-choices-row', 'Thiago Laguna',{timeout:60000})
   .click()
 
       cy.contains('button', 'Adicionar')

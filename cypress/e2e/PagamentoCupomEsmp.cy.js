@@ -81,7 +81,7 @@ describe("Teste - Login", () => {
     it("Compra Teste Automação Recorrente 2", () => {
 
         //Clica no Treinamento
-        cy.get(':nth-child(2) > .card-container > [ng-init="course = content.entity"] > a.ng-scope > .showcase-card-container', { timeout: 60000 })
+        cy.get(':nth-child(4) > .card-container > [ng-init="course = content.entity"] > a.ng-scope > .showcase-card-container', { timeout: 60000 })
         .should('be.visible')
         .click();
 
@@ -470,7 +470,7 @@ it('Emite o primeiro boleto no treinamento Teste Automação Recorrente 1', ()=>
     it("Emite o primeiro boleto no treinamento Teste Automação Recorrente 2", () => {
 
         //Clica no Treinamento
-        cy.get(':nth-child(2) > .card-container > [ng-init="course = content.entity"] > a.ng-scope > .showcase-card-container', { timeout: 60000 })
+        cy.get(':nth-child(4) > .card-container > [ng-init="course = content.entity"] > a.ng-scope > .showcase-card-container', { timeout: 60000 })
         .should('be.visible')
         .click();
 
