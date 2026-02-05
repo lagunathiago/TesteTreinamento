@@ -55,7 +55,7 @@ describe("Teste - Login", () => {
   });
 
   context("Teste Login", () => {
-    /*
+    
       it("Teste Login", () => {
 
         // Clicando na aba Treinamento
@@ -388,7 +388,7 @@ it("Treinamento com aprovação, Aceitar Matricula", () => {
     .click({ force: true });
 
         cy.get("#courseName").click(); // Clica pra digitar
-        cy.get("#courseName").type("Treinamento com aprovação, aceitar Matricula") //  Nome no Treinamento
+        cy.get("#courseName").type("Treinamento com aprovação, Aceitar Matricula") //  Nome no Treinamento
 
         cy.get('label.thumb-placeholder[aspect="square"] input[type="file"]').selectFile('cypress/fixtures/Teste Analise 3.png', { force: true });
         cy.log('AJUSTE A IMAGEM MANUALMENTE')
@@ -476,7 +476,7 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
 
 
 
-    it("Treinamento com aprovação, Recusar Analise", () => {
+    it("Treinamento com aprovação, Cancelar Analise", () => {
 
         //Clicar em criar treinamentos
         cy.get('.title-bar .btn-icon', { timeout: 600000 }) //
@@ -486,7 +486,7 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
     .click({ force: true });
 
         cy.get("#courseName").click(); // Clica pra digitar
-        cy.get("#courseName").type("Treinamento com aprovação, aceitar Matricula") //  Nome no Treinamento
+        cy.get("#courseName").type("Treinamento com aprovação, Cancelar Analise") //  Nome no Treinamento
 
         cy.get('label.thumb-placeholder[aspect="square"] input[type="file"]').selectFile('cypress/fixtures/Teste Analise 4.png', { force: true });
         cy.log('AJUSTE A IMAGEM MANUALMENTE')
@@ -590,7 +590,6 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
 
     })
 
-*/
      it("Vai até a vitrine", () => {
 
         // Clicando no icon da vitrine
@@ -606,7 +605,6 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
         .click();
        
    });
-
 
   it('Ver tudo',()=> {
 
@@ -638,6 +636,11 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
 
   it('Envia Aprovação no Treinamento com aprovação, aceitar Matricula',()=> {
 
+    //Ver tudo
+     cy.get('.show-all', { timeout: 60000 })
+        .should('be.visible')
+        .click();
+
     //Clica no Treinamento
        cy.get(':nth-child(5) > .card-container > [ng-init="course = content.entity"] > a.ng-scope > .showcase-card-container', { timeout: 60000 })
         .should('be.visible')
@@ -657,7 +660,7 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
 
   });
 
-   /*
+  
 
    it("Envia os campos do Primeiro treiamento", () => {
 
@@ -818,6 +821,7 @@ cy.get('.modal:visible', { timeout: 60000 })
   cy.wait(10000)
 
     });
+    
        it('Entra em outro perfil e envia para analise ',()=> {
 
         cy.visit("https://hml.lector.live/esmp/subscribe/login");
@@ -933,8 +937,126 @@ cy.get('.modal:visible', { timeout: 60000 })
   cy.get('[switch="modal.manageSubscriptions"] > .modal > .modal-header > .btn',{ timeout: 60000 })
   .should('be.visible')
   .click();
+
     });
 
+    it("Aprova o Treinamento", () => {
+      
+  //Volta para categoria
+  cy.get('.breadcrumbs-path > :nth-child(5)',{ timeout: 60000 })
+  .should('be.visible')
+  .click()
+
+  //Clica no segundo treinamento
+  cy.get('.card-items', { timeout: 60000 })
+  .should('have.length.greaterThan', 2)
+  .eq(2) // segundo card (index começa em 0)
+  .scrollIntoView()
+  .click()
+
+      //Clica em gerenciar
+      cy.get('.manage-subscription > .btn-swipe-accent',{timeout:60000})
+      .should('be.visible')
+      .click()
+
+     //Solicitação de matricula
+      cy.contains('a', 'Solicitações de matrícula', { timeout: 60000 })
+  .should('be.visible')
+  .click()
+
+//clica no usuario
+  cy.get('#pending-subscriptions-table > tbody > .odd > .select-checkbox',{ timeout: 60000 })
+  .should('be.visible')
+  .click()
+
+  //Aprova denovo
+  cy.get('button[ng-click="modal.approveBatchSubscriptions = true"]', { timeout: 20000 })
+  .should('be.visible')
+  .click({ force: true });
+
+
+  //Aprovar a matricula
+  cy.get('button[ng-click="batchProcessSubscriptionsRequests(true)"]', { timeout: 20000 })
+  .should('be.visible')
+  .click({ force: true });
+
+  
+//Clica em Desenpenho
+  cy.contains('a', 'Desempenho', { timeout: 20000 })
+  .should('be.visible')
+  .click({ force: true });
+
+  cy.wait(2000)
+
+  //Solicitação de matricula
+      cy.contains('a', 'Solicitações de matrícula', { timeout: 60000 })
+  .should('be.visible')
+  .click()
+
+  //Clica em agurdando pagamento
+  cy.contains('a', 'Aguardando pagamento', { timeout: 20000 })
+  .should('be.visible')
+  .click({ force: true });
+
+  cy.wait(1000)
+
+  //Clica no usuario para ver se ele está em aguardando treinamento, não usei o contains para poder fazer a automação com quanquer usuario
+  cy.get('.odd > .select-checkbox',{ timeout: 60000 })
+  .should('be.visible')
+  .click()
+
+ //Fecha modal
+  cy.get('[switch="modal.manageSubscriptions"] > .modal > .modal-header > .btn',{ timeout: 60000 })
+  .should('be.visible')
+  .click();
+
+    });
+  
+    it("Envia para analise", () => {
+      
+  //Volta para categoria
+  cy.get('.breadcrumbs-path > :nth-child(5)',{ timeout: 60000 })
+  .should('be.visible')
+  .click()
+
+  //Clica no quarto treinamento
+  cy.get('.card-items', { timeout: 60000 })
+  .should('have.length.greaterThan', 3)
+  .eq(3) // segundo card (index começa em 0)
+  .scrollIntoView()
+  .click()
+
+      //Clica em gerenciar
+      cy.get('.manage-subscription > .btn-swipe-accent',{timeout:60000})
+      .should('be.visible')
+      .click()
+
+     //Solicitação de matricula
+      cy.contains('a', 'Solicitações de matrícula', { timeout: 60000 })
+  .should('be.visible')
+  .click()
+
+//clica no usuario
+  cy.get('#pending-subscriptions-table > tbody > .odd > .select-checkbox',{ timeout: 60000 })
+  .should('be.visible')
+  .click()
+
+  //Envia Aprovar
+  cy.get('button.btn-swipe-accent', { timeout: 60000 })
+  .contains('Análise financeira')
+  .click();
+
+ //Confirma
+ cy.get('#confirmModalConfirm', { timeout: 20000 })
+  .should('be.visible')
+  .click()
+
+ //Fecha modal
+  cy.get('[switch="modal.manageSubscriptions"] > .modal > .modal-header > .btn',{ timeout: 60000 })
+  .should('be.visible')
+  .click();
+  
+    });
 
 it("Vai até os relatóros", ()=> {
 
@@ -1045,6 +1167,91 @@ cy.contains('button', 'Aprovar compra', { timeout: 10000 })
 
     });
 
+    it('Pesquisa o Treinamento e Cancela a Analise', ()=> {
+      cy.wait(3000)
+      
+  //Escreve
+        cy.get('.report-filters', { timeout: 10000 })
+  .find('input[ng-model="filter.text"]')
+  .filter(':visible')
+  .eq(1) // garante só 1
+  .should('be.visible')
+  .clear()
+  .type('Treinamento com aprovação, Cancelar Analise', { delay: 30 });
+
+    cy.wait(3000)
+
+  //Clique em pesquisar
+  cy.get(':nth-child(2) > div.ng-scope > .text-filter > .multiselect > .btn', { timeout: 10000 })
+  .should('be.visible')
+  .click();
+
+//Clica em Revisar pagamento
+  cy.get('button')
+  .filter(':contains("Revisar pagamentos")')
+  .last()
+  .scrollIntoView()
+  .click({ force: true });
+
+    cy.wait(2000)
+
+// validar valor da parcela
+cy.contains('R$3.91').should('be.visible')
+
+//Clica em Cancelar compra
+cy.contains('button', 'Cancelar análise financeira', { timeout: 10000 })
+  .scrollIntoView()
+  .should('be.visible')
+  .click()
+
+  cy.wait(2000)
+
+    });
+    it('Verifica se o aluno está em Aguardando Pagamento', ()=> {
+
+      // Clicando na aba Treinamento
+      cy.get('[title="Treinamentos"] > .sideitem',{timeout:60000})
+      .should('be.visible')
+      .click()
+
+      cy.wait(3000) //espera alguns segundos para carregar a pagina
+
+      //Clica na Categoria automação
+      cy.get('[data-nodeid="42"]',{timeout:60000})
+      .should('be.visible')
+      .click() 
+
+   //Clica no quarto treinamento
+  cy.get('.card-items', { timeout: 60000 })
+  .should('have.length.greaterThan', 3)
+  .eq(3) // segundo card (index começa em 0)
+  .scrollIntoView()
+  .click()
+
+      //Clica em gerenciar
+      cy.get('.manage-subscription > .btn-swipe-accent',{timeout:60000})
+      .should('be.visible')
+      .click()
+
+     //Solicitação de matricula
+      cy.contains('a', 'Solicitações de matrícula', { timeout: 60000 })
+  .should('be.visible')
+  .click()
+
+//clica no usuario
+  cy.get('#pending-subscriptions-table > tbody > .odd > .select-checkbox',{ timeout: 60000 })
+  .should('be.visible')
+  .click()
+
+ //Fecha modal
+  cy.get('[switch="modal.manageSubscriptions"] > .modal > .modal-header > .btn',{ timeout: 60000 })
+  .should('be.visible')
+  .click();
+
+  cy.wait(2000)
+
+  });
+
 
  it('Sai do Perfil adm', () => {
 
@@ -1079,8 +1286,6 @@ cy.contains('button', 'Aprovar compra', { timeout: 10000 })
 
     });
 
-    
-
     it("Vai até a vitrine", () => {
 
         // Clicando no icon da vitrine
@@ -1097,7 +1302,7 @@ cy.contains('button', 'Aprovar compra', { timeout: 10000 })
 
     });
     
-it('Emite o boleto do primeiro treinamento', ()=> {
+it('Emite o boleto do primeiro treinamento com campos personalizado', ()=> {
 
         //Clica no Treinamento
         cy.get(':nth-child(2) > .card-container > [ng-init="course = content.entity"] > a.ng-scope > .showcase-card-container', { timeout: 60000 })
@@ -1124,7 +1329,12 @@ it('Emite o boleto do primeiro treinamento', ()=> {
    });
 
 
-    it("Emite o boleto do segundo treinamento", () => {
+    it("Emite o boleto do treinamento com aprovação", () => {
+
+      //Ver tudo
+     cy.get('.show-all', { timeout: 60000 })
+        .should('be.visible')
+        .click();
 
         //Clica no Treinamento
         cy.get(':nth-child(4) > .card-container > [ng-init="course = content.entity"] > a.ng-scope > .showcase-card-container', { timeout: 60000 })
@@ -1149,6 +1359,34 @@ it('Emite o boleto do primeiro treinamento', ()=> {
         .click()
 
    });
+
+   it("Emite o boleto do segundo treinamento que tem campos persozalizado", () => {
+
+        //Clica no Treinamento
+        cy.get(':nth-child(4) > .card-container > [ng-init="course = content.entity"] > a.ng-scope > .showcase-card-container', { timeout: 60000 })
+        .should('be.visible')
+        .click();
+
+        //Clica em efetuar pagamento
+        cy.get('.classes-actions > :nth-child(1) > .btn-swipe-accent', { timeout: 60000 })
+        .should('be.visible')
+        .click();
+
+         cy.wait(2000)
+
+         //Fecha o modal do boleto
+        cy.get('modal-header > div > .btn', {timeout:6000})
+        .should('be.visible')
+        .click()
+
+        // volta pra vitrine
+        cy.get('.showcase-head-2 > .btn', {timeout:60000})
+        .should('be.visible')
+        .click()
+
+   });
+
+   
 
     it("Vai em minhas aréas", () => {
       //Minha área
@@ -1507,11 +1745,94 @@ cy.contains('button', 'Aprovar compra', { timeout: 10000 })
 
     });
 
-*/
- it('Sai do Perfil adm', () => {
+it("Troca pro perfil Administrador", () => {
 
- cy.wait(2000)
+     //Clioca no icon
+    cy.get('#user-options-btn > .icon-profile', {timeout: 60000})
+    .should('be.visible')
+    .click()
 
+    //Clica em selecionar perfil
+    cy.get(':nth-child(4) > .menu-option > ng-transclude > .icon-pointer-right',{ timeout: 60000 })
+  .should('be.visible')
+  .click({ force: true });
+
+  //Clica em Administrador
+  cy.get(':nth-child(4) > .user-options-items > :nth-child(1) > ng-transclude > .ng-binding', { timeout: 60000 })
+  .should('be.visible')
+  .click()
+
+    });
+    
+
+    it("Vai até os relatóros", ()=> {
+
+    //Clica em relatórios
+    cy.get('[title="Relatórios"] > .sideitem', { timeout: 60000 })
+        .should('be.visible')
+        .click();
+
+          cy.wait(3000)
+
+    //Clica em Compras/Relatório
+    cy.contains('li.list-group-item.node-report-categories', 'Compras', { timeout: 60000 })
+  .scrollIntoView()
+  .should('be.visible')
+  .click({ force: true });
+
+    cy.wait(3000)
+
+});
+
+     it('Visualização e Edição de Pagamentos (Modal/Datas)', ()=> {
+
+      
+  //Escreve
+        cy.get('.report-filters', { timeout: 10000 })
+  .find('input[ng-model="filter.text"]')
+  .filter(':visible')
+  .eq(1) // garante só 1
+  .should('be.visible')
+  .clear()
+  .type('Teste 04/02');
+
+  //Clique em pesquisar
+  cy.get(':nth-child(2) > div.ng-scope > .text-filter > .multiselect > .btn', { timeout: 10000 })
+  .should('be.visible')
+  .click();
+
+//Clica em Revisar pagamento
+  cy.get('button')
+  .filter(':contains("Revisar pagamentos")')
+  .last()
+  .scrollIntoView()
+  .click({ force: true });
+
+    });
+
+    it('Altere a data de vencimento', ()=> {
+
+  //ve se tem sim no modal
+    cy.contains('td', 'Sim').should('be.visible')
+
+    //Clica em alterar data de vencimento
+    cy.contains('button', 'Alterar vencimento')
+      .should('be.visible')
+      .click()
+
+      //Modal "Alterar boleto" já aberto
+cy.get('div.modal:visible', { timeout: 20000 })
+  .last()
+  .within(() => {
+    cy.get('input.datetimepicker')
+      .should('be.visible')
+      .click({ force: true })
+
+  })
+  
+  cy.log('ALTERE PARA UMA DATA NO FUTURO E NO PASSADO, NÃO DEVE DEIXAR')
+  cy.wait(20000)
+  cy.log('ALTERE PARA UMA DATA NO FUTURO E NO PASSADO, NÃO DEVE DEIXAR')
 
     });
    });
