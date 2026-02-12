@@ -609,7 +609,6 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna',{timeout:60000})
 
     });
 
-
     it("Treinamento gratuito com aprovação de campos personalizados", () => {
 
         //Clicar em criar treinamentos
@@ -712,7 +711,7 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna',{timeout:60000})
 
            cy.contains(
   '.ui-select-choices-row span.ng-binding',
-  'campo 04.12',
+  'NOVO',
   { timeout: 60000 }
 )
 .should('be.visible')
@@ -848,7 +847,7 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna',{timeout:60000})
          
            cy.contains(
   '.ui-select-choices-row span.ng-binding',
-  'campo 04.12',
+  'novo campo 17/12',
   { timeout: 60000 }
 )
 .should('be.visible')
@@ -856,11 +855,6 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna',{timeout:60000})
 
             //Clica em adicionar 
             cy.get('.flex > .middle > .btn-swipe-accent',{timeout:60000})
-            .should('be.visible')
-            .click({force:true})
-
-            //Clica em requer aprovação
-            cy.get('.mb-20.ng-scope > .checkbox > .icon-checkbox',{timeout:60000})
             .should('be.visible')
             .click({force:true})
 
@@ -991,7 +985,7 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna',{timeout:60000})
 
              cy.contains(
   '.ui-select-choices-row span.ng-binding',
-  'campo 04.12',
+  'caio',
   { timeout: 60000 }
 )
 .should('be.visible')

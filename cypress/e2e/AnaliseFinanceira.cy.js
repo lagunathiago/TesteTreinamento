@@ -660,8 +660,6 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
 
   });
 
-  
-
    it("Envia os campos do Primeiro treiamento", () => {
 
         //Clica no Treinamento
