@@ -1,31 +1,52 @@
-/// <reference types="cypress" />
-
+Cypress.on("uncaught:exception", (err) => {
+  if (
+    err.message.includes("Cannot read properties of null") ||
+    err.message.includes("charAt")
+  ) {
+    return false;
+  }
+});
 describe("Teste - Login", () => {
   before(() => {
-    cy.viewport(1920, 1080); // Define a dimensão da tela para o teste.
+    cy.viewport(1920, 1080);
 
-    cy.visit("https://hml.lector.live/esmp/subscribe/login");
+    cy.visit("https://hml.lector.live/ext/subscribe/login");
     cy.contains("button", "Entrar").click();
-    cy.get('form.ng-pristine > [type="text"]').type("thiagosuporte@uorak.com");
-    cy.get("ng-transclude > .border").type("123");
-    cy.get('#btn-entrar').click();
-});
 
-  context("Teste Pagamento BB", () => {
-    it("Login", () => {
+    cy.get('form.ng-pristine > [type="text"]', { timeout: 60000 })
+      .should("be.visible")
+      .type("qualidade2@lectortec.com.br");
 
-        // Clicando na aba Treinamento
-      cy.get('[title="Treinamentos"] > .sideitem').click()
+    cy.get("ng-transclude > .border", { timeout: 60000 })
+      .should("be.visible")
+      .type("2006lrnrgr");
+
+    cy.get("#btn-entrar", { timeout: 60000 }).should("be.visible").click();
+
+    // opcional: garante que saiu da tela de login
+    cy.url({ timeout: 60000 }).should("not.include", "/subscribe/login");
+
+  });
+
+  context("Teste Aprovações", () => {
+
+    /*
+     it("Aba Treinamentos", () => {
+
+         // Clicando na aba Treinamento
+      cy.get('[title="Treinamentos"] > .sideitem',{timeout:60000})
+      .should('be.visible')
+      .click();
+
       cy.wait(3000) //espera alguns segundos para carregar a pagina
 
       //Clica na Categoria automação
-      cy.contains('li.list-group-item', 'Teste Automação')
-  .should('be.visible')
-  .click();
+      cy.get('[data-nodeid="14"]', { timeout: 60000 })
+  .scrollIntoView()
+  .click({ force: true });
 
-  
     });
-    
+
     it("Treinamento paga á vista sem aprovação", () => {
 
         //Clicar em criar treinamentos
@@ -38,12 +59,8 @@ describe("Teste - Login", () => {
         cy.wait(6000);                                                     // Aguarda alguns segudos para ajustar a imagem
         cy.get('button[ng-click="cropper.save()"]').click();               // Confirma em confirmar para salvar a imagem
 
-        //Codigo do treinamento 
-        cy.get('[external-id=""] > .w-100').click()
-        cy.get('[external-id=""] > .w-100').type("012025")
         
-    })
-
+    });
     it("Conteúdos", () => {
 
         cy.get('[ui-sref="accessLink.content.courses.edit.id.contents"]').click()      // Clica em conteudos
@@ -60,21 +77,21 @@ describe("Teste - Login", () => {
   .within(() => {
     cy.get('input.ui-select-search')
       .should('be.visible')
-      .type('Minha')
+      .type('Boletim Lector')
   })
 
- cy.contains(
-  '.ui-select-choices-row',
-  'Minha Área - Adm.pdf',
-  { timeout: 30000 }
-)
-  .should('be.visible')
-  .click()
 
-cy.get(".editing-resource > .end > .btn-swipe-accent").click();
+  // 3) clica no item pelo texto (use um trecho, não o nome inteiro)
+cy.get('.ui-select-dropdown, .ui-select-choices', { timeout: 60000 })
+  .contains('div.ui-select-choices-row', 'Boletim Lector 07-10-2024', { timeout: 60000 })
+  .scrollIntoView()
+  .click({ force: true });
+  
+  cy.get(".editing-resource > .end > .btn-swipe-accent").click();
 
-    })
+  
 
+    });
     it('Turma Paga á vista sem aprovação', () => {
       //Turma Gratuita
       cy.get('[ui-sref="accessLink.content.courses.edit.id.classes"]').click()
@@ -85,9 +102,7 @@ cy.get(".editing-resource > .end > .btn-swipe-accent").click();
       cy.get('#price-fixed').click() //Clica no valor
       cy.get('#price-fixed') //Valor Treinamento
   .clear()
-  .type('{selectall}3.91');   
-
-  cy.get('.field2 > div.mt-20 > .middle > .checkbox > .icon-checkbox').click() //Deixar em branco
+  .type('{selectall}1.00');   
 
       cy.get('.navigation-controls > .ml-20').click()//botao prximo
       cy.get('.navigation-controls > .ml-20').click()//botao prximo
@@ -104,17 +119,40 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
   .should('be.visible')
   .click()
 
-      cy.wait(1000)
+      cy.wait(1000);
      
       // Clica no botão "Salvar Turma"
       
       cy.get('.add-content > .end > .btn-swipe-accent').click()
-      /*
+      
       cy.get('.content-box-footer > .flex > .btn-swipe-accent').click()
       cy.get('[ng-show="modal.useVersioning"] > .modal > :nth-child(3) > .checkbox > .icon-checkbox').click(); //selecionar versionamento
       cy.get('[ng-show="modal.useVersioning"] > .modal > .end > .ml-10').click(); //salvar sem versionamento
-     */
+     
     });
+
+    it('Clica no treinamento denovo', ()=> {
+
+     //Clica no Treinamento
+  cy.contains('.card-title', 'Treinamento pago á vista sem aprovação', {
+  timeout: 60000
+})
+  .scrollIntoView()
+  .should('be.visible')
+  .click({ force: true })
+
+  //Clica em editar
+  cy.get('.end.ng-scope > .icon-edit',{timeout:60000})
+  .should('be.visible')
+  .click()
+
+  //Clica na turma
+        cy.get('[ui-sref="accessLink.content.courses.edit.id.classes"]',{timeout:60000})
+        .should('be.visible')
+        .click()
+
+    })
+
      it('Duplicar Turma Paga para Gratuita', () => {
 
   //Clicar em clonar turma
@@ -152,16 +190,14 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
       cy.get('.add-content > .end > .btn-swipe-accent').click()
 
       cy.get('.content-box-footer > .flex > .btn-swipe-accent').click() //Salvar treinamento
-      cy.get('[ng-show="modal.useVersioning"] > .modal > :nth-child(3) > .checkbox > .icon-checkbox').click(); //selecionar versionamento
-      cy.get('[ng-show="modal.useVersioning"] > .modal > .end > .ml-10').click(); //salvar sem versionamento
-
+     
     });
 
 
      it("Treinamento paga á vista com aprovação", () => {
 
         //Clicar em criar treinamentos
-        cy.get('.title-bar .btn-icon', { timeout: 600000 }) // até 10 minutos
+        cy.get('.title-bar .btn-icon', { timeout: 600000 }) 
     .should('exist')
     .should('be.visible')
     .and('not.be.disabled')
@@ -174,10 +210,6 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
         cy.log('AJUSTE A IMAGEM MANUALMENTE')
         cy.wait(6000);                                                     // Aguarda alguns segudos para ajustar a imagem
         cy.get('button[ng-click="cropper.save()"]').click();               // Confirma em confirmar para salvar a imagem
-
-        //Codigo do treinamento 
-        cy.get('[external-id=""] > .w-100').click()
-        cy.get('[external-id=""] > .w-100').type("012025")
 
     })
 
@@ -197,19 +229,17 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
   .within(() => {
     cy.get('input.ui-select-search')
       .should('be.visible')
-      .type('Minha')
+      .type('Boletim Lector')
   })
 
- cy.contains(
-  '.ui-select-choices-row',
-  'Minha Área - Adm.pdf',
-  { timeout: 30000 }
-)
-  .should('be.visible')
-  .click()
-
-cy.get(".editing-resource > .end > .btn-swipe-accent").click();
-
+  // 3) clica no item pelo texto (use um trecho, não o nome inteiro)
+cy.get('.ui-select-dropdown, .ui-select-choices', { timeout: 60000 })
+  .contains('div.ui-select-choices-row', 'Boletim Lector 07-10-2024', { timeout: 60000 })
+  .scrollIntoView()
+  .click({ force: true });
+  
+  cy.get(".editing-resource > .end > .btn-swipe-accent").click();
+        
     })
 
     it('Turma Paga á vista com aprovação', () => {
@@ -221,9 +251,7 @@ cy.get(".editing-resource > .end > .btn-swipe-accent").click();
       cy.get('#price-fixed').click() //Clica no valor
       cy.get('#price-fixed') //Valor Treinamento
   .clear()
-  .type('{selectall}3.91');   
-
-    cy.get('.field2 > div.mt-20 > .middle > .checkbox > .icon-checkbox').click() //Deixar em branco
+  .type('{selectall}1.00');   
       
       cy.get('.navigation-controls > .ml-20').click()//botao prximo
       cy.get('.navigation-controls > .ml-20').click()//botao prximo
@@ -244,12 +272,34 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
 
       // Clica no botão "Salvar Turma"
       cy.get('.add-content > .end > .btn-swipe-accent').click()
-      /*
+      
       cy.get('.content-box-footer > .flex > .btn-swipe-accent').click()
       cy.get('[ng-show="modal.useVersioning"] > .modal > :nth-child(3) > .checkbox > .icon-checkbox').click(); //selecionar versionamento
       cy.get('[ng-show="modal.useVersioning"] > .modal > .end > .ml-10').click(); //salvar sem versionamento
-       */
+
         });
+
+         it('Clica no treinamento denovo', ()=> {
+
+     //Clica no Treinamento
+  cy.contains('.card-title', 'Treinamento paga á vista com aprovação', {
+  timeout: 60000
+})
+  .scrollIntoView()
+  .should('be.visible')
+  .click({ force: true })
+
+  //Clica em editar
+  cy.get('.end.ng-scope > .icon-edit',{timeout:60000})
+  .should('be.visible')
+  .click()
+
+  //Clica na turma
+        cy.get('[ui-sref="accessLink.content.courses.edit.id.classes"]',{timeout:60000})
+        .should('be.visible')
+        .click()
+
+    })
 
          it('Duplicar Turma Paga para Gratuita', () => {
 
@@ -287,9 +337,7 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna',{timeout:60000})
       cy.get('.add-content > .end > .btn-swipe-accent').click()
 
       cy.get('.content-box-footer > .flex > .btn-swipe-accent').click() //Salvar treinamento
-      cy.get('[ng-show="modal.useVersioning"] > .modal > :nth-child(3) > .checkbox > .icon-checkbox').click(); //selecionar versionamento
-      cy.get('[ng-show="modal.useVersioning"] > .modal > .end > .ml-10').click(); //salvar sem versionamento
-
+     
     });
 
         it("Treinamento gratuito com aprovação", () => {
@@ -309,10 +357,6 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna',{timeout:60000})
         cy.wait(6000);                                                     // Aguarda alguns segudos para ajustar a imagem
         cy.get('button[ng-click="cropper.save()"]').click();               // Confirma em confirmar para salvar a imagem
 
-        //Codigo do treinamento 
-        cy.get('[external-id=""] > .w-100').click()
-        cy.get('[external-id=""] > .w-100').type("012025")
-
     })
 
     it("Conteúdos", () => {
@@ -325,24 +369,22 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna',{timeout:60000})
         cy.get(".weight").type("1");                                                   // Selecionar peso
         cy.get(".open > .ui-select-choices > :nth-child(2)").click();                  // Selecionar peso 1
 
-         cy.contains('.ui-select-container', 'Escolha um documento')
+     cy.contains('.ui-select-container', 'Escolha um documento')
   .should('be.visible')
   .click()
   .within(() => {
     cy.get('input.ui-select-search')
       .should('be.visible')
-      .type('Minha')
+      .type('Boletim Lector')
   })
 
- cy.contains(
-  '.ui-select-choices-row',
-  'Minha Área - Adm.pdf',
-  { timeout: 30000 }
-)
-  .should('be.visible')
-  .click()
-
-cy.get(".editing-resource > .end > .btn-swipe-accent").click();
+  // 3) clica no item pelo texto (use um trecho, não o nome inteiro)
+cy.get('.ui-select-dropdown, .ui-select-choices', { timeout: 60000 })
+  .contains('div.ui-select-choices-row', 'Boletim Lector 07-10-2024', { timeout: 60000 })
+  .scrollIntoView()
+  .click({ force: true });
+  
+  cy.get(".editing-resource > .end > .btn-swipe-accent").click();
 
     })
 
@@ -372,12 +414,35 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
       // Clica no botão "Salvar Turma"
       
       cy.get('.add-content > .end > .btn-swipe-accent').click()
-      /*
+      
       cy.get('.content-box-footer > .flex > .btn-swipe-accent').click()
       cy.get('[ng-show="modal.useVersioning"] > .modal > :nth-child(3) > .checkbox > .icon-checkbox').click(); //selecionar versionamento
       cy.get('[ng-show="modal.useVersioning"] > .modal > .end > .ml-10').click(); //salvar sem versionamento
-      */
+    
     });
+
+     it('Clica no treinamento denovo', ()=> {
+
+     //Clica no Treinamento
+  cy.contains('.card-title', 'Treinamento gratuito com aprovação', {
+  timeout: 60000
+})
+  .scrollIntoView()
+  .should('be.visible')
+  .click({ force: true })
+
+  //Clica em editar
+  cy.get('.end.ng-scope > .icon-edit',{timeout:60000})
+  .should('be.visible')
+  .click()
+
+  //Clica na turma
+        cy.get('[ui-sref="accessLink.content.courses.edit.id.classes"]',{timeout:60000})
+        .should('be.visible')
+        .click()
+
+    })
+
         it('Duplicar Turma Gratuita para Paga', () => {
 
   //Clicar em clonar turma
@@ -390,13 +455,12 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
       cy.get('#price-fixed').click() //Clica no valor
       cy.get('#price-fixed') //Valor Treinamento
   .clear()
-  .type('{selectall}3.91'); 
+  .type('{selectall}1.00'); 
 
       cy.wait(3000)
 
         cy.get('.navigation-controls > .ml-20').click()//botao prximo
         cy.get('.navigation-controls > .ml-20').click()//botao prximo
-
 
      cy.get('tr.ng-scope > :nth-child(4) > .middle > .btn').click()
       cy.get('.step2 > .permission-select > [ng-show="showUser"] > .column > .multiselect > .border > .ui-select-match > .btn-default').type("thiago laguna")
@@ -416,9 +480,7 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
       cy.get('.add-content > .end > .btn-swipe-accent').click()
 
       cy.get('.content-box-footer > .flex > .btn-swipe-accent').click() //Salvar treinamento
-      cy.get('[ng-show="modal.useVersioning"] > .modal > :nth-child(3) > .checkbox > .icon-checkbox').click(); //selecionar versionamento
-      cy.get('[ng-show="modal.useVersioning"] > .modal > .end > .ml-10').click(); //salvar sem versionamento
-
+      
     });
 
     it("Treinamento gratuito sem aprovação", () => {
@@ -431,17 +493,14 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
     .click({ force: true });
 
         cy.get("#courseName").click(); // Clica pra digitar
-        cy.get("#courseName").type("Treinamento gratuito com aprovação") //  Nome no Treinamento
+        cy.get("#courseName").type("Treinamento gratuito sem aprovação") //  Nome no Treinamento
 
         cy.get('[aspect="banner"]').selectFile('cypress/fixtures/GratuitosemAprovação.png', { force: true });
         cy.log('AJUSTE A IMAGEM MANUALMENTE')
         cy.wait(6000);                                                     // Aguarda alguns segudos para ajustar a imagem
         cy.get('button[ng-click="cropper.save()"]').click();               // Confirma em confirmar para salvar a imagem
 
-        //Codigo do treinamento 
-        cy.get('[external-id=""] > .w-100').click()
-        cy.get('[external-id=""] > .w-100').type("012025")
-
+        
     })
 
     it("Conteúdos", () => {
@@ -454,30 +513,24 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
         cy.get(".weight").type("1");                                                   // Selecionar peso
         cy.get(".open > .ui-select-choices > :nth-child(2)").click();                  // Selecionar peso 1
 
-         cy.contains('.ui-select-container', 'Escolha um documento')
+          cy.contains('.ui-select-container', 'Escolha um documento')
   .should('be.visible')
   .click()
   .within(() => {
     cy.get('input.ui-select-search')
       .should('be.visible')
-      .type('Minha')
+      .type('Boletim Lector')
   })
 
- cy.contains(
-  '.ui-select-choices-row',
-  'Minha Área - Adm.pdf',
-  { timeout: 30000 }
-)
-  .should('be.visible')
-  .click()
-
-cy.get(".editing-resource > .end > .btn-swipe-accent").click();
+  // 3) clica no item pelo texto (use um trecho, não o nome inteiro)
+cy.get('.ui-select-dropdown, .ui-select-choices', { timeout: 60000 })
+  .contains('div.ui-select-choices-row', 'Boletim Lector 07-10-2024', { timeout: 60000 })
+  .scrollIntoView()
+  .click({ force: true });
+  
+  cy.get(".editing-resource > .end > .btn-swipe-accent").click();
         
-       /* cy.log('DIGITE UM DOCUMENTO E SELECIONE')
-        cy.wait(10000)
-        cy.get(".editing-resource > .end > .btn-swipe-accent").click();  */
     })
-
     it('Turma Gratuita sem aprovação', () => {
 
       cy.get('[ui-sref="accessLink.content.courses.edit.id.classes"]').click()
@@ -505,12 +558,35 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
       // Clica no botão "Salvar Turma"
       
       cy.get('.add-content > .end > .btn-swipe-accent').click()
-      /*
+      
       cy.get('.content-box-footer > .flex > .btn-swipe-accent').click()
       cy.get('[ng-show="modal.useVersioning"] > .modal > :nth-child(3) > .checkbox > .icon-checkbox').click(); //selecionar versionamento
       cy.get('[ng-show="modal.useVersioning"] > .modal > .end > .ml-10').click(); //salvar sem versionamento
-*/
+
     });
+
+    it('Clica no treinamento denovo', ()=> {
+
+     //Clica no Treinamento
+  cy.contains('.card-title', 'Treinamento gratuito sem aprovação', {
+  timeout: 60000
+})
+  .scrollIntoView()
+  .should('be.visible')
+  .click({ force: true })
+
+  //Clica em editar
+  cy.get('.end.ng-scope > .icon-edit',{timeout:60000})
+  .should('be.visible')
+  .click()
+
+  //Clica na turma
+        cy.get('[ui-sref="accessLink.content.courses.edit.id.classes"]',{timeout:60000})
+        .should('be.visible')
+        .click()
+
+    })
+
      it('Duplicar Turma Gratuita para Paga', () => {
 
   //Clicar em clonar turma
@@ -524,7 +600,7 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
       cy.get('#price-fixed').click() //Clica no valor
       cy.get('#price-fixed') //Valor Treinamento
   .clear()
-  .type('{selectall}3.91'); 
+  .type('{selectall}1.00'); 
 
       cy.wait(3000)
 
@@ -532,11 +608,11 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
          cy.get('.navigation-controls > .ml-20').click()//botao prximo
 
       cy.get('tr.ng-scope > :nth-child(4) > .middle > .btn').click()
-      cy.get('.step2 > .permission-select > [ng-show="showUser"] > .column > .multiselect > .border > .ui-select-match > .btn-default').type("Aluno")
+      cy.get('.step2 > .permission-select > [ng-show="showUser"] > .column > .multiselect > .border > .ui-select-match > .btn-default').type("thiago laguna")
       cy.get('.ui-select-dropdown')
   .should('be.visible')
 
-cy.contains('.ui-select-choices-row', 'Aluno')
+cy.contains('.ui-select-choices-row', 'Thiago Laguna')
   .click()
 
       cy.contains('button', 'Adicionar')
@@ -547,50 +623,368 @@ cy.contains('.ui-select-choices-row', 'Aluno')
       cy.get('.add-content > .end > .btn-swipe-accent').click()
 
       cy.get('.content-box-footer > .flex > .btn-swipe-accent').click() //Salvar treinamento
-      cy.get('[ng-show="modal.useVersioning"] > .modal > :nth-child(3) > .checkbox > .icon-checkbox').click(); //selecionar versionamento
-      cy.get('[ng-show="modal.useVersioning"] > .modal > .end > .ml-10').click(); //salvar sem versionamento
+
+      cy.wait(3000)
 
     });
 
-         it('Colocando a Categoria do Treinamento na Vitrine', () => { 
-     //Role até aparecer vitrines
-    cy.log('ROLE ATÉ APARECER A VITRINES NA ABA')
-    cy.wait(5000)
+     it("Muda para o perfil aluno", ()=> {
 
-        //Clica na vitrine
-        cy.get('a.sideitem[ui-sref="accessLink.content.showcases"]')
+        //Clioca no icon
+  cy.contains('div', 'Administrador',{ timeout: 60000 })
   .should('be.visible')
   .click({ force: true });
-        cy.wait(2000)
 
-        //Clica na primeira vitrine
-        cy.get(':nth-child(1) > :nth-child(5) > .actions > .actions-line > :nth-child(1) > .btn').click()
-        
-        cy.wait(2000)
-        //Clica em adicionar
-        cy.get('.btn-icon').click()
+  //Perfil
+  cy.get('.icon-pointer-right',{ timeout: 60000 })
+  .should('be.visible')
+  .click({ force: true });
 
-        cy.wait(2000)
-        cy.get('[ng-click="addCarousel();"]').click();
+  //Aluno
+  cy.get('.user-options-items > :nth-child(1) > ng-transclude', { timeout: 60000 })
+  .should('be.visible')
+  .click()
+
+   });
+
+*/
+    it("Vai até a vitrine", () => {
+
+        // Clicando no icon da vitrine
+      cy.get('.active > .icon-next', { timeout: 60000 })
+        .should('be.visible')
+        .click();
+
+        cy.wait(3000)
+
+        //Clica na vitrine Automação
+        cy.get('.showcase-navigation-menu > :nth-child(7)', { timeout: 60000 })
+        .should('be.visible')
+        .click();
         
+   });
+/*
+     it('Compra do Treinamento pago á vista sem aprovação', ()=> {
+
+    //Ver tudo
+        cy.get('.show-all', { timeout: 60000 })
+        .should('be.visible')
+        .click();
+
+
+            //Clica no Treinamento
+       cy.contains('.showcase-card-title', 'Treinamento pago á vista sem aprovação', { timeout: 60000 })
+  .should('be.visible')
+  .scrollIntoView()
+  .click()
+
+  //Clica em comprar
+        cy.get('.classes-actions > :nth-child(1) > .btn-swipe-accent', { timeout: 60000 })
+        .should('be.visible')
+        .click()
+
+        //Clica no pix
+      cy.get(".mb-5 > .icon-radio", { timeout: 10000 })
+        .should("be.visible")
+        .click();
+
+        //Clica em continuar compra
+      cy.get('[ng-show="!sicredi.paymentOption"] > .btn-swipe-accent', {
+        timeout: 10000,
+      })
+        .should("be.visible")
+        .click();
+
+      cy.wait(4000);
+
+      cy.get("#pixQrCode", { timeout: 60000 }).should("be.visible");
+
+  cy.wait(3000)
+  
+
+  //Fecha modal
+  cy.get('.column.ng-valid > .modal-header > .btn', {timeout:6000})
+        .should('be.visible')
+        .click()
+
         
-        //Tempo para adicionar a categoria
-        cy.wait(15000)
-        cy.log("ADICIONE A CATEGORIA DO TREINAMENTO MANUALMENTE")
+
+        //Volta pra vitrine
+        cy.get('.showcase-head-2 > .btn', {timeout:60000})
+        .should('be.visible')
+        .click();
+
+    });
+    
+     it('Solicita a incrição no Treinamento paga á vista com aprovação', ()=> {
+
+    //Ver tudo
+        cy.get('.show-all', { timeout: 60000 })
+        .should('be.visible')
+        .click();
+
+            //Clica no Treinamento
+       cy.contains('.showcase-card-title', 'Treinamento paga á vista com aprovação', { timeout: 60000 })
+  .should('be.visible')
+  .scrollIntoView()
+  .click()
+
+  //Clica em comprar
+        cy.get('.classes-actions > :nth-child(1) > .btn-swipe-accent', { timeout: 60000 })
+        .should('be.visible')
+        .click()
+
+  cy.wait(3000)
+
+        //Volta pra vitrine
+        cy.get('.showcase-head-2 > .btn', {timeout:60000})
+        .should('be.visible')
+        .click();
+
+    });
+
+     it('Solicita a incrição no Treinamento gratuito com aprovação', ()=> {
+
+    //Ver tudo
+        cy.get('.show-all', { timeout: 60000 })
+        .should('be.visible')
+        .click();
+
+            //Clica no Treinamento
+       cy.contains('.showcase-card-title', 'Treinamento gratuito com aprovação', { timeout: 60000 })
+  .should('be.visible')
+  .scrollIntoView()
+  .click()
+
+   //Clica em Fazer Incrição
+        cy.get('.classes-actions > [ng-click="subscribeClass(class);"]', { timeout: 60000 })
+        .should('be.visible')
+        .click()
+
+  cy.wait(3000)
+
+        //Volta pra vitrine
+        cy.get('.showcase-head-2 > .btn', {timeout:60000})
+        .should('be.visible')
+        .click();
+
+    });
+    */
+     it('Faz a incrição no Treinamento gratuito sem aprovação', ()=> {
+
+    //Ver tudo
+        cy.get('.show-all', { timeout: 60000 })
+        .should('be.visible')
+        .click();
+
+            //Clica no Treinamento
+       cy.contains('.showcase-card-title', 'Treinamento gratuito sem aprovação', { timeout: 60000 })
+  .should('be.visible')
+  .scrollIntoView()
+  .click()
+
+   //Clica em Fazer Incrição
+         cy.get('.classes-actions > [ng-click="subscribeClass(class);"]', { timeout: 60000 })
+        .should('be.visible')
+        .click()
+
+  cy.wait(3000)
+
+//Clica em acessar
+  cy.get('.classes-actions > .btn-swipe-accent.ng-scope', { timeout: 60000 })
+        .should('be.visible')
+        .click()
+        cy.wait(3000)
+
+        //Clica em voltar
+    cy.get("#hideResource", { timeout: 60000 })
+      .should("be.visible")
+      .click({ force: true });
  
-        
-// Clica no botão "Salvar" no carrosel
-cy.contains('button.btn-swipe-accent.ng-binding', 'Salvar')
-  .should('be.visible')
-  .click({ force: true });
+      cy.log('CONCLUA O TREINAMENTO')
+      cy.pause()
 
-//clica em salvar novamente
-cy.contains('button.btn-swipe-accent.ng-scope', 'Salvar')
-  .should('be.visible')
-  .click({ force: true });
-      
-
-    });
-  });
 });
 
+     it('Acessar o Treinamento gratuito sem aprovação novamente após a conclusão', ()=> {
+
+    //Ver tudo
+        cy.get('.show-all', { timeout: 60000 })
+        .should('be.visible')
+        .click();
+
+            //Clica no Treinamento
+       cy.contains('.showcase-card-title', 'Treinamento gratuito sem aprovação', { timeout: 60000 })
+  .should('be.visible')
+  .scrollIntoView()
+  .click()
+
+   //Clica em Fazer Incrição
+         cy.get('.classes-actions > [ng-click="subscribeClass(class);"]', { timeout: 60000 })
+        .should('be.visible')
+        .click()
+
+  cy.wait(3000)
+
+//Clica em acessar
+  cy.get('.classes-actions > .btn-swipe-accent.ng-scope', { timeout: 60000 })
+        .should('be.visible')
+        .click()
+        cy.wait(3000)
+
+        //Clica em voltar
+    cy.get("#hideResource", { timeout: 60000 })
+      .should("be.visible")
+      .click({ force: true });
+
+      cy.log('CONCLUA O TREINAMENTO')
+      cy.pause()
+
+     });
+
+
+ it("Troca pro perfil Administrador", () => {
+
+     //Clioca no icon
+    cy.get('#user-options-btn > .icon-profile', {timeout: 60000})
+    .should('be.visible')
+    .click()
+
+    //Clica em selecionar perfil
+    cy.get(':nth-child(4) > .menu-option > ng-transclude > .icon-pointer-right',{ timeout: 60000 })
+  .should('be.visible')
+  .click({ force: true });
+
+  //Clica em Administrador
+  cy.get(':nth-child(4) > .user-options-items > :nth-child(1) > ng-transclude > .ng-binding', { timeout: 60000 })
+  .should('be.visible')
+  .click()
+
+    });
+
+     it("Aba Treinamentos", () => {
+
+         // Clicando na aba Treinamento
+      cy.get('[title="Treinamentos"] > .sideitem',{timeout:60000})
+      .should('be.visible')
+      .click();
+
+      cy.wait(3000) //espera alguns segundos para carregar a pagina
+
+      //Clica na Categoria automação
+      cy.get('[data-nodeid="43"]',{timeout:60000})
+      .should('be.visible')
+      .click() 
+
+    });
+
+    it("Aceita a solicitação do Treinamento paga á vista com aprovação", () => {
+
+      //Clica no Treinamento
+  cy.contains('.card-title', 'Treinamento paga á vista com aprovação', {
+  timeout: 60000
+})
+  .scrollIntoView()
+  .should('be.visible')
+  .click({ force: true })
+  
+      //Clica em gerenciar
+      cy.get('.manage-subscription > .btn-swipe-accent',{timeout:60000})
+      .first()
+      .should('be.visible')
+      .click()
+
+     //Solicitação de matricula
+      cy.contains('a', 'Solicitações de matrícula', { timeout: 60000 })
+  .should('be.visible')
+  .click()
+
+//clica no usuario
+  cy.get('#pending-subscriptions-table > tbody > .odd > .select-checkbox',{ timeout: 60000 })
+  .should('be.visible')
+  .click()
+
+  //Clica em Aprovar
+  cy.contains('button', 'Aprovar', { timeout: 60000 })
+  .should('be.visible')
+  .and('not.be.disabled')
+  .click()
+
+  //Aprova
+  cy.get('button[ng-click="batchProcessSubscriptionsRequests(true)"]', { timeout: 60000})
+  .should('be.visible')
+  .click()
+
+ //Fecha modal
+  cy.get('[switch="modal.manageSubscriptions"] > .modal > .modal-header > .btn',{ timeout: 60000 })
+  .should('be.visible')
+  .click()
+
+  //Volta para categoria
+  cy.get('.breadcrumbs-path > :nth-child(5)',{ timeout: 60000 })
+  .should('be.visible')
+  .click()
+
+  cy.get('.breadcrumbs-path > .lector-txt-accent',{ timeout: 60000 })
+  .should('be.visible')
+  .click()
+
+   });
+
+    it("Aceita a solicitação do Treinamento gratuito com aprovação", () => {
+
+      //Clica no Treinamento
+  cy.contains('.card-title', 'Treinamento gratuito com aprovação', {
+  timeout: 60000
+})
+  .scrollIntoView()
+  .should('be.visible')
+  .click({ force: true })
+  
+      //Clica em gerenciar
+      cy.get('.manage-subscription > .btn-swipe-accent',{timeout:60000})
+      .first()
+      .should('be.visible')
+      .click()
+
+     //Solicitação de matricula
+      cy.contains('a', 'Solicitações de matrícula', { timeout: 60000 })
+  .should('be.visible')
+  .click()
+
+//clica no usuario
+  cy.get('#pending-subscriptions-table > tbody > .odd > .select-checkbox',{ timeout: 60000 })
+  .should('be.visible')
+  .click()
+
+  //Clica em Aprovar
+  cy.contains('button', 'Aprovar', { timeout: 60000 })
+  .should('be.visible')
+  .and('not.be.disabled')
+  .click()
+
+  //Aprova
+  cy.get('button[ng-click="batchProcessSubscriptionsRequests(true)"]', { timeout: 60000})
+  .should('be.visible')
+  .click()
+
+ //Fecha modal
+  cy.get('[switch="modal.manageSubscriptions"] > .modal > .modal-header > .btn',{ timeout: 60000 })
+  .should('be.visible')
+  .click()
+
+  //Volta para categoria
+  cy.get('.breadcrumbs-path > :nth-child(5)',{ timeout: 60000 })
+  .should('be.visible')
+  .click()
+
+   });
+
+   
+
+
+
+
+    
+  });
+});

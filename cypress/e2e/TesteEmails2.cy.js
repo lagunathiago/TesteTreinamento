@@ -96,12 +96,7 @@ describe("Teste - Login", () => {
         .should('be.visible')
         .click()
 
-        cy.wait(3000)
-
-        //Fecha o modal do boleto
-        cy.get('modal-header > div > .btn', {timeout:6000})
-        .should('be.visible')
-        .click()
+        8
 
         //Volta pra vitrine
         cy.get('.showcase-head-2 > .btn', {timeout:60000})
@@ -2084,5 +2079,7 @@ it("Aba Treinamentos", () => {
   cy.pause()
 
     });
+
   });
+  
 });
