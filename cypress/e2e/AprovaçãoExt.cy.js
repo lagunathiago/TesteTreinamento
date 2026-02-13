@@ -30,7 +30,6 @@ describe("Teste - Login", () => {
 
   context("Teste Aprovações", () => {
 
-    /*
      it("Aba Treinamentos", () => {
 
          // Clicando na aba Treinamento
@@ -647,7 +646,6 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
 
    });
 
-*/
     it("Vai até a vitrine", () => {
 
         // Clicando no icon da vitrine
@@ -663,7 +661,7 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
         .click();
         
    });
-/*
+
      it('Compra do Treinamento pago á vista sem aprovação', ()=> {
 
     //Ver tudo
@@ -769,7 +767,7 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
         .click();
 
     });
-    */
+    
      it('Faz a incrição no Treinamento gratuito sem aprovação', ()=> {
 
     //Ver tudo
@@ -856,7 +854,7 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
   .click({ force: true });
 
   //Clica em Administrador
-  cy.get(':nth-child(4) > .user-options-items > :nth-child(1) > ng-transclude > .ng-binding', { timeout: 60000 })
+  cy.get(':nth-child(4) > .user-options-items > :nth-child(6) > ng-transclude > .ng-binding', { timeout: 60000 })
   .should('be.visible')
   .click()
 
@@ -872,9 +870,9 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
       cy.wait(3000) //espera alguns segundos para carregar a pagina
 
       //Clica na Categoria automação
-      cy.get('[data-nodeid="43"]',{timeout:60000})
-      .should('be.visible')
-      .click() 
+      cy.get('[data-nodeid="14"]', { timeout: 60000 })
+  .scrollIntoView()
+  .click({ force: true });
 
     });
 
@@ -979,10 +977,6 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
   .click()
 
    });
-
-   
-
-
 
 
     

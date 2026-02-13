@@ -1001,7 +1001,6 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
   .should('be.visible')
   .click()
 
-   });
-    
+    });
   });
 });
