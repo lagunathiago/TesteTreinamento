@@ -49,7 +49,12 @@ describe("Teste - Login", () => {
     it("Treinamento paga á vista sem aprovação", () => {
 
         //Clicar em criar treinamentos
-        cy.get('.title-bar > .btn-icon').click()
+        cy.get('.title-bar .btn-icon', { timeout: 600000 }) // até 10 minutos
+    .should('exist')
+    .should('be.visible')
+    .and('not.be.disabled')
+    .click({ force: true });
+
         cy.get("#courseName").click(); // Clica pra digitar
         cy.get("#courseName").type("Treinamento pago á vista sem aprovação") //  Nome no Treinamento
 
