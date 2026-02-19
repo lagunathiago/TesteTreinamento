@@ -503,6 +503,7 @@ describe("Teste - Login", () => {
 
       cy.wait(300); // micro-wait só pra estabilizar render (bem pequeno)
 
+    //verifica o valor e o cupom
       cy.get("table#mypurchases-table tbody tr", { timeout: 20000 }).then(
         ($rows) => {
           const $last = $rows.last();

@@ -36,7 +36,7 @@ describe("Teste - Login", () => {
   });
 
   context("Teste Pagamento BB", () => {
-    /*
+    
     it("Aba Treinamentos", () => {
 
          // Clicando na aba Treinamento
@@ -1200,7 +1200,7 @@ it('Entra no perfil aluno para validar os boletos', () => {
 
    });
 
-*/
+
  it("Minha área/Minhas compras/", () => {
 
       //Minha área

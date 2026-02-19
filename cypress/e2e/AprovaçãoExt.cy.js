@@ -88,8 +88,6 @@ cy.get('.ui-select-dropdown, .ui-select-choices', { timeout: 60000 })
   
   cy.get(".editing-resource > .end > .btn-swipe-accent").click();
 
-  
-
     });
     it('Turma Paga á vista sem aprovação', () => {
       //Turma Gratuita
