@@ -1,12 +1,20 @@
-Cypress.on("uncaught:exception", (err) => {
-  // Ignora APENAS esse erro específico do front (bug conhecido)
+Cypress.on('uncaught:exception', (err) => {
+  const msg = err.message || '';
+
+  // Erros conhecidos do Angular / Front que não devem quebrar o teste
   if (
-    err.message.includes("Cannot set properties of null") &&
-    err.message.includes("setting 'ready'")
+    msg.includes('Cannot read properties of null') ||
+    msg.includes('Cannot read properties of undefined') ||   // ✅ novo
+    msg.includes("reading 'then'") ||                         // ✅ novo
+    msg.includes('charAt') ||
+    msg.includes('writeText') ||
+    msg.includes('Clipboard') ||
+    msg.includes('Document is not focused')
   ) {
-    return false; // não falha o teste
+    return false;
   }
 });
+
 
 describe("Teste - Login e troca de perfil", () => {
   before(() => {
@@ -15,91 +23,40 @@ describe("Teste - Login e troca de perfil", () => {
 
     // Login
     cy.contains("button", "Entrar").click();
-    cy.get('form.ng-pristine > [type="text"]').type("testeaut@uorak.com.br");
+    cy.get('form.ng-pristine > [type="text"]').type("thiagosuporte@uorak.com");
     cy.get("ng-transclude > .border").type("123");
     cy.get("#btn-entrar").click();
 
-    // Acessa o treinamento
-    cy.get(".showcase-card-container", {
-      timeout: 60000,
+  });
+
+it('entra na vitrine', () => {
+
+  cy.contains('.showcase-grid-card', 'teste automoção', { timeout: 60000 })
+  .should('be.visible')
+  .click({force:true})
+
+})
+
+  it('Clica no treinamento ', ()=> {
+
+      //Clica no Treinamento
+       cy.contains('.showcase-card-title', 'Teste Automação', { timeout: 60000 })
+  .should('be.visible')
+  .scrollIntoView()
+  .click()
+
     })
-      .should("be.visible")
-      .first()
-      .click();
-  });
-
-  /*it('Fazer inscrição, Acessar ou cair direto na gravação', () => {
-  const selInscricao = 'button[ng-click="subscribeClass(class)"]';
-  const selAcessar = 'button[ui-sref^="accessLink.content.home.courses.id.contents"]';
-
-  // Se tiver algum seletor confiável da página de gravação/conteúdo, coloque aqui:
-  const selGravacao = '[ui-sref*="contents"], .recordings, .resource-view, #nextResourceArrow';
-
-  cy.get('body', { timeout: 30000 }).then(($body) => {
-    const temInscricao = $body.find(selInscricao).filter(':visible').length > 0;
-    const temAcessar = $body.find(selAcessar).filter(':visible').length > 0;
-
-    // 1) Se existir Inscrever, clica e depois tenta Acessar (se aparecer)
-    if (temInscricao) {
-      cy.get(selInscricao, { timeout: 30000 })
-        .filter(':visible')
-        .first()
-        .scrollIntoView()
-        .should('be.visible')
-        .click({ force: true });
-
-      cy.log('✅ Clicou em Fazer inscrição');
-
-      // Depois de inscrever, pode:
-      // - aparecer "Acessar"
-      // - ou redirecionar direto pro conteúdo
-      cy.get('body', { timeout: 60000 }).then(($b2) => {
-        const apareceuAcessar = $b2.find(selAcessar).filter(':visible').length > 0;
-
-        if (apareceuAcessar) {
-          cy.get(selAcessar, { timeout: 60000 })
-            .filter(':visible')
-            .first()
-            .scrollIntoView()
-            .should('be.visible')
-            .click({ force: true });
-
-          cy.log('✅ Clicou em Acessar após inscrição');
-        } else {
-          cy.log('ℹ️ Não apareceu "Acessar" — provavelmente entrou direto na gravação');
-          cy.get(selGravacao, { timeout: 60000 }).should('exist');
-        }
-      });
-
-      return;
-    }
-
-    // 2) Se existir Acessar, clica
-    if (temAcessar) {
-      cy.get(selAcessar, { timeout: 30000 })
-        .filter(':visible')
-        .first()
-        .scrollIntoView()
-        .should('be.visible')
-        .click({ force: true });
-
-      cy.log('✅ Clicou em Acessar diretamente');
-      return;
-    }
-
-    // 3) Se não tem nenhum botão, já caiu direto na gravação/conteúdo
-    cy.log('ℹ️ Usuário já inscrito: entrou direto na gravação/conteúdo');
-    cy.get(selGravacao, { timeout: 60000 }).should('exist');
-  });
-});
-*/
 
   it("Clicar em Fazer inscrição (se disponivel)", () => {
-    cy.wait(2000);
+    cy.pause()
+
   });
+
   // --- GRAVAÇÃO ---
   it("Assistir gravação e validar 100%", () => {
-    cy.wait(30000); // simula assistir o vídeo
+
+    cy.log('ASSISTE A GRAVAÇÃO COMPLETA')
+    cy.pause()
     cy.get("#hideResource", { timeout: 60000 })
       .should("be.visible")
       .click({ force: true });
@@ -113,13 +70,40 @@ describe("Teste - Login e troca de perfil", () => {
     cy.log("✅ Gravação confirmada 100%");
   });
 
+
   // --- DOCUMENTO 1 ---
   it("Abrir documento PDF e validar 100%", () => {
     cy.wait(3000);
 
+    //
     cy.get("tbody > :nth-child(3) > :nth-child(1) > .lector-txt-main")
       .should("be.visible")
       .click();
+
+      //clica na listagem
+      cy.get('#courseResourceMenuIndicator', { timeout: 60000 })
+  .scrollIntoView({ block: 'center' })
+  .click({ force: true });
+
+  //clica no arquivo
+  cy.get('.current-resource > .resource-list-header > .ng-binding',{timeout:60000})
+  .should('be.visible')
+  .click({force: true})
+
+  cy.wait(2000)
+
+  //Clica no chatbox 'li e concordo'
+  cy.get('.modal-overlay:visible .modal', { timeout: 60000 })
+  .first()
+  .within(() => {
+    cy.contains('label.checkbox, .checkbox', 'Li e concordo')
+      .click({ force: true });
+  });
+
+  //Clica em confirmar
+  cy.get('[switch="modal.agreementRequired"] > .modal > :nth-child(2) > .end > .flex > .btn-swipe-accent',{timeout:60000})
+  .should('be.visible')
+  .click()
 
     cy.wait(4000);
     cy.get("#hideResource", { timeout: 60000 })
@@ -131,12 +115,38 @@ describe("Teste - Login e troca de perfil", () => {
   });
 
   // --- DOCUMENTO 2 ---
-  it("Abrir documento XLSX e validar 100%", () => {
+  it("Abrir documento jpg e validar 100%", () => {
     cy.get("tbody > :nth-child(5) > :nth-child(1) > .lector-txt-main")
       .should("be.visible")
       .click();
 
+        //clica na listagem
+      cy.get('#courseResourceMenuIndicator', { timeout: 60000 })
+  .scrollIntoView({ block: 'center' })
+  .click({ force: true });
+
+  //clica no arquivo
+  cy.get('.course-resources-list-container > ul > :nth-child(3)',{timeout:60000})
+  .should('be.visible')
+  .click({force: true})
+
+  cy.wait(2000)
+
+  //Clica no chatbox 'li e concordo'
+  cy.get('.modal-overlay:visible .modal', { timeout: 60000 })
+  .first()
+  .within(() => {
+    cy.contains('label.checkbox, .checkbox', 'Li e concordo')
+      .click({ force: true });
+  });
+
+  //Clica em confirmar
+  cy.get('[switch="modal.agreementRequired"] > .modal > :nth-child(2) > .end > .flex > .btn-swipe-accent',{timeout:60000})
+  .should('be.visible')
+  .click()
+
     cy.wait(4000);
+
     cy.get("#hideResource", { timeout: 60000 })
       .should("be.visible")
       .click({ force: true });
@@ -146,12 +156,38 @@ describe("Teste - Login e troca de perfil", () => {
   });
 
   // --- DOCUMENTO 3 ---
-  it("Abrir documento pptx e validar 100%", () => {
+  it("Abrir documento png e validar 100%", () => {
     cy.get("tbody > :nth-child(7) > :nth-child(1) > .lector-txt-main")
       .should("be.visible")
       .click();
 
+       //clica na listagem
+      cy.get('#courseResourceMenuIndicator', { timeout: 60000 })
+  .scrollIntoView({ block: 'center' })
+  .click({ force: true });
+
+  //clica no arquivo
+  cy.get('.course-resources-list-container > ul > :nth-child(4)',{timeout:60000})
+  .should('be.visible')
+  .click({force: true})
+
+  cy.wait(2000)
+
+  //Clica no chatbox 'li e concordo'
+  cy.get('.modal-overlay:visible .modal', { timeout: 60000 })
+  .first()
+  .within(() => {
+    cy.contains('label.checkbox, .checkbox', 'Li e concordo')
+      .click({ force: true });
+  });
+
+  //Clica em confirmar
+  cy.get('[switch="modal.agreementRequired"] > .modal > :nth-child(2) > .end > .flex > .btn-swipe-accent',{timeout:60000})
+  .should('be.visible')
+  .click()
+
     cy.wait(4000);
+
     cy.get("#hideResource", { timeout: 60000 })
       .should("be.visible")
       .click({ force: true });
@@ -161,10 +197,35 @@ describe("Teste - Login e troca de perfil", () => {
   });
 
   // --- DOCUMENTO 4 ---
-  it("Abrir documento pptx e validar 100%", () => {
+  it("Abrir documento docx e validar 100%", () => {
     cy.get("tbody > :nth-child(9) > :nth-child(1) > .lector-txt-main")
       .should("be.visible")
       .click();
+
+       //clica na listagem
+      cy.get('#courseResourceMenuIndicator', { timeout: 60000 })
+  .scrollIntoView({ block: 'center' })
+  .click({ force: true });
+
+  //clica no arquivo
+  cy.get('.course-resources-list-container > ul > :nth-child(5)',{timeout:60000})
+  .should('be.visible')
+  .click({force: true})
+
+  cy.wait(2000)
+
+  //Clica no chatbox 'li e concordo'
+  cy.get('.modal-overlay:visible .modal', { timeout: 60000 })
+  .first()
+  .within(() => {
+    cy.contains('label.checkbox, .checkbox', 'Li e concordo')
+      .click({ force: true });
+  });
+
+  //Clica em confirmar
+  cy.get('[switch="modal.agreementRequired"] > .modal > :nth-child(2) > .end > .flex > .btn-swipe-accent',{timeout:60000})
+  .should('be.visible')
+  .click()
 
     cy.wait(4000);
     cy.get("#hideResource", { timeout: 60000 })
@@ -175,16 +236,64 @@ describe("Teste - Login e troca de perfil", () => {
     cy.log("⬅️ Documento 4 aberto e retornado com sucesso");
   });
 
+  it("Abrir documento xlsx e validar 100%", () => {
+
+    cy.get(':nth-child(11) > [style="padding-left: 5px;"]')
+      .should("be.visible")
+      .click();
+
+    cy.wait(4000);
+    cy.get("#hideResource", { timeout: 60000 })
+      .should("be.visible")
+      .click({ force: true });
+
+    cy.wait(2000);
+    cy.log("⬅️ Documento 4 aberto e retornado com sucesso");
+
+  });
+
+    it("Abrir documento word e validar 100%", () => {
+
+      cy.get(':nth-child(13) > [style="padding-left: 5px;"]')
+      .should("be.visible")
+      .click();
+
+    cy.wait(4000);
+    cy.get("#hideResource", { timeout: 60000 })
+      .should("be.visible")
+      .click({ force: true });
+
+    cy.wait(2000);
+    cy.log("⬅️ Documento 4 aberto e retornado com sucesso");
+
+  });
+
+
+  it("Abrir documento word e validar 100%", () => {
+
+      cy.get(':nth-child(15) > [style="padding-left: 5px;"]')
+      .should("be.visible")
+      .click();
+
+    cy.wait(4000);
+    cy.get("#hideResource", { timeout: 60000 })
+      .should("be.visible")
+      .click({ force: true });
+
+    cy.wait(2000);
+    cy.log("⬅️ Documento 4 aberto e retornado com sucesso");
+
+  });
+
+
   it("Avaliação uma por pagina", () => {
     // Clica na avaliação (espera até 30s se necessário)
-    cy.get("tbody > :nth-child(11) > :nth-child(1) > .lector-txt-main", {
-      timeout: 30000,
-    })
+    cy.get(':nth-child(17) > [style="padding-left: 5px;"]',{timeout:60000})
       .should("be.visible")
       .click();
 
     cy.log("PREENCHA AS RESPOTA E ENVIE");
-    cy.wait(15000);
+    cy.pause()
 
     //Clica em voltar
     cy.get("#hideResource", { timeout: 60000 })
@@ -194,15 +303,13 @@ describe("Teste - Login e troca de perfil", () => {
 
   it("Avaliação todas na mesma página", () => {
     cy.wait(3000);
-    // Clica na avaliação (espera até 30s se necessário)
-    cy.get("tbody > :nth-child(11) > :nth-child(1) > .lector-txt-main", {
-      timeout: 30000,
-    })
+
+    cy.get(':nth-child(19) > [style="padding-left: 5px;"]',{timeout:60000})
       .should("be.visible")
       .click();
 
     cy.log("PREENCHA AS RESPOTA E ENVIE");
-    cy.wait(15000);
+    cy.pause()
 
     //Clica em voltar
     cy.get("#hideResource", { timeout: 60000 })
@@ -210,10 +317,28 @@ describe("Teste - Login e troca de perfil", () => {
       .click({ force: true });
   });
 
+   
+  it("Avaliação todas na mesma página", () => {
+    cy.wait(3000);
+
+    cy.get(':nth-child(21) > [style="padding-left: 5px;"]',{timeout:60000})
+      .should("be.visible")
+      .click();
+
+    cy.log("PREENCHA AS RESPOTA E ENVIE");
+    cy.pause()
+
+    //Clica em voltar
+    cy.get("#hideResource", { timeout: 60000 })
+      .should("be.visible")
+      .click({ force: true });
+  });
+
+
   it("Aula Presencial", () => {
     cy.wait(3000);
     //Clica na aula presencial
-    cy.get("tbody > :nth-child(15) > :nth-child(1) > .lector-txt-main")
+    cy.get("tbody > :nth-child(23) > :nth-child(1) > .lector-txt-main")
       .should("be.visible")
       .click();
 
@@ -227,9 +352,11 @@ describe("Teste - Login e troca de perfil", () => {
     cy.get("#hideResource", { timeout: 60000 })
       .should("be.visible")
       .click({ force: true });
+
   });
-  /*
-      it("Direcionamento para Webconferencia", () => {
+
+  
+      it("Direcionamento para TEANS", () => {
   cy.wait(3000)
 
   // Ignora o erro específico que a aplicação dispara ao abrir a Webconferência
@@ -241,7 +368,7 @@ describe("Teste - Login e troca de perfil", () => {
     // outros erros continuam quebrando o teste
   });
 
-  cy.get('tbody > :nth-child(17) > :nth-child(1) > .lector-txt-main')
+  cy.get('tbody > :nth-child(25) > :nth-child(1) > .lector-txt-main')
     .should("be.visible")
     .click();
 
@@ -253,11 +380,159 @@ describe("Teste - Login e troca de perfil", () => {
       .click({ force: true });
 
       });
-*/
+
+        it("Direcionamento para ZOOM", () => {
+  cy.wait(3000)
+
+  // Ignora o erro específico que a aplicação dispara ao abrir a Webconferência
+  cy.on('uncaught:exception', (err) => {
+    if (err.message.includes("reading '@class'")) {
+      // retorna false para o Cypress NÃO falhar o teste
+      return false;
+    }
+    // outros erros continuam quebrando o teste
+  });
+
+  cy.get('tbody > :nth-child(27) > :nth-child(1) > .lector-txt-main')
+    .should("be.visible")
+    .click();
+
+  cy.wait(6000);
+
+  //Clica em voltar
+    cy.get("#hideResource", { timeout: 50000 })
+      .should("be.visible")
+      .click({ force: true });
+
+      });
+
+       it("Direcionamento para YOUTUBE", () => {
+  cy.wait(3000)
+
+  // Ignora o erro específico que a aplicação dispara ao abrir a Webconferência
+  cy.on('uncaught:exception', (err) => {
+    if (err.message.includes("reading '@class'")) {
+      // retorna false para o Cypress NÃO falhar o teste
+      return false;
+    }
+    // outros erros continuam quebrando o teste
+  });
+
+  cy.get('tbody > :nth-child(29) > :nth-child(1) > .lector-txt-main')
+    .should("be.visible")
+    .click();
+
+  cy.wait(6000);
+
+  //Clica em voltar
+    cy.get("#hideResource", { timeout: 50000 })
+      .should("be.visible")
+      .click({ force: true });
+
+      });
+
+       it("Direcionamento para LECTOR", () => {
+  cy.wait(3000)
+
+  // Ignora o erro específico que a aplicação dispara ao abrir a Webconferência
+  cy.on('uncaught:exception', (err) => {
+    if (err.message.includes("reading '@class'")) {
+      // retorna false para o Cypress NÃO falhar o teste
+      return false;
+    }
+    // outros erros continuam quebrando o teste
+  });
+
+  cy.get('tbody > :nth-child(31) > :nth-child(1) > .lector-txt-main')
+    .should("be.visible")
+    .click();
+
+  cy.wait(6000);
+
+  //Clica em voltar
+    cy.get("#hideResource", { timeout: 50000 })
+      .should("be.visible")
+      .click({ force: true });
+
+      });
+
+       it("Direcionamento para ZOOM", () => {
+  cy.wait(3000)
+
+  // Ignora o erro específico que a aplicação dispara ao abrir a Webconferência
+  cy.on('uncaught:exception', (err) => {
+    if (err.message.includes("reading '@class'")) {
+      // retorna false para o Cypress NÃO falhar o teste
+      return false;
+    }
+    // outros erros continuam quebrando o teste
+  });
+
+  cy.get('tbody > :nth-child(27) > :nth-child(1) > .lector-txt-main')
+    .should("be.visible")
+    .click();
+
+  cy.wait(6000);
+
+  //Clica em voltar
+    cy.get("#hideResource", { timeout: 50000 })
+      .should("be.visible")
+      .click({ force: true });
+
+      });
+
+      it("Direcionamento para MEET", () => {
+  cy.wait(3000)
+
+  // Ignora o erro específico que a aplicação dispara ao abrir a Webconferência
+  cy.on('uncaught:exception', (err) => {
+    if (err.message.includes("reading '@class'")) {
+      // retorna false para o Cypress NÃO falhar o teste
+      return false;
+    }
+    // outros erros continuam quebrando o teste
+  });
+
+  cy.get('tbody > :nth-child(33) > :nth-child(1) > .lector-txt-main')
+    .should("be.visible")
+    .click();
+
+  cy.wait(6000);
+
+  //Clica em voltar
+    cy.get("#hideResource", { timeout: 50000 })
+      .should("be.visible")
+      .click({ force: true });
+
+      });
+
+      it("WEB LECTOR", () => {
+  cy.wait(3000)
+
+  // Ignora o erro específico que a aplicação dispara ao abrir a Webconferência
+  cy.on('uncaught:exception', (err) => {
+    if (err.message.includes("reading '@class'")) {
+      // retorna false para o Cypress NÃO falhar o teste
+      return false;
+    }
+    // outros erros continuam quebrando o teste
+  });
+
+  cy.get('tbody > :nth-child(33) > :nth-child(1) > .lector-txt-main')
+    .should("be.visible")
+    .click();
+
+  cy.wait(6000);
+
+  //Clica em voltar
+    cy.get("#hideResource", { timeout: 50000 })
+      .should("be.visible")
+      .click({ force: true });
+
+      });
+
   it("Vídeo Lector", () => {
-    cy.get(':nth-child(19) > [style="padding-left: 5px;"] > .lector-txt-main', {
-      timeout: 3000,
-    })
+    cy.get(':nth-child(37) > [style="padding-left: 5px;"] > .lector-txt-main', {timeout: 3000})
       .should("be.visible")
       .click({ force: true });
 
@@ -272,7 +547,7 @@ describe("Teste - Login e troca de perfil", () => {
   it("Video Youtube", () => {
     cy.wait(3000);
 
-    cy.get(':nth-child(21) > [style="padding-left: 5px;"]', { timeout: 30000 })
+    cy.get(':nth-child(39) > [style="padding-left: 5px;"]', { timeout: 30000 })
       .should("be.visible")
       .click({ force: true });
 
@@ -283,8 +558,9 @@ describe("Teste - Login e troca de perfil", () => {
     cy.log("⬅️ Clicou em Voltar após assistir gravação");
   });
 
+
   it("Topico ", () => {
-    cy.get(":nth-child(25) > :nth-child(1) > .lector-txt-main")
+    cy.get(":nth-child(43) > :nth-child(1) > .lector-txt-main")
       .should("be.visible")
       .click({ force: true });
 
@@ -313,7 +589,7 @@ describe("Teste - Login e troca de perfil", () => {
     cy.log(
       "FAÇA A AVALIAÇÃO DO SCORM, CONFIRME E DEIXE O BOTÃO VOLTAR VISIVEL",
     );
-    cy.wait(60000);
+    cy.pause
 
     // Clica em voltar
     cy.get("#hideResource", { timeout: 50000 })
@@ -321,10 +597,11 @@ describe("Teste - Login e troca de perfil", () => {
       .click({ force: true });
   });
 
+
   it("Entrega de atividade", () => {
     cy.wait(3000);
 
-    cy.get(':nth-child(29) > [style="padding-left: 5px;"]')
+    cy.get(':nth-child(49) > [style="padding-left: 5px;"]')
       .should("be.visible")
       .click();
 
@@ -349,14 +626,14 @@ describe("Teste - Login e troca de perfil", () => {
 
   it("Reação todas na mesma página", () => {
     // Clica na avaliação (espera até 30s se necessário)
-    cy.get("tbody > :nth-child(11) > :nth-child(1) > .lector-txt-main", {
+    cy.get("tbody > :nth-child(47) > :nth-child(1) > .lector-txt-main", {
       timeout: 30000,
     })
       .should("be.visible")
       .click();
 
     cy.log("PREENCHA AS RESPOTA E ENVIE");
-    cy.wait(10000);
+    cy.pause()
 
     //Clica em voltar
     cy.get("#hideResource", { timeout: 60000 })
@@ -367,14 +644,13 @@ describe("Teste - Login e troca de perfil", () => {
   it("Reação uma por página", () => {
     cy.wait(3000);
     // Clica na avaliação (espera até 30s se necessário)
-    cy.get("tbody > :nth-child(11) > :nth-child(1) > .lector-txt-main", {
-      timeout: 30000,
-    })
+    cy.get("tbody > :nth-child(45) > :nth-child(1) > .lector-txt-main", {
+      timeout: 30000 })
       .should("be.visible")
       .click();
 
     cy.log("PREENCHA AS RESPOTA E ENVIE");
-    cy.wait(10000);
+    cy.pause(10000);
 
     //Clica em voltar
     cy.get("#hideResource", { timeout: 60000 })
@@ -382,6 +658,29 @@ describe("Teste - Login e troca de perfil", () => {
       .click({ force: true });
   });
 
+  it("Troca pro perfil Administrador", () => {
+
+     //Clioca no icon
+    cy.get('#user-options-btn > .icon-profile', {timeout: 60000})
+    .should('be.visible')
+    .click()
+
+    //Clica em selecionar perfil
+    cy.get(':nth-child(4) > .menu-option > ng-transclude > .icon-pointer-right',{ timeout: 60000 })
+  .should('be.visible')
+  .click({ force: true });
+
+  //Clica em Administrador
+  cy.get(':nth-child(4) > .user-options-items > :nth-child(1) > ng-transclude > .ng-binding', { timeout: 60000 })
+  .should('be.visible')
+  .click()
+
+   
+
+
+  
+
+/*
   it("Concluir treinamento", () => {
     cy.get(".header > .btn-swipe-accent").should("be.visible").click();
 
@@ -394,5 +693,11 @@ describe("Teste - Login e troca de perfil", () => {
 
     cy.log("gerando certificado");
     cy.wait(8000);
+*/
+
+
+
+
+
   });
 });

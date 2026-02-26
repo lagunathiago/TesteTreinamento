@@ -504,7 +504,7 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
             cy.wait(2000)
       cy.get('.add-content > .end > .btn-swipe-accent').click()
 
-      cy.get('.content-box-footer > .flex > .btn-swipe-accent').click() //Salvar treinamento
+      cy.get('.content-box-footer > .flex > .btn-swipe-accent').click() 
       
     });
 

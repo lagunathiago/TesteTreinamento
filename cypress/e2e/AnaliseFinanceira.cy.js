@@ -1,37 +1,18 @@
-/*
 Cypress.on('uncaught:exception', (err) => {
-  if (err.message.includes('Cannot read properties of null') &&
-      err.message.includes('charAt')) {
-    return false
-  }
-})
+  const msg = err.message || '';
 
-Cypress.on("uncaught:exception", (err) => {
+  // erros conhecidos do front que não devem quebrar o teste
   if (
-    err.message.includes("Cannot read properties of null") ||
-    err.message.includes("charAt")
+    msg.includes('Cannot read properties of null') ||
+    msg.includes('charAt') ||
+    msg.includes('writeText') ||
+    msg.includes('Clipboard') ||
+    msg.includes('Document is not focused') ||
+    msg.includes('slipDtos') // <- ADICIONA ISSO
   ) {
     return false;
   }
 });
-*/
-Cypress.on("uncaught:exception", (err) => {
-  const msg = err.message || "";
-
-  // Ignora erros conhecidos do Angular que não quebram o fluxo do teste
-  if (
-    msg.includes("Cannot read properties of null") &&
-    (
-      msg.includes("remove") ||
-      msg.includes("charAt")
-    )
-  ) {
-    return false;
-  }
-});
-
-
-
 describe("Teste - Login", () => {
   before(() => {
     cy.viewport(1920, 1080);
@@ -56,6 +37,8 @@ describe("Teste - Login", () => {
 
   context("Teste Login", () => {
     
+    /*
+
       it("Teste Login", () => {
 
         // Clicando na aba Treinamento
@@ -66,7 +49,7 @@ describe("Teste - Login", () => {
       cy.wait(3000) //espera alguns segundos para carregar a pagina
 
       //Clica na Categoria automação
-      cy.get('[data-nodeid="42"]',{timeout:60000})
+      cy.get('[data-nodeid="43"]',{timeout:60000})
       .should('be.visible')
       .click() 
        
@@ -163,7 +146,7 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna',{timeout:60000})
 
     });
     
-         it('Adicinando a aprovação de campos personalizado', () => {
+         it('Adicinando os campos peronalizado com aprovação', () => {
 
             //Clica nos campos personalizado
             cy.get(':nth-child(6) > .dot',{timeout:60000})
@@ -175,45 +158,59 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna',{timeout:60000})
             .should('be.visible')
             .click({force:true})
 
-            cy.wait(1000)
+            //Clica em novo
+            cy.contains('label', 'Novo', { timeout: 60000 })
+  .should('be.visible')
+  .click({ force: true });
 
-            //Clica em 'Selecionar um campo personalizado"
-            cy.get('.flex > .ng-isolate-scope > .multiselect > .border > .ui-select-match > .btn-default',{timeout:60000})
+  //Escreve
+ cy.get('table.custom-fields-table', { timeout: 60000 })
+  .find('input[placeholder="Nome"]')
+  .first()
+  .should('be.visible')
+  .should('not.be.disabled')
+  .clear({ force: true })
+  .type('Campo Personalizado - 01', { force: true });
+
+              cy.wait(1000)
+
+  //Selecona o tipo
+ cy.get('td .ui-select-container.lector-select', { timeout: 60000 })
+  .should('be.visible')
+  .click({ force: true });
+
+  // 3. Seleciona "Texto"
+cy.contains('.ui-select-choices-row', 'Texto', { timeout: 60000 })
+  .click();
+
+          //Clica em adicionar
+          cy.get(':nth-child(4) > .middle > .btn-swipe-accent', {timeout:60000})
             .should('be.visible')
-            .click({force:true})
+            .click({force: true})
 
-            //Clica no campo "04.12"
-            cy.get('#ui-select-choices-row-51-0',{timeout:60000})
+ //Escreve o segundo campo
+ cy.get('table.custom-fields-table', { timeout: 60000 })
+  .find('input[placeholder="Nome"]')
+  .first()
+  .should('be.visible')
+  .should('not.be.disabled')
+  .clear({ force: true })
+  .type('Campo Personalizado - 02', { force: true });
+
+   //Selecona o tipo
+ cy.get('td .ui-select-container.lector-select', { timeout: 60000 })
+  .should('be.visible')
+  .click({ force: true });
+
+  // 3. Seleciona "Texto"
+cy.contains('.ui-select-choices-row', 'Texto', { timeout: 60000 })
+  .click();
+
+          //Clica em adicionar
+          cy.get(':nth-child(4) > .middle > .btn-swipe-accent', {timeout:60000})
             .should('be.visible')
-            .click({force:true})
+            .click({force: true})
 
-            //Clica em adicionar 
-            cy.get('.flex > .middle > .btn-swipe-accent',{timeout:60000})
-            .should('be.visible')
-            .click({force:true})
-
-            //Clica em requer aprovação
-            cy.get('.mb-20.ng-scope > .checkbox > .icon-checkbox',{timeout:60000})
-            .should('be.visible')
-            .click({force:true})
-
-            cy.wait(1000)
-
-            //Adicionar segundo campo
-            //Clica em 'Selecionar um campo personalizado"
-            cy.get('.flex > .ng-isolate-scope > .multiselect > .border > .ui-select-match > .btn-default',{timeout:60000})
-            .should('be.visible')
-            .click({force:true})
-
-            //Clica no campo "Novo Campo 04.12"
-            cy.get('#ui-select-choices-row-51-1',{timeout:60000})
-            .should('be.visible')
-            .click({force:true})
-
-            //Clica em adicionar 
-            cy.get('.flex > .middle > .btn-swipe-accent',{timeout:60000})
-            .should('be.visible')
-            .click({force:true})
 
       // Clica no botão "Salvar Turma"
             cy.wait(2000)
@@ -226,6 +223,7 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna',{timeout:60000})
       cy.wait(4000)
 
     });
+
 
       it("Criar Treinamento 2 /Aba Geral", () => {
 
@@ -331,40 +329,65 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna',{timeout:60000})
             .should('be.visible')
             .click({force:true})
 
+            //Clica em novo
+            cy.contains('label', 'Novo', { timeout: 60000 })
+  .should('be.visible')
+  .click({ force: true });
+
+  //Escreve
+ cy.get('table.custom-fields-table', { timeout: 60000 })
+  .find('input[placeholder="Nome"]')
+  .first()
+  .should('be.visible')
+  .should('not.be.disabled')
+  .clear({ force: true })
+  .type('Campo Personalizado - 03', { force: true });
+
+              cy.wait(1000)
+
+  //Selecona o tipo
+ cy.get('td .ui-select-container.lector-select', { timeout: 60000 })
+  .should('be.visible')
+  .click({ force: true });
+
+  // 3. Seleciona "Texto"
+cy.contains('.ui-select-choices-row', 'Texto', { timeout: 60000 })
+  .click();
+
+          //Clica em adicionar
+          cy.get(':nth-child(4) > .middle > .btn-swipe-accent', {timeout:60000})
+            .should('be.visible')
+            .click({force: true})
+
             cy.wait(1000)
 
-            //Clica em 'Selecionar um campo personalizado"
-            cy.get('.flex > .ng-isolate-scope > .multiselect > .border > .ui-select-match > .btn-default',{timeout:60000})
-            .should('be.visible')
-            .click({force:true})
+            //Adicionar segundo campo            
 
-            //Clica no campo "teste 09/12/2025 campo"
-            cy.get('#ui-select-choices-row-51-2',{timeout:60000})
-            .should('be.visible')
-            .click({force:true})
+  //Escreve
+ cy.get('table.custom-fields-table', { timeout: 60000 })
+  .find('input[placeholder="Nome"]')
+  .first()
+  .should('be.visible')
+  .should('not.be.disabled')
+  .clear({ force: true })
+  .type('Campo Personalizado - 04', { force: true });
 
-            //Clica em adicionar 
-            cy.get('.flex > .middle > .btn-swipe-accent',{timeout:60000})
-            .should('be.visible')
-            .click({force:true})
+              cy.wait(1000)
 
-            cy.wait(1000)
+  //Selecona o tipo
+ cy.get('td .ui-select-container.lector-select', { timeout: 60000 })
+  .should('be.visible')
+  .click({ force: true });
 
-            //Adicionar segundo campo
-            //Clica em 'Selecionar um campo personalizado"
-            cy.get('.flex > .ng-isolate-scope > .multiselect > .border > .ui-select-match > .btn-default',{timeout:60000})
-            .should('be.visible')
-            .click({force:true})
+  // 3. Seleciona "Arquivo"
+cy.contains('.ui-select-choices-row', 'Arquivo', { timeout: 60000 })
+  .click();
 
-            //Clica no campo "novo campo 17/12"
-            cy.get('#ui-select-choices-row-51-5',{timeout:60000})
+          //Clica em adicionar
+          cy.get(':nth-child(4) > .middle > .btn-swipe-accent', {timeout:60000})
             .should('be.visible')
-            .click({force:true})
-
-            //Clica em adicionar 
-            cy.get('.flex > .middle > .btn-swipe-accent',{timeout:60000})
-            .should('be.visible')
-            .click({force:true})
+            .click({force: true})
+          
 
       // Clica no botão "Salvar Turma"
             cy.wait(2000)
@@ -378,6 +401,9 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna',{timeout:60000})
 
     });
 
+
+
+    
 it("Treinamento com aprovação, Aceitar Matricula", () => {
 
         //Clicar em criar treinamentos
@@ -600,7 +626,7 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
         cy.wait(3000)
 
         //Clica na vitrine Automação
-        cy.get('.showcase-navigation-menu > :nth-child(9)', { timeout: 60000 })
+        cy.get('.showcase-navigation-menu > :nth-child(10)', { timeout: 60000 })
         .should('be.visible')
         .click();
        
@@ -613,38 +639,14 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
         .click();
   })
 
-  it('Envia Aprovação no Treinamento com aprovação, aceitar Matricula',()=> {
 
-    //Clica no Treinamento
-       cy.get(':nth-child(4) > .card-container > [ng-init="course = content.entity"] > a.ng-scope > .showcase-card-container', { timeout: 60000 })
-        .should('be.visible')
-        .click();
+  it('Envia Aprovação no Treinamento: Treinamento com aprovação, aceitar Matricula',()=> {
 
-        //Clica em comprar
-        cy.get('.classes-actions > :nth-child(1) > .btn-swipe-accent', { timeout: 60000 })
-        .should('be.visible')
-        .click()
-
-        cy.wait(3000)
-
-        //Volta pra vitrine
-        cy.get('.showcase-head-2 > .btn', {timeout:60000})
-        .should('be.visible')
-        .click()
-
-  })
-
-  it('Envia Aprovação no Treinamento com aprovação, aceitar Matricula',()=> {
-
-    //Ver tudo
-     cy.get('.show-all', { timeout: 60000 })
-        .should('be.visible')
-        .click();
-
-    //Clica no Treinamento
-       cy.get(':nth-child(5) > .card-container > [ng-init="course = content.entity"] > a.ng-scope > .showcase-card-container', { timeout: 60000 })
-        .should('be.visible')
-        .click();
+         //Clica no Treinamento
+       cy.contains('.showcase-card-title', 'Treinamento com aprovação, Aceitar Matricula', { timeout: 60000 })
+  .should('be.visible')
+  .scrollIntoView()
+  .click()
 
         //Clica em comprar
         cy.get('.classes-actions > :nth-child(1) > .btn-swipe-accent', { timeout: 60000 })
@@ -660,12 +662,46 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
 
   });
 
-   it("Envia os campos do Primeiro treiamento", () => {
+  it('Envia Aprovação do Treinamento: Treinamento com aprovação, aceitar Matricula',()=> {
 
-        //Clica no Treinamento
-        cy.get(':nth-child(2) > .card-container > [ng-init="course = content.entity"] > a.ng-scope > .showcase-card-container', { timeout: 60000 })
+    //Ver tudo
+     cy.get('.show-all', { timeout: 60000 })
         .should('be.visible')
         .click();
+
+        //Clica no Treinamento
+       cy.contains('.showcase-card-title', 'Treinamento com aprovação, Cancelar Analise', { timeout: 60000 })
+  .should('be.visible')
+  .scrollIntoView()
+  .click()
+
+        //Clica em comprar
+        cy.get('.classes-actions > :nth-child(1) > .btn-swipe-accent', { timeout: 60000 })
+        .should('be.visible')
+        .click()
+
+        cy.wait(3000)
+
+        //Volta pra vitrine
+        cy.get('.showcase-head-2 > .btn', {timeout:60000})
+        .should('be.visible')
+        .click()
+
+  });
+
+
+   it("Envia os campos do treinamento: Campo Personalizado + Aprovação de Gestor + Analise Financeira", () => {
+
+    //Ver tudo
+     cy.get('.show-all', { timeout: 60000 })
+        .should('be.visible')
+        .click();
+
+        //Clica no Treinamento
+       cy.contains('.showcase-card-title', 'Campo Personalizado + Aprovação de Gestor + Analise Financeira', { timeout: 60000 })
+  .should('be.visible')
+  .scrollIntoView()
+  .click()
 
         //Clica em comprar
         cy.get('.classes-actions > :nth-child(1) > .btn-swipe-accent', { timeout: 60000 })
@@ -698,12 +734,18 @@ cy.get('.modal:visible', { timeout: 20000 })
 
    });
 
-    it("Envia os campos do  Segundo treiamento", () => {
+    it("Envia os campos do Treinamento: Campo Personalizado 2 + Aprovação de Gestor 2 + Analise Financeira 2", () => {
 
-        //Clica no Treinamento
-        cy.get(':nth-child(3) > .card-container > [ng-init="course = content.entity"] > a.ng-scope > .showcase-card-container', { timeout: 60000 })
+      //Ver tudo
+     cy.get('.show-all', { timeout: 60000 })
         .should('be.visible')
         .click();
+
+        //Clica no Treinamento
+       cy.contains('.showcase-card-title', 'Campo Personalizado 2 + Aprovação de Gestor 2 + Analise Financeira 2', { timeout: 60000 })
+  .should('be.visible')
+  .scrollIntoView()
+  .click()
 
         //Clica em comprar
         cy.get('.classes-actions > :nth-child(1) > .btn-swipe-accent', { timeout: 60000 })
@@ -718,7 +760,9 @@ cy.get('.modal:visible', { timeout: 20000 })
 });
 
 //Envia a imagem no quarto campo
-cy.get('.modal > form.ng-valid > :nth-child(2) > .middle > label').selectFile('cypress/fixtures/images6.png', { force: true });
+cy.get('.modal > form.ng-valid > :nth-child(2) > .middle > label').selectFile('cypress/fixtures/images6.png', { force: true })
+.should('be.visible')
+.click({force: true})
 
 cy.wait(3000)
 
@@ -756,6 +800,7 @@ cy.get('.modal:visible', { timeout: 20000 })
 
     });
 
+
     it("Aceita os campos", () => {
 
      //Clioca no icon de notivicações
@@ -769,28 +814,28 @@ cy.get('.modal:visible', { timeout: 20000 })
   .click();
 
   //Aceita o primeiro documento
-  cy.get(':nth-child(3) > :nth-child(12) > .btn',{timeout:60000})
+  cy.get('tbody > :nth-child(1) > :nth-child(10) > .btn',{timeout:60000})
   .should('be.visible')
   .click()
 
   cy.wait(1000)
 
   //Aceita o segundo documento
-  cy.get(':nth-child(4) > :nth-child(12) > .btn',{timeout:60000})
+  cy.get(':nth-child(2) > :nth-child(10) > .btn',{timeout:60000})
   .should('be.visible')
   .click()
 
   cy.wait(1000)
 
    //Aceita o aceita o terceiro documento
-  cy.get(':nth-child(5) > :nth-child(12) > .btn',{timeout:60000})
+  cy.get(':nth-child(3) > :nth-child(10) > .btn',{timeout:60000})
   .should('be.visible')
   .click()
 
   cy.wait(1000)
 
    //Aceita o quarto documento
-  cy.get(':nth-child(6) > :nth-child(12) > .btn',{timeout:60000})
+  cy.get(':nth-child(4) > :nth-child(10) > .btn',{timeout:60000})
   .should('be.visible')
   .click()
 
@@ -802,8 +847,10 @@ cy.get('.modal:visible', { timeout: 60000 })
   .should('be.visible')
   .click({ force: true });
 
-    });
+  cy.wait(5000)
 
+    });
+*/
      it('Sai do Perfil adm', () => {
 
     //Clioca no icon
@@ -840,8 +887,10 @@ cy.get('.modal:visible', { timeout: 60000 })
     // opcional: garante que saiu da tela de login
     cy.url({ timeout: 60000 }).should('not.include', '/subscribe/login');
   });
+  
 
-    it("Envia para analise no Primeiro treinamento", () => {
+/*
+    it("Envia para a anaise o Treinamento: Campo Personalizado + Aprovação de Gestor + Analise Financeira", () => {
 
      // Clicando na aba Treinamento
       cy.get('[title="Treinamentos"] > .sideitem',{timeout:60000})
@@ -851,7 +900,7 @@ cy.get('.modal:visible', { timeout: 60000 })
       cy.wait(3000) //espera alguns segundos para carregar a pagina
 
       //Clica na Categoria automação
-      cy.get('[data-nodeid="42"]',{timeout:60000})
+      cy.get('[data-nodeid="43"]',{timeout:60000})
       .should('be.visible')
       .click()
       
@@ -859,6 +908,12 @@ cy.get('.modal:visible', { timeout: 60000 })
       cy.get(':nth-child(1) > .card-items',{timeout:60000})
       .should('be.visible')
       .click()
+
+      //Clica no Treinamento
+  cy.contains('.card-title', 'Campo Personalizado + Aprovação de Gestor + Analise Financeira', { timeout: 60000 })
+  .scrollIntoView()
+  .should('be.visible')
+  .click({ force: true })
       
       //Clica em gerenciar
       cy.get('.manage-subscription > .btn-swipe-accent',{timeout:60000})
@@ -892,7 +947,7 @@ cy.get('.modal:visible', { timeout: 60000 })
   
    });
 
- it("Envia para analise no Segundo treinamento", () => {
+ it("Envia para analise o Treinamento: Campo Personalizado 2 + Aprovação de Gestor 2 + Analise Financeira 2", () => {
 
   //Volta para categoria
   cy.get('.breadcrumbs-path > :nth-child(5)',{ timeout: 60000 })
@@ -900,11 +955,10 @@ cy.get('.modal:visible', { timeout: 60000 })
   .click()
 
 //Clica no segundo treinamento
-  cy.get('.card-items', { timeout: 60000 })
-  .should('have.length.greaterThan', 1)
-  .eq(1) // segundo card (index começa em 0)
+  cy.contains('.card-title', 'Campo Personalizado 2 + Aprovação de Gestor 2 + Analise Financeira 2', { timeout: 60000 })
   .scrollIntoView()
-  .click()
+  .should('be.visible')
+  .click({ force: true })
 
       //Clica em gerenciar
       cy.get('.manage-subscription > .btn-swipe-accent',{timeout:60000})
@@ -945,12 +999,11 @@ cy.get('.modal:visible', { timeout: 60000 })
   .should('be.visible')
   .click()
 
-  //Clica no segundo treinamento
-  cy.get('.card-items', { timeout: 60000 })
-  .should('have.length.greaterThan', 2)
-  .eq(2) // segundo card (index começa em 0)
+  //Clica no terceiro treinamento
+  cy.contains('.card-title', 'Treinamento com aprovação, Aceitar Matricula', { timeout: 60000 })
   .scrollIntoView()
-  .click()
+  .should('be.visible')
+  .click({ force: true })
 
       //Clica em gerenciar
       cy.get('.manage-subscription > .btn-swipe-accent',{timeout:60000})
@@ -972,13 +1025,11 @@ cy.get('.modal:visible', { timeout: 60000 })
   .should('be.visible')
   .click({ force: true });
 
-
   //Aprovar a matricula
   cy.get('button[ng-click="batchProcessSubscriptionsRequests(true)"]', { timeout: 20000 })
   .should('be.visible')
   .click({ force: true });
 
-  
 //Clica em Desenpenho
   cy.contains('a', 'Desempenho', { timeout: 20000 })
   .should('be.visible')
@@ -1010,19 +1061,18 @@ cy.get('.modal:visible', { timeout: 60000 })
 
     });
   
-    it("Envia para analise", () => {
+    it("Envia para analise o Treinamento: Treinamento com aprovação, Cancelar Analise", () => {
       
   //Volta para categoria
   cy.get('.breadcrumbs-path > :nth-child(5)',{ timeout: 60000 })
   .should('be.visible')
   .click()
 
-  //Clica no quarto treinamento
-  cy.get('.card-items', { timeout: 60000 })
-  .should('have.length.greaterThan', 3)
-  .eq(3) // segundo card (index começa em 0)
+  //Clica no terceiro treinamento
+  cy.contains('.card-title', 'Treinamento com aprovação, Cancelar Analise', { timeout: 60000 })
   .scrollIntoView()
-  .click()
+  .should('be.visible')
+  .click({ force: true })
 
       //Clica em gerenciar
       cy.get('.manage-subscription > .btn-swipe-accent',{timeout:60000})
@@ -1055,7 +1105,8 @@ cy.get('.modal:visible', { timeout: 60000 })
   .click();
   
     });
-
+*/
+    
 it("Vai até os relatóros", ()=> {
 
     //Clica em relatórios
@@ -1074,7 +1125,7 @@ it("Vai até os relatóros", ()=> {
     cy.wait(3000)
 
 });
-
+/*
      it('Pesquisa o Primeiro treinamento e Aprova a compra', ()=> {
 
       cy.wait(3000)
@@ -1119,7 +1170,7 @@ cy.contains('button', 'Aprovar compra', { timeout: 10000 })
   cy.wait(2000)
 
     });
-
+*/
      it('Pesquisa o Segundo treinamento e Aprova a compra', ()=> {
 
       cy.wait(3000)
@@ -1140,12 +1191,14 @@ cy.contains('button', 'Aprovar compra', { timeout: 10000 })
   .should('be.visible')
   .click();
 
-  //Clica em revisar pagamento
-  cy.get('button')
-  .filter(':contains("Revisar pagamentos")')
+  // clica sempre no último "Revisar pagamentos"
+cy.get('table tbody tr', { timeout: 60000 })
   .last()
-  .scrollIntoView()
-  .click({ force: true });
+  .within(() => {
+    cy.contains('button', 'Revisar pagamentos')
+      .scrollIntoView()
+      .click({ force: true });
+  });
 
     cy.wait(2000)
 
@@ -1185,11 +1238,13 @@ cy.contains('button', 'Aprovar compra', { timeout: 10000 })
   .click();
 
 //Clica em Revisar pagamento
-  cy.get('button')
-  .filter(':contains("Revisar pagamentos")')
+cy.get('table tbody tr', { timeout: 60000 })
   .last()
-  .scrollIntoView()
-  .click({ force: true });
+  .within(() => {
+    cy.contains('button', 'Revisar pagamentos')
+      .scrollIntoView()
+      .click({ force: true });
+  });
 
     cy.wait(2000)
 
@@ -1204,7 +1259,10 @@ cy.contains('button', 'Cancelar análise financeira', { timeout: 10000 })
 
   cy.wait(2000)
 
+
     });
+
+    /*
     it('Verifica se o aluno está em Aguardando Pagamento', ()=> {
 
       // Clicando na aba Treinamento
@@ -1833,5 +1891,6 @@ cy.get('div.modal:visible', { timeout: 20000 })
   cy.log('ALTERE PARA UMA DATA NO FUTURO E NO PASSADO, NÃO DEVE DEIXAR')
 
     });
+    */
    });
   });

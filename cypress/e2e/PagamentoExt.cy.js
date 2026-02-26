@@ -118,7 +118,6 @@ cy.get('.ui-select-dropdown, .ui-select-choices', { timeout: 60000 })
       cy.get('#price-fixed') //Valor Treinamento
   .clear()
   .type('{selectall}1.00');   
-      
 
       cy.get('.navigation-controls > .ml-20').click()//botao prximo
       cy.get('.navigation-controls > .ml-20').click()//botao prximo
@@ -454,12 +453,6 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
      
     });
 
-
-
-
-
-
-    
 
 
     it("Clica em cupon", () => {
@@ -1196,6 +1189,7 @@ it("Valida compra da Turma paga á vista", () => {
   .last()
   .should('contain.text', 'Turma paga Cartão e Cupom');
 
+  
       });
 
 
