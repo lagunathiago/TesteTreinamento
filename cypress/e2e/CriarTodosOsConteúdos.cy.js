@@ -32,7 +32,8 @@ describe("Teste - Login", () => {
       .should('be.visible')
       .click();
 
-
+      
+      //Clica na Categoria
       cy.contains("li.list-group-item", "1Teste Automação",{timeout: 60000})
       .should('be.visible')
       .click({force: true})
@@ -406,8 +407,8 @@ describe("Teste - Login", () => {
         .type("Aula Presencial Cypress", { force: true });
 
       cy.get(".editing-resource > .end > .btn-swipe-accent").click();
-    });
     
+    });
     
 
     it("Conteúdo - Aula Presencial YOUTUBE", () => {
@@ -424,7 +425,6 @@ describe("Teste - Login", () => {
         .first()
         .clear({ force: true })
         .type("Aula Presencial YOUTUBE", { force: true });
-
 
         cy.contains('.first-row', 'Evento Híbrido')
   .parent()
@@ -541,8 +541,6 @@ describe("Teste - Login", () => {
       cy.get(".editing-resource > .end > .btn-swipe-accent").click();
 
     });
-
-
     
     it("Conteúdo - Aula Presencial MEET", () => {
       abrirConteudosENovo();
@@ -1266,4 +1264,6 @@ cy.wait(2000);
    });
   
   });
+  
 });
+ 

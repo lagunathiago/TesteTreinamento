@@ -21,21 +21,50 @@ describe("Teste - Login e troca de perfil", () => {
     cy.viewport(1920, 1080);
     cy.visit("https://hml.lector.live/lector_suporte/subscribe/login");
 
-    // Login
+   
+
+    cy.visit("https://hml.lector.live/lector_suporte/subscribe/login");
     cy.contains("button", "Entrar").click();
-    cy.get('form.ng-pristine > [type="text"]').type("thiagosuporte@uorak.com");
-    cy.get("ng-transclude > .border").type("123");
-    cy.get("#btn-entrar").click();
+
+      cy.viewport(1920, 1080);
+
+    cy.get('form.ng-pristine > [type="text"]', { timeout: 60000 })
+      .should("be.visible")
+      .type("qualidade2@lectortec.com.br");
+
+    cy.get("ng-transclude > .border", { timeout: 60000 })
+      .should("be.visible")
+      .type("2006lrnrgr");
+
+    cy.get("#btn-entrar", { timeout: 60000 }).should("be.visible").click();
+
+    // opcional: garante que saiu da tela de login
+    cy.url({ timeout: 60000 }).should("not.include", "/subscribe/login");
+
 
   });
 
-it('entra na vitrine', () => {
+context("Assitir Treinamento", { testIsolation: false }, () => {
+  /*
+   it('Vai até a vitrine', () => {
 
-  cy.contains('.showcase-grid-card', 'teste automoção', { timeout: 60000 })
-  .should('be.visible')
-  .click({force:true})
+        //Clica em conteúdos
+        cy.get('.active > .ng-binding',{timeout:60000})
+        .should('be.visible')
+        .click()
 
-})
+        //Vai até a vitrine
+        cy.get('.showcase-navigation-menu > :nth-child(2) > .showcase-menu-name',{timeout:60000})
+        .should('be.visible')
+        .click()
+
+        //Clica em Ver Tudo
+        cy.get('.carousel-container > .showcase-title-container > .middle > .show-all')
+        .last()
+        .should('be.visible')
+        .click()
+
+    });
 
   it('Clica no treinamento ', ()=> {
 
@@ -236,6 +265,7 @@ it('entra na vitrine', () => {
     cy.log("⬅️ Documento 4 aberto e retornado com sucesso");
   });
 
+  // --- DOCUMENTO 5 ---
   it("Abrir documento xlsx e validar 100%", () => {
 
     cy.get(':nth-child(11) > [style="padding-left: 5px;"]')
@@ -252,6 +282,7 @@ it('entra na vitrine', () => {
 
   });
 
+  // --- DOCUMENTO 6 ---
     it("Abrir documento word e validar 100%", () => {
 
       cy.get(':nth-child(13) > [style="padding-left: 5px;"]')
@@ -269,25 +300,24 @@ it('entra na vitrine', () => {
   });
 
 
-  it("Abrir documento word e validar 100%", () => {
-
-      cy.get(':nth-child(15) > [style="padding-left: 5px;"]')
+  it("Avaliação uma por pagina", () => {
+    // Clica na avaliação (espera até 30s se necessário)
+    cy.get(':nth-child(15) > [style="padding-left: 5px;"]',{timeout:60000})
       .should("be.visible")
       .click();
 
-    cy.wait(4000);
+    cy.log("PREENCHA AS RESPOTA E ENVIE");
+    cy.pause()
+
+    //Clica em voltar
     cy.get("#hideResource", { timeout: 60000 })
       .should("be.visible")
       .click({ force: true });
-
-    cy.wait(2000);
-    cy.log("⬅️ Documento 4 aberto e retornado com sucesso");
-
   });
 
+  it("Avaliação todas na mesma página", () => {
+    cy.wait(3000);
 
-  it("Avaliação uma por pagina", () => {
-    // Clica na avaliação (espera até 30s se necessário)
     cy.get(':nth-child(17) > [style="padding-left: 5px;"]',{timeout:60000})
       .should("be.visible")
       .click();
@@ -301,27 +331,11 @@ it('entra na vitrine', () => {
       .click({ force: true });
   });
 
-  it("Avaliação todas na mesma página", () => {
+   
+  it("Avaliação Correção", () => {
     cy.wait(3000);
 
     cy.get(':nth-child(19) > [style="padding-left: 5px;"]',{timeout:60000})
-      .should("be.visible")
-      .click();
-
-    cy.log("PREENCHA AS RESPOTA E ENVIE");
-    cy.pause()
-
-    //Clica em voltar
-    cy.get("#hideResource", { timeout: 60000 })
-      .should("be.visible")
-      .click({ force: true });
-  });
-
-   
-  it("Avaliação todas na mesma página", () => {
-    cy.wait(3000);
-
-    cy.get(':nth-child(21) > [style="padding-left: 5px;"]',{timeout:60000})
       .should("be.visible")
       .click();
 
@@ -338,7 +352,7 @@ it('entra na vitrine', () => {
   it("Aula Presencial", () => {
     cy.wait(3000);
     //Clica na aula presencial
-    cy.get("tbody > :nth-child(23) > :nth-child(1) > .lector-txt-main")
+    cy.get("tbody > :nth-child(21) > :nth-child(1) > .lector-txt-main")
       .should("be.visible")
       .click();
 
@@ -354,6 +368,32 @@ it('entra na vitrine', () => {
       .click({ force: true });
 
   });
+
+  
+       it("Direcionamento para YOUTUBE", () => {
+  cy.wait(3000)
+
+  // Ignora o erro específico que a aplicação dispara ao abrir a Webconferência
+  cy.on('uncaught:exception', (err) => {
+    if (err.message.includes("reading '@class'")) {
+      // retorna false para o Cypress NÃO falhar o teste
+      return false;
+    }
+    // outros erros continuam quebrando o teste
+  });
+
+  cy.get('tbody > :nth-child(23) > :nth-child(1) > .lector-txt-main')
+    .should("be.visible")
+    .click();
+
+  cy.wait(6000);
+
+  //Clica em voltar
+    cy.get("#hideResource", { timeout: 50000 })
+      .should("be.visible")
+      .click({ force: true });
+
+      });
 
   
       it("Direcionamento para TEANS", () => {
@@ -405,8 +445,8 @@ it('entra na vitrine', () => {
       .click({ force: true });
 
       });
-
-       it("Direcionamento para YOUTUBE", () => {
+      
+      it("Direcionamento para MEET", () => {
   cy.wait(3000)
 
   // Ignora o erro específico que a aplicação dispara ao abrir a Webconferência
@@ -430,6 +470,7 @@ it('entra na vitrine', () => {
       .click({ force: true });
 
       });
+
 
        it("Direcionamento para LECTOR", () => {
   cy.wait(3000)
@@ -456,55 +497,6 @@ it('entra na vitrine', () => {
 
       });
 
-       it("Direcionamento para ZOOM", () => {
-  cy.wait(3000)
-
-  // Ignora o erro específico que a aplicação dispara ao abrir a Webconferência
-  cy.on('uncaught:exception', (err) => {
-    if (err.message.includes("reading '@class'")) {
-      // retorna false para o Cypress NÃO falhar o teste
-      return false;
-    }
-    // outros erros continuam quebrando o teste
-  });
-
-  cy.get('tbody > :nth-child(27) > :nth-child(1) > .lector-txt-main')
-    .should("be.visible")
-    .click();
-
-  cy.wait(6000);
-
-  //Clica em voltar
-    cy.get("#hideResource", { timeout: 50000 })
-      .should("be.visible")
-      .click({ force: true });
-
-      });
-
-      it("Direcionamento para MEET", () => {
-  cy.wait(3000)
-
-  // Ignora o erro específico que a aplicação dispara ao abrir a Webconferência
-  cy.on('uncaught:exception', (err) => {
-    if (err.message.includes("reading '@class'")) {
-      // retorna false para o Cypress NÃO falhar o teste
-      return false;
-    }
-    // outros erros continuam quebrando o teste
-  });
-
-  cy.get('tbody > :nth-child(33) > :nth-child(1) > .lector-txt-main')
-    .should("be.visible")
-    .click();
-
-  cy.wait(6000);
-
-  //Clica em voltar
-    cy.get("#hideResource", { timeout: 50000 })
-      .should("be.visible")
-      .click({ force: true });
-
-      });
 
       it("WEB LECTOR", () => {
   cy.wait(3000)
@@ -532,11 +524,12 @@ it('entra na vitrine', () => {
       });
 
   it("Vídeo Lector", () => {
-    cy.get(':nth-child(37) > [style="padding-left: 5px;"] > .lector-txt-main', {timeout: 3000})
+    cy.get(':nth-child(35) > [style="padding-left: 5px;"] > .lector-txt-main', {timeout: 3000})
       .should("be.visible")
       .click({ force: true });
 
-    cy.wait(20000); // simula assistir o vídeo
+      cy.log('Assista o video completo')
+    cy.pause()
 
     cy.get("#hideResource", { timeout: 60000 })
       .should("be.visible")
@@ -547,7 +540,7 @@ it('entra na vitrine', () => {
   it("Video Youtube", () => {
     cy.wait(3000);
 
-    cy.get(':nth-child(39) > [style="padding-left: 5px;"]', { timeout: 30000 })
+    cy.get(':nth-child(37) > [style="padding-left: 5px;"]', { timeout: 30000 })
       .should("be.visible")
       .click({ force: true });
 
@@ -560,11 +553,12 @@ it('entra na vitrine', () => {
 
 
   it("Topico ", () => {
-    cy.get(":nth-child(43) > :nth-child(1) > .lector-txt-main")
+    cy.get(":nth-child(41) > :nth-child(1) > .lector-txt-main")
       .should("be.visible")
       .click({ force: true });
 
-    cy.wait(2000);
+      cy.log('Verifique se tem algo escrito')
+    cy.wait(10000);
 
     //Clica em voltar
     cy.get("#hideResource", { timeout: 50000 })
@@ -582,13 +576,11 @@ it('entra na vitrine', () => {
   // Teste SCORM
   it("Scorm", () => {
     cy.wait(3000);
-    cy.get(":nth-child(27) > :nth-child(1) > .lector-txt-main")
+    cy.get(":nth-child(43) > :nth-child(1) > .lector-txt-main")
       .should("be.visible")
       .click();
 
-    cy.log(
-      "FAÇA A AVALIAÇÃO DO SCORM, CONFIRME E DEIXE O BOTÃO VOLTAR VISIVEL",
-    );
+    cy.log("FAÇA A AVALIAÇÃO DO SCORM, CONFIRME E DEIXE O BOTÃO VOLTAR VISIVEL");
     cy.pause
 
     // Clica em voltar
@@ -601,7 +593,7 @@ it('entra na vitrine', () => {
   it("Entrega de atividade", () => {
     cy.wait(3000);
 
-    cy.get(':nth-child(49) > [style="padding-left: 5px;"]')
+    cy.get(':nth-child(45) > [style="padding-left: 5px;"]')
       .should("be.visible")
       .click();
 
@@ -644,7 +636,7 @@ it('entra na vitrine', () => {
   it("Reação uma por página", () => {
     cy.wait(3000);
     // Clica na avaliação (espera até 30s se necessário)
-    cy.get("tbody > :nth-child(45) > :nth-child(1) > .lector-txt-main", {
+    cy.get("tbody > :nth-child(49) > :nth-child(1) > .lector-txt-main", {
       timeout: 30000 })
       .should("be.visible")
       .click();
@@ -675,29 +667,84 @@ it('entra na vitrine', () => {
   .should('be.visible')
   .click()
 
-   
+  });
+   */
 
+it("Vai pra categoria", () => {
 
-  
+        // Clicando na aba Treinamento
+      cy.get('[title="Treinamentos"] > .sideitem',{timeout:60000})
+      .should('be.visible')
+      .click()
 
+      //Clica na Categoria
+      cy.contains("li.list-group-item", "1Teste Automação",{timeout: 60000})
+      .should('be.visible')
+      .click({force: true})
+
+      });
+
+      it('Clica no treinamento', ()=> {
 /*
-  it("Concluir treinamento", () => {
-    cy.get(".header > .btn-swipe-accent").should("be.visible").click();
-
-    cy.wait(5000);
-    cy.get(
-      '[switch="modal.finishCourse"] > .modal > :nth-child(2) > .end > .flex > .btn-swipe-accent',
-    )
-      .should("be.visible")
-      .click();
-
-    cy.log("gerando certificado");
-    cy.wait(8000);
+     //Clica no Treinamento
+  cy.contains('.card-title', 'Teste Automação', { timeout: 60000})
+  .scrollIntoView()
+  .should('be.visible')
+  .click({ force: true })
 */
+  cy.contains('.card-title', /^Teste Automação$/)
+  .scrollIntoView()
+  .should('be.visible')
+  .click();
 
+  //Clica em gerenciar
+      cy.get('.manage-subscription > .btn-swipe-accent',{timeout:60000})
+      .first()
+      .should('be.visible')
+      .click()
 
+    });
 
+    it('Corrige Avaliação', () => {
 
+      //Clica em Corrigir Avalaiação
+      cy.get('[ng-class*="manageSubscriptionsTabs.evaluations"]',{timeout:60000})
+      .should('be.visible')
+      .click()
+
+      //Clica em corrigir
+      cy.get('.center > .btn',{timeout:60000})
+      .should('be.visible')
+      .click()
+
+      cy.get('.pv-10 > .input-number > div > .icon-pointer-up',{timeout:60000})
+      .should('be.visible')
+      .click()
+
+      //Laço de Repetição(Clica dez vezes)
+for (let i = 0; i < 10; i++) {
+  cy.get('.pv-10 > .input-number > div > .icon-pointer-up')
+    .click();
+}
+
+//Escreve
+cy.get('textarea[ng-model="questionAnswer.observations"]')
+  .should('be.visible')
+  .type('Teste de observação da correção');
+
+  cy.contains('button', 'Enviar correção')
+  .click();
+
+  //Espera Carregar o envio da avaliação
+  cy.wait(7000)
+
+  //Envia a Avalição
+  cy.get('[switch="modal.manageSubscriptions"] > .modal > .modal-header > .btn',{timeout:60000})
+  .should('be.visible')
+  .click()
+
+    });
 
   });
+
 });

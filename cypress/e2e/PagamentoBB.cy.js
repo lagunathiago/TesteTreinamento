@@ -855,7 +855,6 @@ cy.wait(3000)
   .click()
 
 
-
     });
     
        it('Entra em outro perfil e aceita as solicitações de matriculas',()=> {
