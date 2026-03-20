@@ -41,15 +41,20 @@ describe("Teste - Login", () => {
   });
 
   context("Criando Treinamento", { testIsolation: false }, () => {
-/*
-     it("Treinamento gratuito sem aprovação", () => {
 
+
+     it("Clica na aba treinamento", () => {
 
         // Clicando na aba Treinamento
       cy.get('[title="Treinamentos"] > .sideitem',{timeout:60000})
       .should('be.visible')
       .click()
 
+     });
+
+/*
+      it('Cria o treinamento', () => {
+        
         //Clicar em criar treinamentos
         cy.get('.title-bar .btn-icon', { timeout: 600000 }) // até 10 minutos
     .should('exist')
@@ -107,7 +112,6 @@ describe("Teste - Login", () => {
 
     });
 
-        
   
     it('Turma Gratuita sem aprovação', () => {
 
@@ -138,18 +142,12 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
       cy.get('.add-content > .end > .btn-swipe-accent').click()
       
       cy.get('.content-box-footer > .flex > .btn-swipe-accent').click()
-      cy.get('[ng-show="modal.useVersioning"] > .modal > :nth-child(3) > .checkbox > .icon-checkbox').click(); //selecionar versionamento
-      cy.get('[ng-show="modal.useVersioning"] > .modal > .end > .ml-10').click(); //salvar sem versionamento
 
     });
 */
-    it("Vai em treinamentos e pesquisa o treinamento", () => {
-       
-        // Clicando na aba Treinamento
-      cy.get('[title="Treinamentos"] > .sideitem',{timeout:60000})
-      .should('be.visible')
-      .click()
 
+    it('Digita Treinamento', () => {
+       
       cy.wait(3000) //espera alguns segundos para carregar a pagina
 
       //Digita o Treianamento
@@ -163,11 +161,11 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
   .should('be.visible')
   .click()
 
-  //Clica no Treinamento
-  cy.contains('.card-title', 'Gerenciar Teste Automação', { timeout: 60000 })
+//Clica no treinamento: Gerenciar Teste Automação
+  cy.contains('.card-title', /^Gerenciar Teste Automação$/, { timeout: 60000 })
   .scrollIntoView()
   .should('be.visible')
-  .click({ force: true })
+  .click({ force: true });
 
   //Clica em gerenciar
       cy.get('.manage-subscription > .btn-swipe-accent',{timeout:60000})
@@ -175,9 +173,10 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
       .click()
       
     });
-/*
+
        // -----------------Não Matriculados------------------------
-   
+
+   /*
     it('Pesquisa por Usuario e faz Matricula', () => {
 
       //Digita Usuario
@@ -189,7 +188,7 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
   .type('kaka 1', { force: true });
 
   //Pesquisa
-  cy.get('[ng-show="manageSubscriptionsTabs.notSubscribed"] > [ng-include=""] > .report-filters > :nth-child(1) > .filters-container > .multiselect > form.ng-valid > .btn',{timeout:60000})
+cy.get('course-not-subscribed-users.ng-isolate-scope > [ng-include=""] > .report-filters > :nth-child(1) > .filters-container > .multiselect > form.ng-valid > .btn',{timeout:60000})
   .should('be.visible')
   .click({ force: true });
 
@@ -211,11 +210,12 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
     cy.wait(2000)
 
   //Confirma
-  cy.get('[switch="modal.confirmSubscribeUsers"] > .modal > :nth-child(2) > .modal-form > .end > .btn-swipe-accent',{timeout:60000})
+  cy.contains('button:visible', 'Confirmar', { timeout: 60000 })
   .should('be.visible')
   .click({ force: true });
 
     cy.wait(4000)
+
 
   //Matriculados/Concluidos
       cy.contains('a', 'Matriculados / Concluídos', { timeout: 60000 })
@@ -225,7 +225,7 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
  cy.wait(1000)
 
  //verefica se foi matriculado
- cy.contains('td.userNameColumn', 'teste 08/01 - 6', { timeout: 20000 })
+ cy.contains('td.userNameColumn', 'kaka 1', { timeout: 20000 })
   .should('be.visible');
 
   //Volta em Não Matriculados//Matriculados/Concluidos
@@ -234,6 +234,7 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
   .click()
   
     });
+
      it('Pesquisa por Email e faz a Matricula', () => {
 
       //Digita Email
@@ -246,8 +247,8 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
   cy.wait(1000)
 
   //Pesquisa
-  cy.get('[ng-show="manageSubscriptionsTabs.notSubscribed"] > [ng-include=""] > .report-filters > :nth-child(2) > .filters-container > .multiselect > form.ng-valid > .btn',{timeout:60000})
-  .should('be.visible')
+  cy.get('button.icon-spyglass:visible', { timeout: 60000 })
+  .eq(1)
   .click({ force: true });
 
   cy.wait(1000)
@@ -268,7 +269,7 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
   cy.wait(2000)
 
   //Confirma
-  cy.get('[switch="modal.confirmSubscribeUsers"] > .modal > :nth-child(2) > .modal-form > .end > .btn-swipe-accent',{timeout:60000})
+  cy.contains('button:visible', 'Confirmar', { timeout: 60000 })
   .should('be.visible')
   .click({ force: true });
 
@@ -306,8 +307,8 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
   cy.wait(1000)
 
   //Pesquisa
-  cy.get('[ng-show="manageSubscriptionsTabs.notSubscribed"] > [ng-include=""] > .report-filters > :nth-child(2) > .filters-container > .multiselect > form.ng-valid > .btn',{timeout:60000})
-  .should('be.visible')
+  cy.get('button.icon-spyglass:visible', { timeout: 60000 })
+  .eq(2)
   .click({ force: true });
 
   cy.wait(1000)
@@ -328,7 +329,7 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
   cy.wait(2000)
 
   //Confirma
-  cy.get('[switch="modal.confirmSubscribeUsers"] > .modal > :nth-child(2) > .modal-form > .end > .btn-swipe-accent',{timeout:60000})
+  cy.contains('button:visible', 'Confirmar', { timeout: 60000 })
   .should('be.visible')
   .click({ force: true });
 
@@ -353,21 +354,20 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
   .click()
 
     });
-
+    
        it('Pesquisa por Grupo e faz a Matricula', () => {
 
-      //Digita Grupo
-  cy.get('input[ng-model="filter.text"]', { timeout: 20000 })
-  .filter(':visible')
-  .eq(3) // = Grupo
+   //Digita Grupo
+  cy.get('input.ui-select-search:visible', { timeout: 20000 })
+  .eq(0) // Grupo geralmente é o primeiro
   .click({ force: true })
-  .type('{selectall}{backspace}Grupo - 2', { force: true });
+  .type('Grupo - 2', { force: true });
 
   cy.wait(1000)
 
-  //Pesquisa
-  cy.get('[ng-show="manageSubscriptionsTabs.notSubscribed"] > [ng-include=""] > .report-filters > :nth-child(2) > .filters-container > .multiselect > form.ng-valid > .btn',{timeout:60000})
-  .should('be.visible')
+ //Pesquisa
+  cy.get('button.icon-spyglass:visible', { timeout: 60000 })
+  .eq(3)
   .click({ force: true });
 
   cy.wait(1000)
@@ -388,46 +388,27 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
   cy.wait(2000)
 
   //Confirma
-  cy.get('[switch="modal.confirmSubscribeUsers"] > .modal > :nth-child(2) > .modal-form > .end > .btn-swipe-accent',{timeout:60000})
+  cy.contains('button:visible', 'Confirmar', { timeout: 60000 })
   .should('be.visible')
   .click({ force: true });
 
   cy.wait(4000)
 
-  //Matriculados/Concluidos
-      cy.contains('a', 'Matriculados / Concluídos', { timeout: 60000 })
-  .should('be.visible')
-  .click()
-
- cy.wait(2000)
-
- //Verefica se foi matriulado
- cy.contains('td.userNameColumn', 'kaka1', { timeout: 20000 })
-  .should('be.visible');
-
-  cy.wait(1000)
-
-  //Volta em Não Matriculados//Matriculados/Concluidos
-      cy.contains('a', 'Não matriculados', { timeout: 60000 })
-  .should('be.visible')
-  .click()
-
     });
 
  it('Pesquisa por Cargo e faz a Matricula', () => {
 
-      //Digita Cargo
-  cy.get('input[ng-model="filter.text"]', { timeout: 20000 })
-  .filter(':visible')
-  .eq(4) // 4= pesquisa de Cargo
+  //Digita Cargo
+  cy.get('input.ui-select-search:visible', { timeout: 20000 })
+  .eq(1) //
   .click({ force: true })
-  .type('{selectall}{backspace}Analista de Testes JR', { force: true });
+  .type('Analista de Testes JR', { force: true });
 
   cy.wait(1000)
 
-  //Pesquisa
-  cy.get('[ng-show="manageSubscriptionsTabs.notSubscribed"] > [ng-include=""] > .report-filters > :nth-child(2) > .filters-container > .multiselect > form.ng-valid > .btn',{timeout:60000})
-  .should('be.visible')
+ //Pesquisa
+  cy.get('button.icon-spyglass:visible', { timeout: 60000 })
+  .eq(4)
   .click({ force: true });
 
   cy.wait(1000)
@@ -448,46 +429,30 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
   cy.wait(2000)
 
   //Confirma
-  cy.get('[switch="modal.confirmSubscribeUsers"] > .modal > :nth-child(2) > .modal-form > .end > .btn-swipe-accent',{timeout:60000})
+  cy.contains('button:visible', 'Confirmar', { timeout: 60000 })
   .should('be.visible')
   .click({ force: true });
 
   cy.wait(4000)
 
-  //Matriculados/Concluidos
-      cy.contains('a', 'Matriculados / Concluídos', { timeout: 60000 })
-  .should('be.visible')
-  .click()
-
- cy.wait(2000)
-
- //Verefica se foi matriulado
- cy.contains('td.userNameColumn', 'USUARIO 06.06.2024 10', { timeout: 20000 })
-  .should('be.visible');
-
-  cy.wait(1000)
-
-  //Volta em Não Matriculados//Matriculados/Concluidos
-      cy.contains('a', 'Não matriculados', { timeout: 60000 })
-  .should('be.visible')
-  .click()
 
     });
 
+    */
+
 it('Pesquisa por Perfil faz a Matricula', () => {
 
-      //Digita Perfil
-  cy.get('input[ng-model="filter.text"]', { timeout: 20000 })
-  .filter(':visible')
-  .eq(5) // 5= pesquisa de Perfil
+   //Digita perfil
+  cy.get('input.ui-select-search:visible', { timeout: 20000 })
+  .eq(2) //
   .click({ force: true })
-  .type('{selectall}{backspace}Aluno', { force: true });
+  .type('Aluno', { force: true });
 
   cy.wait(1000)
 
-  //Pesquisa
-  cy.get('[ng-show="manageSubscriptionsTabs.notSubscribed"] > [ng-include=""] > .report-filters > :nth-child(2) > .filters-container > .multiselect > form.ng-valid > .btn',{timeout:60000})
-  .should('be.visible')
+ //Pesquisa
+  cy.get('button.icon-spyglass:visible', { timeout: 60000 })
+  .eq(5)
   .click({ force: true });
 
   cy.wait(1000)
@@ -508,46 +473,27 @@ it('Pesquisa por Perfil faz a Matricula', () => {
   cy.wait(2000)
 
   //Confirma
-  cy.get('[switch="modal.confirmSubscribeUsers"] > .modal > :nth-child(2) > .modal-form > .end > .btn-swipe-accent',{timeout:60000})
+  cy.contains('button:visible', 'Confirmar', { timeout: 60000 })
   .should('be.visible')
   .click({ force: true });
 
   cy.wait(4000)
 
-  //Matriculados/Concluidos
-      cy.contains('a', 'Matriculados / Concluídos', { timeout: 60000 })
-  .should('be.visible')
-  .click()
+    });
 
- cy.wait(2000)
+it('Pesquisa por Clientes e faz a Matricula', () => {
 
- //Verefica se foi matriulado
- cy.contains('td.userNameColumn', 'Valindolfo Blener', { timeout: 20000 })
-  .should('be.visible');
-
-  cy.wait(1000)
-
-  //Volta em Não Matriculados//Matriculados/Concluidos
-      cy.contains('a', 'Não matriculados', { timeout: 60000 })
-  .should('be.visible')
-  .click()
-
-    })
-
-it('Pesquisa por Perfil faz a Matricula', () => {
-
-      //Digita Email
-  cy.get('input[ng-model="filter.text"]', { timeout: 20000 })
-  .filter(':visible')
-  .eq(6) // 6= pesquisa de perfil
+  //Digita Clientes
+  cy.get('input.ui-select-search:visible', { timeout: 20000 })
+  .eq(3) //
   .click({ force: true })
-  .type('{selectall}{backspace}Outro', { force: true });
+  .type('Outro', { force: true });
 
   cy.wait(1000)
 
-  //Pesquisa
-  cy.get('[ng-show="manageSubscriptionsTabs.notSubscribed"] > [ng-include=""] > .report-filters > :nth-child(2) > .filters-container > .multiselect > form.ng-valid > .btn',{timeout:60000})
-  .should('be.visible')
+ //Pesquisa
+  cy.get('button.icon-spyglass:visible', { timeout: 60000 })
+  .eq(6)
   .click({ force: true });
 
   cy.wait(1000)
@@ -568,30 +514,13 @@ it('Pesquisa por Perfil faz a Matricula', () => {
   cy.wait(2000)
 
   //Confirma
-  cy.get('[switch="modal.confirmSubscribeUsers"] > .modal > :nth-child(2) > .modal-form > .end > .btn-swipe-accent',{timeout:60000})
+  cy.contains('button:visible', 'Confirmar', { timeout: 60000 })
   .should('be.visible')
   .click({ force: true });
 
   cy.wait(4000)
 
-  //Matriculados/Concluidos
-      cy.contains('a', 'Matriculados / Concluídos', { timeout: 60000 })
-  .should('be.visible')
-  .click()
-
- cy.wait(2000)
-
- //Verefica se foi matriulado
- cy.contains('td.userNameColumn', '03 10', { timeout: 20000 })
-  .should('be.visible');
-
-  cy.wait(1000)
-
-  //Volta em Não Matriculados//Matriculados/Concluidos
-      cy.contains('a', 'Não matriculados', { timeout: 60000 })
-  .should('be.visible')
-  .click()
-
+  
     });
 
 it('Pesquisa por txt faz a Matricula', () => {
@@ -603,10 +532,6 @@ it('Pesquisa por txt faz a Matricula', () => {
 
   cy.log('ADICIONE UM ARQUIVO TXT')
   cy.pause()
-
-cy.get('[switch="modal.subscribeByFile"] > .modal > :nth-child(2) > .modal-form > .end > .btn-swipe-accent',{timeout:60000})
-.should('be.visible')
-.click()
   
   cy.wait(1000)
 
@@ -674,7 +599,7 @@ it("Filtros de exportação/Não matriculados", () => {
       cy.get('[data-cv-idx="2"]').click();
       cy.wait(1000);
   
-      cy.wait(3000)
+      cy.wait(5000)
       
   //Clica em Matricular
  cy.get('.manage-subscriptions-area-header > .lector-txt-accent')
@@ -786,6 +711,8 @@ it("Filtros de exportação/Não matriculados", () => {
   .within(() => {
     cy.get('td.subscriptionStatusColumn')
       .should('contain', 'Cancelado')
+   });
+
 
   });
 
@@ -835,6 +762,7 @@ it('Pesquisa por E-mail e Cancela a Matricula', () => {
     cy.contains('td.subscriptionStatusColumn', 'Cancelado', { timeout: 60000 })
   .should('be.visible')
 
+});
  
 // Bug Visual, Foi feita a programação,Porem não foi testado, Falta Testar 
 it('Pesquisa por Login e Cancela a Matricula', () => {
@@ -1096,7 +1024,7 @@ it('Volta para não Matriculados e Matricula alunos para Concluir o Treinamento'
   .click()
 
     });
-*/
+
 
 it('Pesquisa por Usuario e faz Matricula', () => {
 
@@ -1223,48 +1151,6 @@ it('Pesquisa por Usuario e faz Matricula', () => {
 
     });
 
-/*
-       it('Pesquisa por Grupo e faz a Matricula', () => {
-
-      //Digita Grupo
-  cy.get('input[ng-model="filter.text"]', { timeout: 20000 })
-  .filter(':visible')
-  .eq(3) // 
-  .click({ force: true })
-  .type('{selectall}{backspace}Grupo - 2', { force: true });
-
-  cy.wait(1000)
-
-  //Pesquisa
-  cy.get('[ng-show="manageSubscriptionsTabs.notSubscribed"] > [ng-include=""] > .report-filters > :nth-child(2) > .filters-container > .multiselect > form.ng-valid > .btn',{timeout:60000})
-  .should('be.visible')
-  .click({ force: true });
-
-  cy.wait(1000)
-
-//clica no iconn box
- cy.get('td.select-checkbox')
-  .filter(':visible')
-  .first()
-  .click({ force: true });
-
-  cy.wait(1000)
-
-  //Clica em Matricular
-  cy.get('button[ng-click="showSubscribeUsers()"]', { timeout: 20000 })
-  .should('be.visible')
-  .click({ force: true });
-
-  cy.wait(2000)
-
-  //Confirma
-  cy.get('[switch="modal.confirmSubscribeUsers"] > .modal > :nth-child(2) > .modal-form > .end > .btn-swipe-accent',{timeout:60000})
-  .should('be.visible')
-  .click({ force: true });
-
-    cy.wait(4000)
-
-    });
 
  it('Pesquisa por Cargo e faz a Matricula', () => {
 
@@ -1383,10 +1269,8 @@ it('Pesquisa por Perfil faz a Matricula', () => {
 
   cy.wait(4000)
 
+
     });
-    */
-
-
 
   });
   

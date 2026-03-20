@@ -190,7 +190,6 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
      
     });
 
-
      it("Treinamento paga á vista com aprovação", () => {
 
         //Clicar em criar treinamentos

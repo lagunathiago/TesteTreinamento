@@ -15,13 +15,9 @@ Cypress.on('uncaught:exception', (err) => {
   }
 });
 
-
 describe("Teste - Login e troca de perfil", () => {
   before(() => {
     cy.viewport(1920, 1080);
-    cy.visit("https://hml.lector.live/lector_suporte/subscribe/login");
-
-   
 
     cy.visit("https://hml.lector.live/lector_suporte/subscribe/login");
     cy.contains("button", "Entrar").click();
@@ -30,22 +26,23 @@ describe("Teste - Login e troca de perfil", () => {
 
     cy.get('form.ng-pristine > [type="text"]', { timeout: 60000 })
       .should("be.visible")
-      .type("qualidade2@lectortec.com.br");
+      .type("thiagosuporte2@uorak.com");
 
     cy.get("ng-transclude > .border", { timeout: 60000 })
       .should("be.visible")
-      .type("2006lrnrgr");
+      .type("123");
 
     cy.get("#btn-entrar", { timeout: 60000 }).should("be.visible").click();
 
     // opcional: garante que saiu da tela de login
     cy.url({ timeout: 60000 }).should("not.include", "/subscribe/login");
 
-
   });
 
+
+
 context("Assitir Treinamento", { testIsolation: false }, () => {
-  /*
+  
    it('Vai até a vitrine', () => {
 
         //Clica em conteúdos
@@ -59,7 +56,7 @@ context("Assitir Treinamento", { testIsolation: false }, () => {
         .click()
 
         //Clica em Ver Tudo
-        cy.get('.carousel-container > .showcase-title-container > .middle > .show-all')
+        cy.get('.carousel-container > .showcase-title-container > .middle > .show-all',{timeout:60000})
         .last()
         .should('be.visible')
         .click()
@@ -589,7 +586,6 @@ context("Assitir Treinamento", { testIsolation: false }, () => {
       .click({ force: true });
   });
 
-
   it("Entrega de atividade", () => {
     cy.wait(3000);
 
@@ -668,7 +664,7 @@ context("Assitir Treinamento", { testIsolation: false }, () => {
   .click()
 
   });
-   */
+   
 
 it("Vai pra categoria", () => {
 
@@ -685,17 +681,11 @@ it("Vai pra categoria", () => {
       });
 
       it('Clica no treinamento', ()=> {
-/*
-     //Clica no Treinamento
-  cy.contains('.card-title', 'Teste Automação', { timeout: 60000})
-  .scrollIntoView()
-  .should('be.visible')
-  .click({ force: true })
-*/
+
   cy.contains('.card-title', /^Teste Automação$/)
   .scrollIntoView()
   .should('be.visible')
-  .click();
+  .click()
 
   //Clica em gerenciar
       cy.get('.manage-subscription > .btn-swipe-accent',{timeout:60000})
@@ -732,19 +722,199 @@ cy.get('textarea[ng-model="questionAnswer.observations"]')
   .should('be.visible')
   .type('Teste de observação da correção');
 
+  //Clica em enviar avaliação 
   cy.contains('button', 'Enviar correção')
   .click();
 
   //Espera Carregar o envio da avaliação
-  cy.wait(7000)
+  cy.wait(10000)
 
-  //Envia a Avalição
-  cy.get('[switch="modal.manageSubscriptions"] > .modal > .modal-header > .btn',{timeout:60000})
+  //Fecha modal
+  cy.get('[switch="modal.manageSubscriptions"] > .modal > .modal-header > .btn',{ timeout: 60000 })
   .should('be.visible')
   .click()
 
     });
 
+    it('Verifica se está na vitrine Altomação', () => {
+
+  //Clica em editar
+  cy.get('.end.ng-scope > .icon-edit',{timeout:60000})
+  .should('be.visible')
+  .click()
+
+  //Clica em vitrine
+  cy.get('[ui-sref="accessLink.content.courses.edit.id.showcases"]',{timeout:60000})
+  .should('be.visible')
+  .click()
+
+  //Verefica se está na vitrine automação
+  cy.contains('td','teste automoção', {timeout:60000})
+  .should('be.visible')
+  .click()
+
+    });
+
+    it('Indice de Aprendizado', () => {
+
+      //Clicas em indice de aprendizado
+      cy.get('[ui-sref="accessLink.content.courses.edit.id.learning-rate"]',{timeout:60000})
+      .should('be.visible')
+      .click()
+
+      //Verifica  se o indice de aprendizado está entre 0 a 100%
+      cy.get('h1.lector-txt-main', { timeout: 60000 })
+  .should('be.visible')
+  .should(($el) => {
+    const texto = $el.text().trim();
+    const numero = Number(texto.replace(/[^\d]/g, ''));
+
+    expect(texto).to.not.equal('');
+    expect(numero).to.not.be.NaN;
+    expect(numero).to.be.within(0, 100);
   });
+
+  it("Muda para o perfil aluno", ()=> {
+
+        //Clioca no icon
+  cy.contains('div', 'Administrador',{ timeout: 60000 })
+  .should('be.visible')
+  .click({ force: true });
+
+  //Clica em Perfil
+  cy.get('.icon-pointer-right',{ timeout: 60000 })
+  .should('be.visible')
+  .click({ force: true });
+
+  //Aluno
+ cy.contains('span','Aluno - Todos')
+  .should('be.visible')
+  .click()
+
+    });
+
+     it('Vai até a vitrine', () => {
+
+        //Clica em conteúdos
+        cy.get('.active > .ng-binding',{timeout:60000})
+        .should('be.visible')
+        .click()
+
+        //Vai até a vitrine
+        cy.get('.showcase-navigation-menu > :nth-child(2) > .showcase-menu-name',{timeout:60000})
+        .should('be.visible')
+        .click()
+
+        //Clica em Ver Tudo
+        cy.get('.carousel-container > .showcase-title-container > .middle > .show-all',{timeout:60000})
+        .last()
+        .should('be.visible')
+        .click()
+
+    });
+
+  it('Clica no treinamento ', ()=> {
+
+      //Clica no Treinamento
+       cy.contains('.showcase-card-title', 'Teste Automação', { timeout: 60000 })
+  .should('be.visible')
+  .scrollIntoView()
+  .click()
+
+    });
+
+    it('Clica em : sim,continuar de onde parou', () => {
+
+      //Clica em continuar de onde parou
+    cy.get('#modal-courseContentsContinueFromLastItem > .modal-footer > .btn-swipe-accent',{timeout:60000})
+    .should('be.visible')
+    .click()
+
+    //Clica em voltar
+    cy.get("#hideResource", { timeout: 60000 })
+      .should("be.visible")
+      .click({ force: true });
+
+    });
+
+    it('Valida o progresso', ()=> {
+
+      // Verifica se o progresso está entre 40% e 100%
+cy.get('.progress-label', { timeout: 60000 })
+  .should('be.visible')
+  .should(($el) => {
+
+    const texto = $el.text().trim();
+    const numero = Number(texto.replace(/[^\d]/g, ''));
+
+    expect(numero).to.not.be.NaN;
+    expect(numero).to.be.within(40, 100);
+
+     });
+
+   });
+
+  it('Valida o Aproveitamento', ()=> {
+
+    // Verifica se o aproveitamento está entre 50% e 100%
+cy.get('.lector-txt-main.txt-xl', { timeout: 60000 })
+  .should('be.visible')
+  .should(($el) => {
+
+    const texto = $el.text().trim();
+    const numero = Number(texto.replace(/[^\d]/g, ''));
+
+    expect(numero).to.not.be.NaN;
+    expect(numero).to.be.within(50, 100);
+
+     });
+
+    });
+
+    it('Verificação Manual Nessesaria', ()=> {
+
+cy.log('⚠️⚠️⚠️VERIFICAR SE OS CONTEUDOS ESTÃO 100% E STATUS VISUALIZADO/APROVADO/NÃO RESPONDIDO⚠️⚠️⚠️');
+cy.pause();
+  debugger;
+
+    });
+
+    it('Concluir Matricula', ()=> {
+
+      //Clica em Concluir Matricula
+      cy.get('.header > .btn-swipe-accent',{timeout:60000})
+      .should('be.visible')
+      .click()
+
+      //Clica em Finalizar Treinamento
+      cy.contains('span','Finalizar treinamento')
+      .should('be.visible')
+      .click()
+
+      //Espera o Cetrificado ser Gerado
+      cy.log('Certificado Sendo Gerado')
+      cy.wait(10000)
+      
+    })
+    
+    it('Verificação de Abertura de certificado', () => {
+
+      //Verifica se foi aberto
+      cy.get('#certificate-view', { timeout: 60000 })
+  .should('be.visible');
+
+  //Espera 5 segundos pra visualzar o certificados
+  cy.wait(5000)
+
+  //Clica em Voltar
+  cy.get('button[ng-click="closeCertificateRender()"]', { timeout: 60000 })
+  .should('be.visible')
+  .click();
+ 
+    });
+   
+  });
+
+});
 
 });

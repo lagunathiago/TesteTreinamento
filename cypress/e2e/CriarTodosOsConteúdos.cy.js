@@ -14,14 +14,25 @@ Cypress.on('uncaught:exception', (err) => {
 });
 
 describe("Teste - Login", () => {
-  before(() => {
-    cy.viewport(1920, 1080); // Define a dimensão da tela para o teste.
+   before(() => {
+    cy.viewport(1920, 1080);
 
     cy.visit("https://hml.lector.live/lector_suporte/subscribe/login");
     cy.contains("button", "Entrar").click();
-    cy.get('form.ng-pristine > [type="text"]').type("thiagosuporte@uorak.com");
-    cy.get("ng-transclude > .border").type("123");
-    cy.get("#btn-entrar").click();
+
+    cy.get('form.ng-pristine > [type="text"]', { timeout: 60000 })
+      .should("be.visible")
+      .type("qualidade2@lectortec.com.br");
+
+    cy.get("ng-transclude > .border", { timeout: 60000 })
+      .should("be.visible")
+      .type("2006lrnrgr");
+
+    cy.get("#btn-entrar", { timeout: 60000 }).should("be.visible").click();
+
+    // opcional: garante que saiu da tela de login
+    cy.url({ timeout: 60000 }).should("not.include", "/subscribe/login");
+
   });
 
   context("Criando Treinamento", { testIsolation: false }, () => {
@@ -774,11 +785,11 @@ describe("Teste - Login", () => {
 
       cy.get("input.ui-select-search:visible", { timeout: 60000 })
         .should("have.length", 1)
-        .type("Concluir", { delay: 10 });
+        .type("Simbologia Maçônica.scorm", { delay: 10 });
 
       cy.wait(3000);
 
-      cy.contains(".ui-select-choices-row", "Concluir", {
+      cy.contains(".ui-select-choices-row", "Simbologia Maçônica.scorm", {
         timeout: 60000,
       })
         .should("be.visible")
@@ -809,7 +820,10 @@ describe("Teste - Login", () => {
 
       cy.wait(4000);
 
-      cy.get(".editing-resource > .end > .btn-swipe-accent").click();
+      cy.get(".editing-resource > .end > .btn-swipe-accent", { timeout: 60000 })
+        .should("exist")
+        .click({ force: true });
+
     });
 
     it("Conteúdo - Reação/Pesquisa (uma por página)", () => {
