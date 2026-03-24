@@ -50,6 +50,12 @@ describe("Teste - Login", () => {
       .should('be.visible')
       .click()
 
+      /*
+         //Clica na Categoria
+      cy.contains("li.list-group-item", "1Teste Automação",{timeout: 60000})
+      .should('be.visible')
+      .click({force: true})
+*/
      });
 
 /*
@@ -112,6 +118,39 @@ describe("Teste - Login", () => {
 
     });
 
+    it("Conteúdo - Certificado", () => {
+
+      cy.get(".editing-resource > :nth-child(2) > .w-100").click();
+
+      cy.get("body .ui-select-choices-row", { timeout: 60000 })
+        .should("be.visible")
+        .contains(/^Certificado$/i)
+        .click({ force: true });
+
+      cy.wait(1500);
+
+      cy.contains(".ui-select-container", "Informe o nome do certificado", {
+        timeout: 60000,
+      })
+        .scrollIntoView()
+        .should("be.visible")
+        .within(() => {
+          cy.get(".ui-select-toggle").click({ force: true });
+        });
+
+      cy.get("input.ui-select-search:visible", { timeout: 60000 })
+        .should("have.length", 1)
+        .clear({ force: true })
+        .type("Certificado do Treinamento", { force: true, delay: 20 });
+
+      // Se existir opção, clica nela
+      cy.get(".ui-select-choices-row", { timeout: 60000 })
+        .contains("Certificado do Treinamento")
+        .click({ force: true });
+
+      cy.get(".editing-resource > .end > .btn-swipe-accent").click();
+    });
+
   
     it('Turma Gratuita sem aprovação', () => {
 
@@ -140,6 +179,7 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
       // Clica no botão "Salvar Turma"
       
       cy.get('.add-content > .end > .btn-swipe-accent').click()
+
       
       cy.get('.content-box-footer > .flex > .btn-swipe-accent').click()
 
@@ -216,7 +256,6 @@ cy.get('course-not-subscribed-users.ng-isolate-scope > [ng-include=""] > .report
 
     cy.wait(4000)
 
-
     });
 
      it('Pesquisa por Email e faz a Matricula', () => {
@@ -284,15 +323,6 @@ cy.get('course-not-subscribed-users.ng-isolate-scope > [ng-include=""] > .report
   .click({ force: true });
 
   cy.wait(1000)
-
-  // Clica no segundo
-cy.get('td.select-checkbox')
-  .filter(':visible')
-  .eq(1)
-  .click({ force: true });
-
-  cy.wait(1000)
-
 
   //Clica em Matricular
   cy.get('button[ng-click="showSubscribeUsers()"]', { timeout: 20000 })
@@ -644,7 +674,7 @@ it("Filtros de exportação/Não matriculados", () => {
 
       cy.wait(2000)
 
-          //Clica em Matriculados Concuidos
+          //Clica em Não Matriculados Concuidos
       cy.contains('a', 'Não matriculados', { timeout: 60000 })
   .should('be.visible')
   .click()
@@ -1916,7 +1946,6 @@ cy.get('button.icon-location:visible')
   .click({ force: true });
 
       });
-*/
 
       it('Certificado', () => {
 
@@ -1939,10 +1968,272 @@ cy.get('button.icon-location:visible')
 
     cy.wait(4000)
 
-
-        
       });
-   
+
+
+it('Verefica que não tenha o botão de reotrmar matricula no usuario Cancelado', () => {
+
+  cy.contains('td.subscriptionStatusColumn', 'Cancelado', { timeout: 20000 })
+  .parents('tr')
+  .within(() => {
+    cy.contains('Retomar matrícula').should('not.exist')
+  })
+
+});
+
+it('Clica em Não Matriculados Concuidos', () => {
+
+  //Clica em Não Matriculados Concuidos
+      cy.contains('a', 'Não matriculados', { timeout: 60000 })
+  .should('be.visible')
+  .click()
+
+});
+
+ it('Pesquisa por Usuario e faz Matricula', () => {
+
+      //Digita Usuario
+      cy.get('input[ng-model="filter.text"]', { timeout: 20000 })
+  .filter(':visible')
+  .first()
+  .click({ force: true })
+  .clear({ force: true })
+  .type('thiago teste', { force: true });
+
+  //Pesquisa
+cy.get('course-not-subscribed-users.ng-isolate-scope > [ng-include=""] > .report-filters > :nth-child(1) > .filters-container > .multiselect > form.ng-valid > .btn',{timeout:60000})
+  .should('be.visible')
+  .click({ force: true });
+
+  cy.wait(1000)
+
+//clica no iconn box
+ cy.get('td.select-checkbox')
+  .filter(':visible')
+  .first()
+  .click({ force: true });
+
+  cy.wait(1000)
+
+  //Clica em Matricular
+  cy.get('button[ng-click="showSubscribeUsers()"]', { timeout: 20000 })
+  .should('be.visible')
+  .click({ force: true });
+
+    cy.wait(2000)
+
+  //Confirma
+  cy.contains('button:visible', 'Confirmar', { timeout: 60000 })
+  .should('be.visible')
+  .click({ force: true });
+
+    cy.wait(4000)
+
+    });
+
+it('Matriculados/Concluidos', () => {
+      
+      //Clica em Matriculados Concuidos
+      cy.contains('a', ' Matriculados / Concluídos', { timeout: 60000 })
+  .should('be.visible')
+  .click()
+
+    });
+
+    it('Pesquisa por Usuario e Conclui a Matricula', () => {
+
+      cy.wait(4000)
+
+      //Digita Usuario
+      cy.get('input[ng-model="filter.text"]', { timeout: 20000 })
+  .filter(':visible')
+  .first()
+  .click({ force: true })
+  .clear({ force: true })
+  .type('thiago teste', { force: true });
+
+    cy.wait(2000)
+
+    //Pesquisa
+  cy.get('.col-sm-12 > [ng-include=""] > .report-filters > :nth-child(1) > .filters-container > .multiselect > form.ng-valid > .btn',{timeout:60000})
+  .should('be.visible')
+  .click({ force: true });
+  
+  cy.wait(3000)
+
+  //Clica no icon box
+ cy.get('td.select-checkbox')
+  .filter(':visible')
+  .first()
+  .click({ force: true });
+
+  cy.wait(1000)
+
+  //Concluir Matricula
+  cy.contains('button', 'Concluir matrícula(s)', { timeout: 60000 })
+  .should('be.visible')
+  .click({ force: true })
+
+  //Confirmar
+  cy.get('button.btn-swipe-accent:visible', { timeout: 60000 })
+  .contains('Confirmar')
+  .click({ force: true });
+
+    cy.wait(2000)
+
+     });
+       it('Pesquisa e retoma a matricula', () => {
+
+      cy.wait(4000)
+
+      //Digita Usuario
+      cy.get('input[ng-model="filter.text"]', { timeout: 20000 })
+  .filter(':visible')
+  .first()
+  .click({ force: true })
+  .clear({ force: true })
+  .type('thiago teste', { force: true });
+
+    cy.wait(2000)
+
+    //Pesquisa
+  cy.get('.col-sm-12 > [ng-include=""] > .report-filters > :nth-child(1) > .filters-container > .multiselect > form.ng-valid > .btn',{timeout:60000})
+  .should('be.visible')
+  .click({ force: true });
+ 
+    cy.wait(2000)
+
+     });
+
+     it('Retomar matricula', () => {
+
+      //Clica em Retomar Matricula
+  cy.get('button[title="Retomar matrícula"]', { timeout: 20000 })
+  .scrollIntoView()
+  .should('be.visible')
+  .click({ force: true })
+
+  //Clica no chate box
+cy.get('.popover-body:visible')
+  .within(() => {
+    cy.get('label.checkbox')
+      .first()
+      .click({ force: true })
+  })
+
+  cy.get('.popover-body:visible')
+  .within(() => {
+    cy.contains('label', 'Indeterminado')
+      .click({ force: true })
+  })
+
+   //Confirmar
+  cy.get('button.btn-swipe-accent:visible', { timeout: 60000 })
+  .contains('Confirmar')
+  .click({ force: true });
+
+     });
+
+
+  it('Pesquisa o usuario e verifica se ele esta em andamento e que nao tenha o botao retomar matricula', () => {
+
+      cy.wait(4000)
+
+      //Digita Usuario
+      cy.get('input[ng-model="filter.text"]', { timeout: 20000 })
+  .filter(':visible')
+  .first()
+  .click({ force: true })
+  .clear({ force: true })
+  .type('thiago teste', { force: true });
+
+    cy.wait(2000)
+
+    //Pesquisa
+  cy.get('.col-sm-12 > [ng-include=""] > .report-filters > :nth-child(1) > .filters-container > .multiselect > form.ng-valid > .btn',{timeout:60000})
+  .should('be.visible')
+  .click({ force: true });
+ 
+    cy.wait(3000)
+
+     cy.contains('td.subscriptionStatusColumn', 'Em andamento', { timeout: 20000 })
+  .parents('tr')
+  .within(() => {
+    cy.contains('Retomar matrícula').should('not.exist')
+  })
+
+     });
+*/
+       it('Entra em outro perfil e verifica se os conteudos estão disponivel', () => {
+
+        cy.visit("https://hml.lector.live/lector_suporte/subscribe/login");
+    cy.contains("button", "Entrar").click();
+
+      cy.viewport(1920, 1080);
+
+    cy.get('form.ng-pristine > [type="text"]', { timeout: 60000 })
+      .should("be.visible")
+      .type("thiagosuporte2@uorak.com");
+
+    cy.get("ng-transclude > .border", { timeout: 60000 })
+      .should("be.visible")
+      .type("123");
+
+    cy.get("#btn-entrar", { timeout: 60000 }).should("be.visible").click();
+
+    // opcional: garante que saiu da tela de login
+    cy.url({ timeout: 60000 }).should("not.include", "/subscribe/login");
+        
+     });
+
+     
+     it('Vai até a vitrine', () => {
+
+        //Clica em conteúdos
+        cy.get('.active > .ng-binding',{timeout:60000})
+        .should('be.visible')
+        .click()
+
+        //Vai até a vitrine
+        cy.get('.showcase-navigation-menu > :nth-child(2) > .showcase-menu-name',{timeout:60000})
+        .should('be.visible')
+        .click()
+
+        //Clica em Ver Tudo
+        cy.get('.carousel-container > .showcase-title-container > .middle > .show-all',{timeout:60000})
+        .last()
+        .should('be.visible')
+        .click()
+
+    });
+
+  it('Clica no treinamento ', ()=> {
+
+      //Clica no Treinamento
+       cy.contains('.showcase-card-title', 'Gerenciar Teste Automação', { timeout: 60000 })
+  .should('be.visible')
+  .scrollIntoView()
+  .click()
+
+  cy.wait(2000)
+
+    })
+
+  it("Visualiza o conteudo e clique em voltar", () => {
+
+cy.wait(7000)
+
+ //Clica em voltar
+    cy.get("#hideResource", { timeout: 60000 })
+      .should("be.visible")
+      .click({ force: true });
+
+       //FINALIZE O TREINAMENTO
+      cy.log('FINALIZE O TREINAMENTO')
+      cy.pause
+
+      });
+
     });
 
   });

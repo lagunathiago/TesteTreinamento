@@ -893,7 +893,6 @@ describe("Teste - Login", () => {
     });
 
     it("Conteúdo - Certificado", () => {
-      abrirConteudosENovo();
 
       cy.get(".editing-resource > :nth-child(2) > .w-100").click();
 
