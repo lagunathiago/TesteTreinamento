@@ -41,7 +41,7 @@ describe("Teste - Login", () => {
 
   context("Criando Treinamento", { testIsolation: false }, () => {
 
-/*
+
      it("Clica vai ate a categoria", () => {
 
         // Clicando na aba Treinamento
@@ -1396,7 +1396,7 @@ cy.get('.classes-actions > :nth-child(1) > .center > div', {timeout: 60000})
 cy.log('VEREFIQUE SE VOCE SERÁ REDIRECIONADO PARA A PAGINA DO MERCADO PAGO')
 
      });
-     */
+     
 
        it('Entra em outro perfil e valida a nova trasnmisão', () => {
 
@@ -1434,7 +1434,6 @@ cy.log('VEREFIQUE SE VOCE SERÁ REDIRECIONADO PARA A PAGINA DO MERCADO PAGO')
   .scrollIntoView()
   .should('be.visible')
   .click({ force: true });
-
   
             //Clica em Compras
     cy.contains('li.list-group-item.node-report-categories', 'Compras', { timeout: 60000 })
