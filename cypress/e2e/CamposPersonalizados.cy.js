@@ -39,7 +39,7 @@ describe("Teste - Login", () => {
   });
 
   context("Criando Treinamento", { testIsolation: false }, () => {
-/*
+
       it("Vai pra categoria", () => {
 
         // Clicando na aba Treinamento
@@ -209,7 +209,6 @@ cy.contains('.ui-select-choices-row', 'Texto', { timeout: 60000 })
 
     });
 
-
 it('Cria o segundo Treinamento com campos', () => {
   
      //Clicar em criar treinamentos
@@ -340,7 +339,6 @@ cy.contains('.ui-select-choices-row', 'Aluno',{timeout:60000})
       cy.wait(5000)
 
     });
-
 
  it('Sai do Perfil adm', () => {
 
@@ -611,7 +609,7 @@ cy.get('.modal:visible', { timeout: 20000 })
     cy.url({ timeout: 60000 }).should('not.include', '/subscribe/login');
 
     });
-*/
+
      it("Vai até o treinamento", () => {
 
         // Clicando na aba Treinamento

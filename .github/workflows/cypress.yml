@@ -26,7 +26,7 @@ jobs:
         run: npm ci
 
       - name: Rodar Cypress
-        run: npx cypress run --spec "cypress/e2e/Filtros.cy.js"
+        run: npx cypress run --spec "cypress/e2e/CamposPersonalizados.cy.js"
 
       - name: Upload screenshots
         if: failure()
