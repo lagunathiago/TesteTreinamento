@@ -31,8 +31,8 @@ jobs:
       - name: Instalar dependências
         run: npm ci
 
-      - name: Rodar Cypress (sem vídeo)
-        run: npx cypress run --browser chrome --headless --config video=false --spec "cypress/e2e/CamposPersonalizados.cy.js"
+      - name: Rodar Cypress (com vídeo)
+        run: npx cypress run --browser chrome --headless --config video=true,videoCompression=false --spec "cypress/e2e/CamposPersonalizados.cy.js"
 
       - name: Upload screenshots
         if: failure()
@@ -40,4 +40,12 @@ jobs:
         with:
           name: cypress-screenshots
           path: cypress/screenshots
+          if-no-files-found: ignore
+
+      - name: Upload videos
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-videos
+          path: cypress/videos
           if-no-files-found: ignore

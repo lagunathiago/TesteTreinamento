@@ -40,7 +40,7 @@ describe("Teste - Login", () => {
 
   context("Criando Treinamento", { testIsolation: false }, () => {
 
-    /*
+    
     it('Vaie em Cadastros', ()=> {
 
         // Clicando em Cadastros
@@ -506,7 +506,7 @@ it('Aceita uma solicitação', () => {
     cy.url({ timeout: 60000 }).should('not.include', '/subscribe/login');
 
     });
-*/
+
 it("Vai até a vitrine", () => {
 
         // Clicando no icon da vitrine
@@ -522,7 +522,7 @@ it("Vai até a vitrine", () => {
    });
    
 
-   /*
+  
       it('Acessa o conteudo no Teste Gestor Automação 1', () => {
 
     //Ver tudo
@@ -605,7 +605,6 @@ it("Vai até a vitrine", () => {
         .click();
 
       });
-*/
       it('Incrição no Teste Gestor Automação 4', () => {
 
     //Ver tudo
