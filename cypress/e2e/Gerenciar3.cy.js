@@ -154,7 +154,6 @@ cy.contains('.ui-select-choices-row', 'Aluno', {timeout:60000})
       .should('be.visible')
       .click()
 
-
     });
 
  });

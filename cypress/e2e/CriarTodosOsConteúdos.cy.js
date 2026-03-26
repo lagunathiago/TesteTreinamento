@@ -418,7 +418,7 @@ describe("Teste - Login", () => {
         .type("Aula Presencial Cypress", { force: true });
 
       cy.get(".editing-resource > .end > .btn-swipe-accent").click();
-    
+
     });
     
 
