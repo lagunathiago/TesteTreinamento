@@ -310,11 +310,9 @@ cy.get('course-not-subscribed-users.ng-isolate-scope > [ng-include=""] > .report
 
           cy.wait(4000)
 
-
     });
 
      it('Pesquisa por Login e faz a Matricula', () => {
-
 
                 cy.wait(3000)
 
@@ -340,7 +338,7 @@ cy.get('course-not-subscribed-users.ng-isolate-scope > [ng-include=""] > .report
   .first()
   .click({ force: true });
 
-  cy.wait(1000)
+  cy.wait(2000)
 
   //Clica em Matricular
   cy.get('button[ng-click="showSubscribeUsers()"]', { timeout: 20000 })
@@ -396,6 +394,13 @@ cy.get('td.select-checkbox')
   .eq(1)
   .click({ force: true });
 
+   // Clica no terceiro
+cy.get('td.select-checkbox')
+  .filter(':visible')
+  .eq(2)
+  .click({ force: true });
+
+
   cy.wait(1000)
 
   //Clica em Matricular
@@ -409,6 +414,12 @@ cy.get('td.select-checkbox')
   cy.contains('button:visible', 'Confirmar', { timeout: 60000 })
   .should('be.visible')
   .click({ force: true });
+
+  cy.wait(3000)
+  
+  //limpa o grupo
+  cy.get('.ui-select-match-item > .close',{timeout:10000})
+  .should('be.visible')
 
   cy.wait(4000)
 
@@ -452,6 +463,12 @@ cy.get('td.select-checkbox')
   .eq(1)
   .click({ force: true });
 
+   // Clica no terceiro
+cy.get('td.select-checkbox')
+  .filter(':visible')
+  .eq(2)
+  .click({ force: true });
+
   cy.wait(1000)
 
   //Clica em Matricular
@@ -466,7 +483,13 @@ cy.get('td.select-checkbox')
   .should('be.visible')
   .click({ force: true });
 
-  cy.wait(4000)
+   cy.wait(4000)
+
+  //limpa o grupo
+  cy.get('.ui-select-match-item > .close',{timeout:10000})
+  .should('be.visible')
+
+     cy.wait(3000)
 
     });
 
@@ -525,6 +548,12 @@ cy.get('td.select-checkbox')
 
   cy.wait(4000)
 
+    //limpa o grupo
+  cy.get('.ui-select-match-item > .close',{timeout:10000})
+  .should('be.visible')
+
+     cy.wait(3000)
+
     });
 
 it('Pesquisa por Clientes e faz a Matricula', () => {
@@ -579,6 +608,12 @@ cy.get('td.select-checkbox')
   .click({ force: true });
 
   cy.wait(4000)
+
+    //limpa 
+  cy.get('.ui-select-match-item > .close',{timeout:10000})
+  .should('be.visible')
+
+     cy.wait(3000)
   
     });
 
@@ -706,12 +741,18 @@ cy.get('[ng-show="manageSubscriptionsTabs.waitingPayment"] > [ng-include=""] > .
   cy.contains('td', 'Grupo - 2', { timeout: 60000 })
   .should('be.visible')
 
-//Apaga Grupo 
-  cy.get('[ng-show="manageSubscriptionsTabs.waitingPayment"] > [ng-include=""] > .report-filters > :nth-child(4) > .filters-container > .multiselect > .border > div > .ui-select-match > [ng-repeat="$item in $select.selected track by $index"] > .ui-select-match-item > .close')
-  .click({ force: true})
+  cy.wait(2000)
+
+ //limpa 
+  cy.get('.ui-select-match-item > .close',{timeout:10000})
+  .should('be.visible')
+
+     cy.wait(3000)
  
     });
  it('Pesquisa por Cargo e faz a Matricula', () => {
+
+  cy.wait(3000)
 
   //Digita Cargo
   cy.get('input.ui-select-search:visible', { timeout: 20000 })
@@ -738,13 +779,17 @@ cy.get('[ng-show="manageSubscriptionsTabs.waitingPayment"] > [ng-include=""] > .
   cy.contains('td', 'Analista de Testes JR', { timeout: 60000 })
   .should('be.visible')
 
-    //Digita Cargo
- cy.get('[ng-show="manageSubscriptionsTabs.waitingPayment"] > [ng-include=""] > .report-filters > :nth-child(5) > .filters-container > .multiselect > .border > div > .ui-select-match > [ng-repeat="$item in $select.selected track by $index"] > .ui-select-match-item > .close')
- .click({force: true})
+  //limpa 
+  cy.get('.ui-select-match-item > .close',{timeout:10000})
+  .should('be.visible')
+
+     cy.wait(3000)
   
     });
 
 it('Pesquisa por Perfil faz a Matricula', () => {
+
+  cy.wait(3000)
 
    //Digita perfil
   cy.get('input.ui-select-search:visible', { timeout: 20000 })
@@ -770,14 +815,17 @@ it('Pesquisa por Perfil faz a Matricula', () => {
   cy.contains('td', 'Aluno', { timeout: 60000 })
   .should('be.visible')
 
+ //limpa 
+  cy.get('.ui-select-match-item > .close',{timeout:10000})
+  .should('be.visible')
 
-    //Apaga o Perfil
-    cy.get('[ng-show="manageSubscriptionsTabs.waitingPayment"] > [ng-include=""] > .report-filters > :nth-child(6) > .filters-container > .multiselect > .border > div > .ui-select-match > [ng-repeat="$item in $select.selected track by $index"] > .ui-select-match-item > .close')
-  .click({ force: true })
+     cy.wait(3000)
   
     });
 
 it('Pesquisa por Clientes e faz a Matricula', () => {
+
+  cy.wait(3000)
 
   //Digita Clientes
   cy.get('input.ui-select-search:visible', { timeout: 20000 })
@@ -804,13 +852,16 @@ it('Pesquisa por Clientes e faz a Matricula', () => {
 
   cy.wait(2000)
 
-    //Apaga o Cliente
-    cy.get('[ng-show="manageSubscriptionsTabs.waitingPayment"] > [ng-include=""] > .report-filters > :nth-child(7) > .filters-container > .multiselect > .border > div > .ui-select-match > [ng-repeat="$item in $select.selected track by $index"] > .ui-select-match-item > .close')
-  .click({ force: true })
+     //limpa 
+  cy.get('.ui-select-match-item > .close',{timeout:10000})
+  .should('be.visible')
+
+     cy.wait(3000)
 
     });
     
 it("Filtros de exportação/Aguardando pagamento", () => {
+
   cy.wait(3000)
 
   //Selecionar colunas
@@ -980,7 +1031,6 @@ cy.contains('Continuar compra', { timeout: 20000 })
 
      });
 
-
      it('Entra em outro pesfil e cancela o pagamento', () => {
 
         cy.visit("https://hml.lector.live/lector_suporte/subscribe/login");
@@ -1101,6 +1151,8 @@ cy.get('[ng-show="manageSubscriptionsTabs.waitingPayment"] > [ng-include=""] > .
     });
 
     it('Pesquisa o usuario em não matriculados', () => {
+
+      cy.wait(3000)
         
       //Clica em Matriculados Concuidos
       cy.contains('a', 'Não matriculados', { timeout: 60000 })

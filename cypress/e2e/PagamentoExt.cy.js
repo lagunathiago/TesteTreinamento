@@ -1193,13 +1193,5 @@ it("Valida compra da Turma paga á vista", () => {
       });
 
 
-
-
-
-
-
-
-
-
   });
 });

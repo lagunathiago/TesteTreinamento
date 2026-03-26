@@ -2920,7 +2920,7 @@ it('Filtros de datas', () => {
    //CLIENTE
 
 it("Filtros de exportação/Não matriculados", () => {
-
+  
   cy.wait(3000)
 
   //Selecionar colunas

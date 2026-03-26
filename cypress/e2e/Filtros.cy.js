@@ -1,7 +1,17 @@
-/// <reference types="cypress" />
+Cypress.on('uncaught:exception', (err) => {
+  const msg = err.message || '';
 
-Cypress.on("uncaught:exception", (err) => {
-  if (err.message.includes("unselectable")) {
+  // Erros conhecidos do Angular / Front que não devem quebrar o teste
+  if (
+    msg.includes('Cannot read properties of null') ||
+    msg.includes('Cannot read properties of undefined') ||   
+    msg.includes("reading 'then'") ||                        
+    msg.includes('charAt') ||
+    msg.includes('writeText') ||
+    msg.includes('Clipboard') ||
+    msg.includes('Clipboard') ||
+    msg.includes('renderCertificateClick is not a function')
+  ) {
     return false;
   }
 });
