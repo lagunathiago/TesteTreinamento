@@ -44,6 +44,8 @@ describe("Teste - Login", () => {
         .should("be.visible")
         .click();
 
+        cy.wait(2000)
+
       //Pesquisa
       cy.get('input[placeholder="Pesquisar treinamentos"]', { timeout: 60000 })
         .should("be.visible")
@@ -55,6 +57,7 @@ describe("Teste - Login", () => {
     });
 
     it("Filtro Ordenação AZ/ZA", () => {
+
       //Clica em nome A/Z
       cy.get('[ng-model="$parent.order"]').click();
       cy.wait(1000);
@@ -104,7 +107,7 @@ describe("Teste - Login", () => {
       cy.get(".open > .ui-select-choices > :nth-child(3)", { timeout: 60000 })
         .should("be.visible")
         .click();
-      cy.wait(12000);
+      cy.wait(4000);
 
       //Clica em Cards
       cy.get(".title-bar > .filter").click();
@@ -114,27 +117,28 @@ describe("Teste - Login", () => {
       cy.get(".open > .ui-select-choices > :nth-child(2)", { timeout: 60000 })
         .should("be.visible")
         .click();
-      cy.wait(12000);
+      cy.wait(4000);
 
       //Clica em Cards
       cy.get(".title-bar > .filter").click();
-      cy.wait(2000);
+      cy.wait(4000);
 
       //cartoes
       cy.get(".open > .ui-select-choices > :nth-child(1)", { timeout: 60000 })
         .should("be.visible")
         .click();
-      cy.wait(12000);
+      cy.wait(4000);
 
       //Clica em Cards
       cy.get(".title-bar > .filter").click();
-      cy.wait(2000);
+      cy.wait(4000);
 
       //cartoes
       cy.get(".open > .ui-select-choices > :nth-child(4)", { timeout: 60000 })
         .should("be.visible")
         .click();
       cy.wait(60000);
+
     });
   });
 });

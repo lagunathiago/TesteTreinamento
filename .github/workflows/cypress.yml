@@ -23,8 +23,9 @@ jobs:
       - name: Instalar dependências
         run: npm ci
 
+      # 🔥 ALTERADO (gera JSON)
       - name: Rodar Cypress
-        run: npx cypress run --spec "cypress/e2e/Filtros.cy.js"
+        run: npx cypress run --spec "cypress/e2e/Filtros.cy.js" --reporter json --reporter-options "output=cypress-report.json"
 
       - name: Upload screenshots
         if: failure()
@@ -40,11 +41,23 @@ jobs:
           name: cypress-videos
           path: cypress/videos
 
+      # 🔥 NOVO (precisa pra ler JSON)
+      - name: Instalar jq
+        run: sudo apt-get install -y jq
+
+      # 🔥 ALTERADO (agora dinâmico)
       - name: Gerar resumo do teste
         if: always()
         run: |
           echo "## Cypress Results" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
+
+          PASSED=$(jq '.stats.passes' cypress-report.json)
+          FAILED=$(jq '.stats.failures' cypress-report.json)
+          DURATION=$(jq '.stats.duration' cypress-report.json)
+
           echo "| Status | Valor |" >> $GITHUB_STEP_SUMMARY
           echo "|--------|-------|" >> $GITHUB_STEP_SUMMARY
-          echo "| Execução | Finalizada |" >> $GITHUB_STEP_SUMMARY
+          echo "| 🟢 Passed | $PASSED |" >> $GITHUB_STEP_SUMMARY
+          echo "| 🔴 Failed | $FAILED |" >> $GITHUB_STEP_SUMMARY
+          echo "| ⏱ Duration | $DURATION ms |" >> $GITHUB_STEP_SUMMARY
