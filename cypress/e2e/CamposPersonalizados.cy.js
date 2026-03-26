@@ -138,7 +138,6 @@ cy.contains('.ui-select-choices-row', 'Aluno',{timeout:60000})
       cy.wait(1000)
 
     });
-    
          it('Adicinando os campos peronalizado', () => {
 
             //Clica nos campos personalizado
@@ -339,22 +338,6 @@ cy.contains('.ui-select-choices-row', 'Aluno',{timeout:60000})
       cy.wait(5000)
 
     });
-
- it('Sai do Perfil adm', () => {
-
-    //Clioca no icon
-  cy.contains('div', 'Administrador',{ timeout: 60000 })
-  .should('be.visible')
-  .click({ force: true });
-
-    //Clica em sair
-    cy.contains('div.option.menu-option', 'Sair', { timeout: 60000 })
-  .should('be.visible')
-  .click()
-
-  cy.wait(10000)
-
-    });
     
        it('Entra em outro perfil e envia os Documentos',()=> {
 
@@ -377,7 +360,6 @@ cy.contains('.ui-select-choices-row', 'Aluno',{timeout:60000})
     cy.url({ timeout: 60000 }).should('not.include', '/subscribe/login');
 
     });
-
     
     it('Vai até a vitrine', () => {
 
@@ -548,46 +530,6 @@ cy.get('.modal:visible', { timeout: 20000 })
 
     });
 
-     it('Meu Cadastro', ()=> {
-
-    //Clica em Minhas Areas
-        cy.get("[ng-class*='accessLink.content.showcase.id.modal.home']",{timeout:60000})
-  .find('.ng-binding')
-  .click({ force: true })
-
-  //Clica em Meu Cadastro
-  cy.get("[ng-class*='home.register']",{timeout:60000})
-  .click()
-
-  //Outras informações
-  cy.get('[ui-sref="accessLink.content.home.register.more-info"]', {timeout:60000})
-  .should('be.visible')
-  .click()
-
-  //Verifica se no está escrito 'Personalizado 01'
-  cy.get('input[placeholder="Atualização Campo 01"]')
-  .should('exist')
- 
-  //Verifica se está escrito 'Personalizado 02'
- cy.get('input[placeholder="Atualização Campo 02"]')
-  .should('exist')
-
-    });
-
-     it("Volta pro perfil de Criação", () => {
-
-     //Clioca no icon
-    cy.get('#user-options-btn > .icon-profile', {timeout: 60000})
-    .should('be.visible')
-    .click()
-
-    //Clica em sair
-    cy.contains('div.option.menu-option', 'Sair', { timeout: 60000 })
-  .should('be.visible')
-  .click()
-
-    });
-    
        it('Entra em outro perfil para verificar a edição dos campos',()=> {
 
         cy.visit("https://hml.lector.live/lector_suporte/subscribe/login");

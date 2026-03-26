@@ -140,7 +140,7 @@ cy.contains('.ui-select-choices-row', 'Aluno', {timeout:60000})
   .should('be.visible')
   .clear()
   .type('Segundo Teste Gerenciar Automação');
-
+  
   //Clica em pesquisar
   cy.get('.multiselect.ng-dirty > .btn', {timeout: 60000})
   .should('be.visible')
