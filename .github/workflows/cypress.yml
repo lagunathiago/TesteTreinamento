@@ -1,15 +1,12 @@
 name: Cypress Tests
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
   workflow_dispatch:
 
 jobs:
   cypress-run:
     runs-on: ubuntu-24.04
+    timeout-minutes: 20
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
@@ -21,12 +18,21 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: npm
+
+      - name: Cache do Cypress
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/Cypress
+          key: cypress-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            cypress-${{ runner.os }}-
 
       - name: Instalar dependências
         run: npm ci
 
-      - name: Rodar Cypress
-        run: npx cypress run --spec "cypress/e2e/CamposPersonalizados.cy.js"
+      - name: Rodar Cypress (sem vídeo)
+        run: npx cypress run --browser chrome --headless --config video=false --spec "cypress/e2e/CamposPersonalizados.cy.js"
 
       - name: Upload screenshots
         if: failure()
@@ -35,20 +41,3 @@ jobs:
           name: cypress-screenshots
           path: cypress/screenshots
           if-no-files-found: ignore
-
-      - name: Upload videos
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: cypress-videos
-          path: cypress/videos
-          if-no-files-found: ignore
-
-      - name: Gerar resumo do teste
-        if: always()
-        run: |
-          echo "## Cypress Results" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "| Status | Valor |" >> $GITHUB_STEP_SUMMARY
-          echo "|--------|-------|" >> $GITHUB_STEP_SUMMARY
-          echo "| Execução | Finalizada |" >> $GITHUB_STEP_SUMMARY
