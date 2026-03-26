@@ -32,7 +32,7 @@ jobs:
         run: npm ci
 
       - name: Rodar Cypress (com vídeo)
-        run: npx cypress run --browser chrome --headless --config video=true,videoCompression=false --spec "cypress/e2e/CamposPersonalizados.cy.js"
+        run: npx cypress run --browser chrome --headless --config video=true,videoCompression=false --spec "cypress/e2e/Filtros.cy.js"
 
       - name: Upload screenshots
         if: failure()

@@ -43,6 +43,7 @@ describe("Teste - Login", () => {
   });
 
   context("Criando Treinamento", { testIsolation: false }, () => {
+
     it("Vai pra categoria", () => {
       cy.get('[title="Treinamentos"] > .sideitem', { timeout: 10000 })
         .scrollIntoView()
@@ -176,6 +177,7 @@ describe("Teste - Login", () => {
         .scrollIntoView()
         .should('be.visible')
         .click();
+
     });
 
     it('Adicinando os campos peronalizado', () => {
@@ -248,7 +250,12 @@ describe("Teste - Login", () => {
         .scrollIntoView()
         .should('be.visible')
         .click();
+
+                cy.wait(4000)
+
     });
+
+
 
     it('Cria o segundo Treinamento com campos', () => {
       cy.get('.title-bar .btn-icon', { timeout: 10000 })
@@ -273,6 +280,7 @@ describe("Teste - Login", () => {
         .scrollIntoView()
         .should('be.visible')
         .click();
+
     });
 
     it("Conteúdo - Documento JPEG", () => {
@@ -428,8 +436,10 @@ describe("Teste - Login", () => {
         .scrollIntoView()
         .should('be.visible')
         .click();
-    });
 
+                cy.wait(5000)
+          
+    });
     it('Entra em outro perfil e envia os Documentos', () => {
       cy.visit("https://hml.lector.live/lector_suporte/subscribe/login");
 
@@ -441,13 +451,13 @@ describe("Teste - Login", () => {
       cy.get('form.ng-pristine > [type="text"]', { timeout: 10000 })
         .scrollIntoView()
         .should('be.visible')
-        .type("thiagosuporte2@uorak.com");
+        .type("thiagosuporte@uorak.com");
 
       cy.get("ng-transclude > .border", { timeout: 10000 })
         .scrollIntoView()
         .should('be.visible')
         .type("123");
-
+        
       cy.get('#btn-entrar', { timeout: 10000 })
         .scrollIntoView()
         .should('be.visible')
@@ -556,7 +566,7 @@ describe("Teste - Login", () => {
     });
 
     it('Vai até a vitrine', () => {
-      cy.get('.active > .ng-binding', { timeout: 10000 })
+      cy.get('.showcase-head-2 > .btn',{timeout:60000})
         .scrollIntoView()
         .should('be.visible')
         .click();
