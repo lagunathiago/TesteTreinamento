@@ -45,11 +45,13 @@ describe("Teste - Login", () => {
 
         // Clicando na aba Treinamento
       cy.get('[title="Treinamentos"] > .sideitem',{timeout:60000})
+        .scrollIntoView()
       .should('be.visible')
       .click()
 
       //Clica na Categoria
       cy.contains("li.list-group-item", "1Teste Automação",{timeout: 60000})
+        .scrollIntoView()
       .should('be.visible')
       .click({force: true})
 
@@ -59,6 +61,7 @@ describe("Teste - Login", () => {
         
         //Clicar em criar treinamentos
         cy.get('.title-bar .btn-icon', { timeout: 600000 }) // até 10 minutos
+          .scrollIntoView()
     .should('exist')
     .should('be.visible')
     .and('not.be.disabled')
