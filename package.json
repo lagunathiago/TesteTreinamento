@@ -14,7 +14,8 @@
   "type": "commonjs",
   "devDependencies": {
     "cypress": "^15.1.0",
-    "cypress-file-upload": "^5.0.8"
+    "cypress-file-upload": "^5.0.8",
+    "mochawesome": "^7.1.4"
   },
   "dependencies": {
     "cypress-real-events": "^1.15.0"

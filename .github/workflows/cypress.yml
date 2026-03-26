@@ -1,15 +1,13 @@
 name: Cypress Tests
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
   workflow_dispatch:
 
 jobs:
   cypress-run:
     runs-on: ubuntu-24.04
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
     steps:
       - name: Checkout do projeto
@@ -23,38 +21,23 @@ jobs:
       - name: Instalar dependências
         run: npm ci
 
-      # 🔥 ALTERADO (gera JSON)
+      # 🔥 AGORA GERA JSON DE VERDADE
       - name: Rodar Cypress
-        run: npx cypress run --spec "cypress/e2e/Filtros.cy.js" --reporter json --reporter-options "output=cypress-report.json"
+        run: npx cypress run --spec "cypress/e2e/Filtros.cy.js" --reporter mochawesome --reporter-options "reportDir=cypress-report,reportFilename=report,overwrite=true,json=true,html=false"
 
-      - name: Upload screenshots
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: cypress-screenshots
-          path: cypress/screenshots
-
-      - name: Upload videos
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: cypress-videos
-          path: cypress/videos
-
-      # 🔥 NOVO (precisa pra ler JSON)
       - name: Instalar jq
         run: sudo apt-get install -y jq
 
-      # 🔥 ALTERADO (agora dinâmico)
+      # 🔥 AGORA FUNCIONA
       - name: Gerar resumo do teste
         if: always()
         run: |
           echo "## Cypress Results" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
 
-          PASSED=$(jq '.stats.passes' cypress-report.json)
-          FAILED=$(jq '.stats.failures' cypress-report.json)
-          DURATION=$(jq '.stats.duration' cypress-report.json)
+          PASSED=$(jq '.stats.passes' cypress-report/report.json)
+          FAILED=$(jq '.stats.failures' cypress-report/report.json)
+          DURATION=$(jq '.stats.duration' cypress-report/report.json)
 
           echo "| Status | Valor |" >> $GITHUB_STEP_SUMMARY
           echo "|--------|-------|" >> $GITHUB_STEP_SUMMARY
