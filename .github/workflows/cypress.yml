@@ -24,4 +24,27 @@ jobs:
         run: npm ci
 
       - name: Rodar Cypress
-        run: npx cypress run --spec "cypress/e2e/Gerenciar3.cy.js"
+        run: npx cypress run --spec "cypress/e2e/Filtros.cy.js"
+
+      - name: Upload screenshots
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+
+      - name: Upload videos
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-videos
+          path: cypress/videos
+
+      - name: Gerar resumo do teste
+        if: always()
+        run: |
+          echo "## Cypress Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Status | Valor |" >> $GITHUB_STEP_SUMMARY
+          echo "|--------|-------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Execução | Finalizada |" >> $GITHUB_STEP_SUMMARY

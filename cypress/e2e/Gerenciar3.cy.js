@@ -97,7 +97,7 @@ describe("Teste - Login", () => {
 
       cy.get(".editing-resource > .end > .btn-swipe-accent").click();
 
-    });
+    }); 
 
     it('Turma Paga sem aprovação', () => {
 
@@ -157,8 +157,9 @@ cy.contains('.ui-select-choices-row', 'Aluno', {timeout:60000})
       .should('be.visible')
       .click()
 
+  
     });
 
- });
+  });
 
 });
