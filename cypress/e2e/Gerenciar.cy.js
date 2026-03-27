@@ -2018,7 +2018,6 @@ cy.get('button.icon-location:visible')
 
       });
 
-
 it('Verefica que não tenha o botão de retomar matricula no usuario Cancelado', () => {
 
   cy.contains('td.subscriptionStatusColumn', 'Cancelado', { timeout: 20000 })

@@ -21,15 +21,19 @@ describe("Teste - Login", () => {
     cy.viewport(1920, 1080);
 
     cy.visit("https://hml.lector.live/lector_suporte/subscribe/login");
-    cy.contains("button", "Entrar").click();
+   
+      cy.contains("button", "Entrar", { timeout: 10000 })
+      .scrollIntoView()
+      .should('be.visible')
+      .click({ force: true });
 
     cy.get('form.ng-pristine > [type="text"]', { timeout: 60000 })
       .should("be.visible")
-      .type("thiagosuporte@uorak.com");
+      .type("qualidade2@lectortec.com.br");
 
     cy.get("ng-transclude > .border", { timeout: 60000 })
       .should("be.visible")
-      .type("123");
+      .type("2006lrnrgr");
 
     cy.get("#btn-entrar", { timeout: 60000 }).should("be.visible").click();
 

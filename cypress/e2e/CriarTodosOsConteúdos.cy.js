@@ -453,7 +453,6 @@ describe("Teste - Login", () => {
   .should('be.visible')
   .click()
 
-
   //link da aula
         cy.get('input[ng-model="editingResource.url"]', { timeout: 60000 })
   .should('be.visible')
