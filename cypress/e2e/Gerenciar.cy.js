@@ -927,7 +927,6 @@ it('Pesquisa por Login e Cancela a Matricula', () => {
 
     });
 
-
     it('Clica em Situação', () => {
 
       cy.wait(2000)
@@ -1050,7 +1049,6 @@ cy.get('.open > .ui-select-choices > :nth-child(1)', { timeout: 10000 })
   .should('be.visible')
 
      cy.wait(3000)
-
 
     });
 

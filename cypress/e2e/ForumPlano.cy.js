@@ -62,6 +62,8 @@ describe("Teste - Login", () => {
       .click({force: true})
 
      });
+
+
 /*
       it('Cria o treinamento Forum Automação', () => {
         
@@ -166,7 +168,7 @@ describe("Teste - Login", () => {
       cy.wait(5000)
 
     });
-    */
+    
       it('Cria o treinamento Tutoria Aprovado Automação', () => {
         
         //Clicar em criar treinamentos
@@ -542,7 +544,9 @@ describe("Teste - Login", () => {
             .should('be.visible')
             .click();
 
+      cy.get(".editing-resource > :nth-child(2) > .w-100").click();
       cy.get(".open > .ui-select-choices > :nth-child(2)").click(); // Documentos
+      
 
       cy.contains(".ui-select-container", "Escolha um documento")
         .should("be.visible")
@@ -567,6 +571,7 @@ describe("Teste - Login", () => {
             .should('be.visible')
             .click();
 
+      cy.get(".editing-resource > :nth-child(2) > .w-100").click();
       cy.get(".open > .ui-select-choices > :nth-child(2)").click(); // Documentos
 
       cy.contains(".ui-select-container", "Escolha um documento")
@@ -592,6 +597,7 @@ describe("Teste - Login", () => {
             .should('be.visible')
             .click();
 
+           cy.get(".editing-resource > :nth-child(2) > .w-100").click();
       cy.get(".open > .ui-select-choices > :nth-child(3)").click(); // Avaliação
 
       cy.contains(".ui-select-container", "Escolha uma avaliação")
@@ -655,7 +661,6 @@ describe("Teste - Login", () => {
       // Clica no botão "Salvar Turma"
       
       cy.get('.add-content > .end > .btn-swipe-accent').click()
-
       
       cy.get('.content-box-footer > .flex > .btn-swipe-accent').click()
 
@@ -760,11 +765,49 @@ describe("Teste - Login", () => {
       
       cy.get('.add-content > .end > .btn-swipe-accent').click()
 
-      
       cy.get('.content-box-footer > .flex > .btn-swipe-accent').click()
 
             cy.wait(5000)
+
+    });
+*/
+
+it('Clica No', () => {
+
+    //Clica no treinamento: Gerenciar Teste Automação
+  cy.contains('.card-title', /^Forum Automação$/, { timeout: 10000 })
+  .scrollIntoView()
+  .should('be.visible')
+  .click({ force: true });
+
+  //Clica em gerenciar
+      cy.get('.manage-subscription > .btn-swipe-accent',{timeout:10000})
+      .should('be.visible')
+      .click()
+
+      });
+
+       it('Foruns', () => {
       
+      //Clica em Matriculados Concuidos
+      cy.contains('a', 'Fóruns', { timeout: 10000 })
+  .should('be.visible')
+  .click()  
+
+    });
+
+    it('Adicinar Forum', () => {
+
+        //Clique em Adicionar
+        cy.get('[ng-if="manageSubscriptionsTabs.forums"] > .btn-swipe-accent.ng-scope')
+        .click() 
+
+      cy.get('input[placeholder="Título"]:visible', { timeout: 20000 })
+  .first()
+  .click({ force: true })
+  .clear({ force: true })
+  .type('Meu título teste', { force: true })
+        
     });
 
   });
