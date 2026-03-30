@@ -78,11 +78,12 @@ describe("Teste - Login", () => {
      it("Conteúdo - Documento JPEG", () => {
 
       //Clica em conteudos
-            cy.get('[ui-sref="accessLink.content.courses.edit.id.contents"]', {timeout:60000})
+            cy.get('[ui-sref="accessLink.content.courses.edit.id.contents"]', {timeout:20000})
+            .scrollIntoView()
             .should('be.visible')
             .click();
 
-            cy.get('ui-view.ng-scope > .flex > .btn-swipe-accent', {timeout:60000})
+            cy.get('ui-view.ng-scope > .flex > .btn-swipe-accent', {timeout:20000})
             .should('be.visible')
             .click();
 
@@ -93,14 +94,14 @@ describe("Teste - Login", () => {
         .should("be.visible")
         .click();
 
-      cy.get("input.ui-select-search:visible", { timeout: 60000 })
+      cy.get("input.ui-select-search:visible", { timeout: 20000 })
         .should("have.length", 1)
         .type("CAPA 19.jpg", { delay: 10 });
 
       cy.contains(
         ".ui-select-choices-row",
         "CAPA 19.jpg",
-        { timeout: 60000 },
+        { timeout: 20000 },
       )
         .should("be.visible")
         .click({ force: true });
@@ -109,7 +110,7 @@ describe("Teste - Login", () => {
         cy.get(".weight").type("1");                                                   // Selecionar peso
         cy.get(".open > .ui-select-choices > :nth-child(2)").click();                  // Selecionar peso 1
 
-          cy.get(".editing-resource > .end > .btn-swipe-accent", { timeout: 60000 })
+          cy.get(".editing-resource > .end > .btn-swipe-accent", { timeout: 20000 })
         .should("exist")
         .click({ force: true });
 
@@ -117,13 +118,13 @@ describe("Teste - Login", () => {
 
      it("Conteúdo - Certificado", () => {
 
-            cy.get('ui-view.ng-scope > .flex > .btn-swipe-accent', {timeout:60000})
+            cy.get('ui-view.ng-scope > .flex > .btn-swipe-accent', {timeout:20000})
             .should('be.visible')
             .click();
       
       cy.get(".editing-resource > :nth-child(2) > .w-100").click();
 
-      cy.get("body .ui-select-choices-row", { timeout: 60000 })
+      cy.get("body .ui-select-choices-row", { timeout: 20000 })
         .should("be.visible")
         .contains(/^Certificado$/i)
         .click({ force: true });
@@ -139,13 +140,13 @@ describe("Teste - Login", () => {
           cy.get(".ui-select-toggle").click({ force: true });
         });
 
-      cy.get("input.ui-select-search:visible", { timeout: 60000 })
+      cy.get("input.ui-select-search:visible", { timeout: 20000 })
         .should("have.length", 1)
         .clear({ force: true })
         .type("Certificado do Treinamento", { force: true, delay: 20 });
 
       // Se existir opção, clica nela
-      cy.get(".ui-select-choices-row", { timeout: 60000 })
+      cy.get(".ui-select-choices-row", { timeout: 20000 })
         .contains("Certificado do Treinamento")
         .click({ force: true });
 
@@ -195,7 +196,6 @@ cy.contains('.ui-select-choices-row', 'Aluno', {timeout:60000})
 
     it('Digita Treinamento', () => {
 
-
       cy.wait(3000) //espera alguns segundos para carregar a pagina
 
       //Digita o Treianamento
@@ -205,18 +205,18 @@ cy.contains('.ui-select-choices-row', 'Aluno', {timeout:60000})
   .type('Segundo Teste Gerenciar Automação');
 
   //Clica em pesquisar
-  cy.get('.multiselect.ng-dirty > .btn', {timeout: 60000})
+  cy.get('.multiselect.ng-dirty > .btn', {timeout: 20000})
   .should('be.visible')
   .click()
 
 //Clica no treinamento: Gerenciar Teste Automação
-  cy.contains('.card-title', /^Segundo Teste Gerenciar Automação$/, { timeout: 60000 })
+  cy.contains('.card-title', /^Segundo Teste Gerenciar Automação$/, { timeout: 20000 })
   .scrollIntoView()
   .should('be.visible')
   .click({ force: true });
 
   //Clica em gerenciar
-      cy.get('.manage-subscription > .btn-swipe-accent',{timeout:60000})
+      cy.get('.manage-subscription > .btn-swipe-accent',{timeout:20000})
       .should('be.visible')
       .click()
       
@@ -260,7 +260,7 @@ cy.get('course-not-subscribed-users.ng-isolate-scope > [ng-include=""] > .report
     cy.wait(2000)
 
   //Confirma
-  cy.contains('button:visible', 'Confirmar', { timeout: 60000 })
+  cy.contains('button:visible', 'Confirmar', { timeout: 20000 })
   .should('be.visible')
   .click({ force: true });
 
@@ -282,7 +282,7 @@ cy.get('course-not-subscribed-users.ng-isolate-scope > [ng-include=""] > .report
   cy.wait(1000)
 
   //Pesquisa
-  cy.get('button.icon-spyglass:visible', { timeout: 60000 })
+  cy.get('button.icon-spyglass:visible', { timeout: 20000 })
   .eq(1)
   .click({ force: true });
 
@@ -304,7 +304,7 @@ cy.get('course-not-subscribed-users.ng-isolate-scope > [ng-include=""] > .report
   cy.wait(2000)
 
   //Confirma
-  cy.contains('button:visible', 'Confirmar', { timeout: 60000 })
+  cy.contains('button:visible', 'Confirmar', { timeout:20000 })
   .should('be.visible')
   .click({ force: true });
 
@@ -326,7 +326,7 @@ cy.get('course-not-subscribed-users.ng-isolate-scope > [ng-include=""] > .report
   cy.wait(1000)
 
   //Pesquisa
-  cy.get('button.icon-spyglass:visible', { timeout: 60000 })
+  cy.get('button.icon-spyglass:visible', { timeout: 20000 })
   .eq(2)
   .click({ force: true });
 
@@ -348,7 +348,7 @@ cy.get('course-not-subscribed-users.ng-isolate-scope > [ng-include=""] > .report
   cy.wait(2000)
 
   //Confirma
-  cy.contains('button:visible', 'Confirmar', { timeout: 60000 })
+  cy.contains('button:visible', 'Confirmar', { timeout: 20000 })
   .should('be.visible')
   .click({ force: true });
 
@@ -369,14 +369,14 @@ cy.get('course-not-subscribed-users.ng-isolate-scope > [ng-include=""] > .report
   cy.wait(2000)
 
     //Clique no grupo
-  cy.contains('Grupo - 2', {timeout:60000})
+  cy.contains('Grupo - 2', {timeout:20000})
   .should('be.visible')
   .click()
 
   cy.wait(2000)
 
  //Pesquisa
-  cy.get('button.icon-spyglass:visible', { timeout: 60000 })
+  cy.get('button.icon-spyglass:visible', { timeout:20000 })
   .eq(3)
   .click({ force: true });
 
@@ -411,7 +411,7 @@ cy.get('td.select-checkbox')
   cy.wait(2000)
 
   //Confirma
-  cy.contains('button:visible', 'Confirmar', { timeout: 60000 })
+  cy.contains('button:visible', 'Confirmar', { timeout: 20000 })
   .should('be.visible')
   .click({ force: true });
 
@@ -438,14 +438,14 @@ cy.get('td.select-checkbox')
   cy.wait(2000)
 
     //Clique no cargo
-  cy.contains('Analista de Testes JR', {timeout:60000})
+  cy.contains('Analista de Testes JR', {timeout:20000})
   .should('be.visible')
   .click()
 
   cy.wait(2000)
 
  //Pesquisa
-  cy.get('button.icon-spyglass:visible', { timeout: 60000 })
+  cy.get('button.icon-spyglass:visible', { timeout: 20000 })
   .eq(4)
   .click({ force: true });
 
@@ -479,7 +479,7 @@ cy.get('td.select-checkbox')
   cy.wait(2000)
 
   //Confirma
-  cy.contains('button:visible', 'Confirmar', { timeout: 60000 })
+  cy.contains('button:visible', 'Confirmar', { timeout:20000 })
   .should('be.visible')
   .click({ force: true });
 
@@ -512,7 +512,7 @@ it('Pesquisa por Perfil faz a Matricula', () => {
   cy.wait(2000)
 
  //Pesquisa
-  cy.get('button.icon-spyglass:visible', { timeout: 60000 })
+  cy.get('button.icon-spyglass:visible', { timeout: 20000 })
   .eq(5)
   .click({ force: true });
 
@@ -542,7 +542,7 @@ cy.get('td.select-checkbox')
   cy.wait(2000)
 
   //Confirma
-  cy.contains('button:visible', 'Confirmar', { timeout: 60000 })
+  cy.contains('button:visible', 'Confirmar', { timeout: 20000 })
   .should('be.visible')
   .click({ force: true });
 
@@ -575,7 +575,7 @@ it('Pesquisa por Clientes e faz a Matricula', () => {
   cy.wait(2000)
 
  //Pesquisa
-  cy.get('button.icon-spyglass:visible', { timeout: 60000 })
+  cy.get('button.icon-spyglass:visible', { timeout: 20000 })
   .eq(6)
   .click({ force: true });
 
@@ -603,7 +603,7 @@ cy.get('td.select-checkbox')
   cy.wait(2000)
 
   //Confirma
-  cy.contains('button:visible', 'Confirmar', { timeout: 60000 })
+  cy.contains('button:visible', 'Confirmar', { timeout: 20000 })
   .should('be.visible')
   .click({ force: true });
 
@@ -621,7 +621,7 @@ cy.get('td.select-checkbox')
 it('Clica em Aguaradando pagamento', () => {
 
      //Clica em Matriculados Concuidos
-      cy.contains('a', ' Aguardando pagamento', { timeout: 60000 })
+      cy.contains('a', ' Aguardando pagamento', { timeout: 20000 })
   .click({force: true})
     
 });
@@ -646,7 +646,7 @@ cy.get('[ng-show="manageSubscriptionsTabs.waitingPayment"] > [ng-include=""] > .
 
     cy.wait(2000)
 
-    cy.contains('table tbody tr', 'thiago teste', { timeout: 60000 })
+    cy.contains('table tbody tr', 'thiago teste', { timeout: 20000 })
     .should('be.visible')
 
       // Apaga Usuario
@@ -670,12 +670,12 @@ cy.get('[ng-show="manageSubscriptionsTabs.waitingPayment"] > [ng-include=""] > .
   cy.wait(1000)
 
   //Pesquisa
-  cy.get('button.icon-spyglass:visible', { timeout: 60000 })
+  cy.get('button.icon-spyglass:visible', { timeout: 20000 })
   .eq(1)
   .click({ force: true });
 
   
-    cy.contains('table tbody tr', 'iiuqprxz@sharklasers.com', { timeout: 60000 })
+    cy.contains('table tbody tr', 'iiuqprxz@sharklasers.com', { timeout:20000 })
     .should('be.visible')
 
   //Apaga email
@@ -699,7 +699,7 @@ cy.get('[ng-show="manageSubscriptionsTabs.waitingPayment"] > [ng-include=""] > .
   cy.wait(1000)
 
   //Pesquisa
-  cy.get('button.icon-spyglass:visible', { timeout: 60000 })
+  cy.get('button.icon-spyglass:visible', { timeout: 20000 })
   .eq(2)
   .click({ force: true });
 
@@ -725,26 +725,26 @@ cy.get('[ng-show="manageSubscriptionsTabs.waitingPayment"] > [ng-include=""] > .
   cy.wait(2000)
 
     //Clique no grupo
-  cy.contains('Grupo - 2', {timeout:60000})
+  cy.contains('Grupo - 2', {timeout:20000})
   .should('be.visible')
   .click()
 
   cy.wait(1000)
 
  //Pesquisa
-  cy.get('button.icon-spyglass:visible', { timeout: 60000 })
+  cy.get('button.icon-spyglass:visible', { timeout: 20000 })
   .eq(3)
   .click({ force: true });
 
   cy.wait(1000)
 
-  cy.contains('td', 'Grupo - 2', { timeout: 60000 })
+  cy.contains('td', 'Grupo - 2', { timeout: 20000 })
   .should('be.visible')
 
   cy.wait(2000)
 
  //limpa 
-  cy.get('.ui-select-match-item > .close',{timeout:10000})
+  cy.get('.ui-select-match-item > .close',{timeout: 20000})
   .should('be.visible')
 
      cy.wait(3000)
@@ -763,20 +763,20 @@ cy.get('[ng-show="manageSubscriptionsTabs.waitingPayment"] > [ng-include=""] > .
   cy.wait(2000)
 
     //Clique no cargo
-  cy.contains('Analista de Testes JR', {timeout:60000})
+  cy.contains('Analista de Testes JR', {timeout:20000})
   .should('be.visible')
   .click()
 
   cy.wait(2000)
 
  //Pesquisa
-  cy.get('button.icon-spyglass:visible', { timeout: 60000 })
+  cy.get('button.icon-spyglass:visible', { timeout: 20000 })
   .eq(4)
   .click({ force: true });
 
   cy.wait(1000)
 
-  cy.contains('td', 'Analista de Testes JR', { timeout: 60000 })
+  cy.contains('td', 'Analista de Testes JR', { timeout: 20000 })
   .should('be.visible')
 
   //limpa 
@@ -806,17 +806,17 @@ it('Pesquisa por Perfil faz a Matricula', () => {
   cy.wait(2000)
 
  //Pesquisa
-  cy.get('button.icon-spyglass:visible', { timeout: 60000 })
+  cy.get('button.icon-spyglass:visible', { timeout: 20000 })
   .eq(5)
   .click({ force: true });
 
   cy.wait(1000)
 
-  cy.contains('td', 'Aluno', { timeout: 60000 })
+  cy.contains('td', 'Aluno', { timeout: 20000 })
   .should('be.visible')
 
  //limpa 
-  cy.get('.ui-select-match-item > .close',{timeout:10000})
+  cy.get('.ui-select-match-item > .close',{timeout:20000})
   .should('be.visible')
 
      cy.wait(3000)
@@ -841,13 +841,13 @@ it('Pesquisa por Clientes e faz a Matricula', () => {
   cy.wait(2000)
 
  //Pesquisa
-  cy.get('button.icon-spyglass:visible', { timeout: 60000 })
+  cy.get('button.icon-spyglass:visible', { timeout: 20000 })
   .eq(6)
   .click({ force: true });
 
   cy.wait(1000)
 
-  cy.contains('td', 'Outro', { timeout: 60000 })
+  cy.contains('td', 'Outro', { timeout: 20000 })
   .should('be.visible')
 
   cy.wait(2000)
@@ -865,7 +865,7 @@ it("Filtros de exportação/Aguardando pagamento", () => {
   cy.wait(3000)
 
   //Selecionar colunas
-        cy.get('#waiting-payment-table_wrapper > :nth-child(1) > .dt-buttons > .buttons-collection', {timeout: 60000})
+        cy.get('#waiting-payment-table_wrapper > :nth-child(1) > .dt-buttons > .buttons-collection', {timeout: 20000})
         .should("be.visible")
         .click();
 
@@ -885,41 +885,41 @@ it("Filtros de exportação/Aguardando pagamento", () => {
       //Vai e volta para fechar a caixinha de selecionar colunas
 
       //Clica em Matriculados Concuidos
-      cy.contains('a', ' Matriculados / Concluídos', { timeout: 60000 })
+      cy.contains('a', ' Matriculados / Concluídos', { timeout: 20000 })
   .click({force: true})
 
       cy.wait(2000)
 
           //Clica em Aguardando pagamento
-      cy.contains('a', 'Aguardando pagamento', { timeout: 60000 })
+      cy.contains('a', 'Aguardando pagamento', { timeout: 20000 })
   .should('be.visible')
   .click()
 
   cy.wait(3000)
     
       //Copiar
-      cy.get('#waiting-payment-table_wrapper > :nth-child(1) > .dt-buttons > .buttons-copy', {timeout:60000})
+      cy.get('#waiting-payment-table_wrapper > :nth-child(1) > .dt-buttons > .buttons-copy', {timeout:20000})
       .should("be.visible")
       .click();
 
       cy.wait(1000);
 
       //Csv
-      cy.get('#waiting-payment-table_wrapper > :nth-child(1) > .dt-buttons > .buttons-csv',  { timeout: 60000 })
+      cy.get('#waiting-payment-table_wrapper > :nth-child(1) > .dt-buttons > .buttons-csv',  { timeout: 20000 })
       .should("be.visible")
       .click();
 
       cy.wait(1000);
 
       //Pdf
-      cy.get('#waiting-payment-table_wrapper > :nth-child(1) > .dt-buttons > .buttons-pdf', { timeout: 60000 })
+      cy.get('#waiting-payment-table_wrapper > :nth-child(1) > .dt-buttons > .buttons-pdf', { timeout: 20000 })
       .should("be.visible")
       .click();
 
       cy.wait(1000);
 
       //Xls
-      cy.get('#waiting-payment-table_wrapper > :nth-child(1) > .dt-buttons > .icon-file-xls', { timeout: 60000 })
+      cy.get('#waiting-payment-table_wrapper > :nth-child(1) > .dt-buttons > .icon-file-xls', { timeout: 20000 })
       .should("be.visible")
       .click();
 
@@ -927,20 +927,20 @@ it("Filtros de exportação/Aguardando pagamento", () => {
 
       //Vai e volta pra ficar 10 porpágina
       //Clica em Matriculados Concuidos
-      cy.contains('a', ' Matriculados / Concluídos', { timeout: 60000 })
+      cy.contains('a', ' Matriculados / Concluídos', { timeout: 20000 })
   .click({force: true})
 
       cy.wait(2000)
 
           //Clica em Matriculados Concuidos
-      cy.contains('a', 'Aguardando pagamento', { timeout: 60000 })
+      cy.contains('a', 'Aguardando pagamento', { timeout: 20000 })
   .should('be.visible')
   .click()
 
       cy.wait(1000);
 
       //Imprimir
-      cy.get('#waiting-payment-table_wrapper > :nth-child(1) > .dt-buttons > .buttons-print', { timeout: 60000 })
+      cy.get('#waiting-payment-table_wrapper > :nth-child(1) > .dt-buttons > .buttons-print', { timeout: 20000 })
       .should("be.visible")
       .click();
 
@@ -995,17 +995,17 @@ it('Listagem', () => {
      it('Vai até a vitrine', () => {
 
         //Clica em conteúdos
-        cy.get('.active > .ng-binding',{timeout:60000})
+        cy.get('.active > .ng-binding',{timeout:20000})
         .should('be.visible')
         .click()
 
         //Vai até a vitrine
-        cy.get('.showcase-navigation-menu > :nth-child(2) > .showcase-menu-name',{timeout:60000})
+        cy.get('.showcase-navigation-menu > :nth-child(2) > .showcase-menu-name',{timeout:20000})
         .should('be.visible')
         .click()
 
         //Clica em Ver Tudo
-        cy.get('.carousel-container > .showcase-title-container > .middle > .show-all',{timeout:60000})
+        cy.get('.carousel-container > .showcase-title-container > .middle > .show-all',{timeout:20000})
         .last()
         .should('be.visible')
         .click()
@@ -1015,7 +1015,7 @@ it('Listagem', () => {
   it('Clica no treinamento ', ()=> {
 
       //Clica no Treinamento
-       cy.contains('.showcase-card-title', 'Segundo Teste Gerenciar Automação', { timeout: 60000 })
+       cy.contains('.showcase-card-title', 'Segundo Teste Gerenciar Automação', { timeout: 20000 })
   .should('be.visible')
   .scrollIntoView()
   .click()
@@ -1056,12 +1056,12 @@ cy.contains('Continuar compra', { timeout: 20000 })
      it("Vai até a categoria", () => {
 
         // Clicando na aba Treinamento
-      cy.get('[title="Treinamentos"] > .sideitem',{timeout:60000})
+      cy.get('[title="Treinamentos"] > .sideitem',{timeout:20000})
       .should('be.visible')
       .click()
 
       //Clica na Categoria
-      cy.contains("li.list-group-item", "1Teste Automação",{timeout: 60000})
+      cy.contains("li.list-group-item", "1Teste Automação",{timeout: 20000})
       .should('be.visible')
       .click({force: true})
 
@@ -1078,18 +1078,18 @@ cy.contains('Continuar compra', { timeout: 20000 })
   .type('Segundo Teste Gerenciar Automação');
 
   //Clica em pesquisar
-  cy.get('.multiselect.ng-dirty > .btn', {timeout: 60000})
+  cy.get('.multiselect.ng-dirty > .btn', {timeout: 20000})
   .should('be.visible')
   .click()
 
 //Clica no treinamento: Gerenciar Teste Automação
-  cy.contains('.card-title', /^Segundo Teste Gerenciar Automação$/, { timeout: 60000 })
+  cy.contains('.card-title', /^Segundo Teste Gerenciar Automação$/, { timeout: 20000 })
   .scrollIntoView()
   .should('be.visible')
   .click({ force: true });
 
   //Clica em gerenciar
-      cy.get('.manage-subscription > .btn-swipe-accent',{timeout:60000})
+      cy.get('.manage-subscription > .btn-swipe-accent',{timeout:20000})
       .should('be.visible')
       .click()
       
@@ -1098,7 +1098,7 @@ cy.contains('Continuar compra', { timeout: 20000 })
     it('Clica em Aguaradando pagamento', () => {
 
      //Clica em Matriculados Concuidos
-      cy.contains('a', ' Aguardando pagamento', { timeout: 60000 })
+      cy.contains('a', ' Aguardando pagamento', { timeout: 20000 })
   .click({force: true})
     
 });
@@ -1122,11 +1122,11 @@ cy.get('[ng-show="manageSubscriptionsTabs.waitingPayment"] > [ng-include=""] > .
 
     cy.wait(2000)
 
-    cy.contains('table tbody tr', 'thiago teste', { timeout: 60000 })
+    cy.contains('table tbody tr', 'thiago teste', { timeout: 20000 })
     .should('be.visible')
 
       //Clica no primero icon box disponivel
-  cy.get('td.select-checkbox:visible', { timeout: 60000 })
+  cy.get('td.select-checkbox:visible', { timeout: 20000 })
   .not('.disabled') // evita desabilitados (se existir)
   .not('.selected') // evita já selecionados (se existir)
   .first()
@@ -1135,14 +1135,14 @@ cy.get('[ng-show="manageSubscriptionsTabs.waitingPayment"] > [ng-include=""] > .
   cy.wait(2000)
   
   //Cancelar Pagamentos
-  cy.contains('button', 'Cancelar pagamentos', { timeout: 60000 })
+  cy.contains('button', 'Cancelar pagamentos', { timeout: 20000 })
   .should('be.visible')
   .click({ force: true })
 
   cy.wait(2000)
   
   //Confirmar
-  cy.get('button.btn-swipe-accent:visible', { timeout: 60000 })
+  cy.get('button.btn-swipe-accent:visible', { timeout: 20000 })
   .contains('Confirmar')
   .click({ force: true });
 
@@ -1155,7 +1155,7 @@ cy.get('[ng-show="manageSubscriptionsTabs.waitingPayment"] > [ng-include=""] > .
       cy.wait(3000)
         
       //Clica em Matriculados Concuidos
-      cy.contains('a', 'Não matriculados', { timeout: 60000 })
+      cy.contains('a', 'Não matriculados', { timeout: 20000 })
   .click({force: true})
 
       //Digita Usuario
@@ -1203,28 +1203,27 @@ cy.get('course-not-subscribed-users.ng-isolate-scope > [ng-include=""] > .report
      it('Vai até a vitrine', () => {
 
         //Clica em conteúdos
-        cy.get('.active > .ng-binding',{timeout:60000})
+        cy.get('.active > .ng-binding',{timeout:20000})
         .should('be.visible')
         .click()
 
         //Vai até a vitrine
-        cy.get('.showcase-navigation-menu > :nth-child(2) > .showcase-menu-name',{timeout:60000})
+        cy.get('.showcase-navigation-menu > :nth-child(2) > .showcase-menu-name',{timeout:20000})
         .should('be.visible')
         .click()
 
         //Clica em Ver Tudo
-        cy.get('.carousel-container > .showcase-title-container > .middle > .show-all',{timeout:60000})
+        cy.get('.carousel-container > .showcase-title-container > .middle > .show-all',{timeout:20000})
         .last()
         .should('be.visible')
         .click()
-
 
     });
 
   it('Clica no treinamento ', ()=> {
 
       //Clica no Treinamento
-       cy.contains('.showcase-card-title', 'Segundo Teste Gerenciar Automação', { timeout: 60000 })
+       cy.contains('.showcase-card-title', 'Segundo Teste Gerenciar Automação', { timeout: 20000 })
   .should('be.visible')
   .scrollIntoView()
   .click()
@@ -1239,7 +1238,6 @@ cy.contains('Comprar', { timeout: 20000 })
   .should('be.visible')
 
      });
-
 
       it('Entra em outro pesfil e cancela o pagamento', () => {
 
@@ -1267,21 +1265,21 @@ cy.contains('Comprar', { timeout: 20000 })
     it("Vai até os relatóros", ()=> {
 
     //Clica em relatórios
-    cy.get('[title="Relatórios"] > .sideitem', { timeout: 60000 })
+    cy.get('[title="Relatórios"] > .sideitem', { timeout: 20000 })
         .should('be.visible')
         .click();
 
           cy.wait(5000)
 
             //Treinamento
-    cy.contains('li.list-group-item.node-report-categories', 'Treinamentos', { timeout: 60000 })
+    cy.contains('li.list-group-item.node-report-categories', 'Treinamentos', { timeout: 20000 })
   .scrollIntoView()
   .should('be.visible')
   .click({ force: true });
 
   
             //Clica em Compras
-    cy.contains('li.list-group-item.node-report-categories', 'Compras', { timeout: 60000 })
+    cy.contains('li.list-group-item.node-report-categories', 'Compras', { timeout: 20000 })
   .scrollIntoView()
   .should('be.visible')
   .click({ force: true });
@@ -1330,7 +1328,7 @@ cy.contains('Comprar', { timeout: 20000 })
      it('Vai até logs geral', () => {
         
             //Clica em Geral
-  cy.get('[data-nodeid="59"]',{ timeout: 60000})
+  cy.get('[data-nodeid="59"]',{ timeout: 20000})
     .click({ force: true })
 
      });
@@ -1349,14 +1347,14 @@ cy.contains('Comprar', { timeout: 20000 })
   cy.wait(1000)
 
   //Clica em ação
-  cy.get(':nth-child(2) > .relative > .w-100 > :nth-child(1) > .placeholder', {timeout:60000 })
+  cy.get(':nth-child(2) > .relative > .w-100 > :nth-child(1) > .placeholder', {timeout:10000 })
   .should('be.visible')
   .click({force: true})
 
   cy.wait(1000)
 
   //Clica em remoção
-  cy.get(':nth-child(2) > .relative > .custom-dropdown > div > :nth-child(4) > .icon-checkbox', {timeout:60000})
+  cy.get(':nth-child(2) > .relative > .custom-dropdown > div > :nth-child(4) > .icon-checkbox', {timeout:10000})
   .should('be.visible')
   .click({force: true})
 
@@ -1400,17 +1398,17 @@ it('ENTRA NO PERFIL ALUNO VERIFICA SE ESTA ESCRITO O BOTÃO: CONTINUAR COMRPRA',
      it('Vai até a vitrine', () => {
 
         //Clica em conteúdos
-        cy.get('.active > .ng-binding',{timeout:60000})
+        cy.get('.active > .ng-binding',{timeout:10000})
         .should('be.visible')
         .click()
 
         //Vai até a vitrine
-        cy.get('.showcase-navigation-menu > :nth-child(2) > .showcase-menu-name',{timeout:60000})
+        cy.get('.showcase-navigation-menu > :nth-child(2) > .showcase-menu-name',{timeout:10000})
         .should('be.visible')
         .click()
 
         //Clica em Ver Tudo
-        cy.get('.carousel-container > .showcase-title-container > .middle > .show-all',{timeout:60000})
+        cy.get('.carousel-container > .showcase-title-container > .middle > .show-all',{timeout:10000})
         .last()
         .should('be.visible')
         .click()
@@ -1420,7 +1418,7 @@ it('ENTRA NO PERFIL ALUNO VERIFICA SE ESTA ESCRITO O BOTÃO: CONTINUAR COMRPRA',
   it('Clica no treinamento ', ()=> {
 
       //Clica no Treinamento
-       cy.contains('.showcase-card-title', 'Segundo Teste Gerenciar Automação', { timeout: 60000 })
+       cy.contains('.showcase-card-title', 'Segundo Teste Gerenciar Automação', { timeout: 20000 })
   .should('be.visible')
   .scrollIntoView()
   .click()
@@ -1475,20 +1473,20 @@ cy.log('VEREFIQUE SE VOCE SERÁ REDIRECIONADO PARA A PAGINA DO MERCADO PAGO')
      it("Vai até os relatóros", ()=> {
 
     //Clica em relatórios
-    cy.get('[title="Relatórios"] > .sideitem', { timeout: 60000 })
+    cy.get('[title="Relatórios"] > .sideitem', { timeout: 20000 })
         .should('be.visible')
         .click();
 
           cy.wait(5000)
 
             //Treinamento
-    cy.contains('li.list-group-item.node-report-categories', 'Treinamentos', { timeout: 60000 })
+    cy.contains('li.list-group-item.node-report-categories', 'Treinamentos', { timeout: 20000 })
   .scrollIntoView()
   .should('be.visible')
   .click({ force: true });
   
             //Clica em Compras
-    cy.contains('li.list-group-item.node-report-categories', 'Compras', { timeout: 60000 })
+    cy.contains('li.list-group-item.node-report-categories', 'Compras', { timeout: 20000 })
   .scrollIntoView()
   .should('be.visible')
   .click({ force: true });
@@ -1526,8 +1524,8 @@ cy.log('VEREFIQUE SE VOCE SERÁ REDIRECIONADO PARA A PAGINA DO MERCADO PAGO')
   .should('be.visible')
   .click();
 
-  cy.pause()
   cy.log('VALIDE QUE FOI GERADO UMA NOVA TRANSMIÇÃO')
+  cy.wait(5000)
 
      });
 

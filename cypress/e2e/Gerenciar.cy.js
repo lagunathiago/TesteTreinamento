@@ -26,11 +26,11 @@ describe("Teste - Login", () => {
 
     cy.get('form.ng-pristine > [type="text"]', { timeout: 60000 })
       .should("be.visible")
-      .type("abcaq@mailto.plus");
+      .type("thiagosuporte@uorak.com");
 
     cy.get("ng-transclude > .border", { timeout: 60000 })
       .should("be.visible")
-      .type("1");
+      .type("123");
 
     cy.get("#btn-entrar", { timeout: 60000 }).should("be.visible").click();
 
@@ -1275,7 +1275,6 @@ cy.get('course-not-subscribed-users.ng-isolate-scope > [ng-include=""] > .report
 
     });
 
-  
      it('Pesquisa por Email e faz a Matricula', () => {
 
        //Digita Email
@@ -1931,7 +1930,6 @@ cy.get('.modal:visible', { timeout: 10000 })
 
    });
 
-
   });
 
    it('Conversar',() => {
@@ -2219,7 +2217,7 @@ cy.get('.popover-body:visible')
 
     cy.get('form.ng-pristine > [type="text"]', { timeout: 10000 })
       .should("be.visible")
-      .type("thiagosuporte2@uorak.com");
+      .type("thiagosuporte@uorak.com");
 
     cy.get("ng-transclude > .border", { timeout: 10000 })
       .should("be.visible")
@@ -2282,11 +2280,11 @@ cy.wait(7000)
 
     cy.get('form.ng-pristine > [type="text"]', { timeout: 60000 })
       .should("be.visible")
-      .type("thiagosuporte@uorak.com");
+      .type("abcaq@mailto.plus");
 
     cy.get("ng-transclude > .border", { timeout: 60000 })
       .should("be.visible")
-      .type("123");
+      .type("1");
 
     cy.get("#btn-entrar", { timeout: 60000 }).should("be.visible").click();
 
@@ -3068,7 +3066,6 @@ it('Listagem', () => {
         .should('be.visible')
         .click()
 
-
     });
 
   it('Clica no treinamento ', ()=> {
@@ -3082,7 +3079,6 @@ it('Listagem', () => {
   cy.wait(2000)
 
     })
-
 
     it('Fazer incrição', () => {
 

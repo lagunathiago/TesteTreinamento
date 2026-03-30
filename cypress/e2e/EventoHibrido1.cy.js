@@ -170,7 +170,7 @@ describe("Teste - Login", () => {
         .click(); //botao prximo
 
         cy.pause()
-        cy.log('REALIZE O AGENDAMENTO, E INSIRA UMA VAGAS')
+        cy.log('REALIZE O AGENDAMENTO, E INSIRA APENAS UMA VAGA PRESENCIAL')
 
       cy.get('.navigation-controls > .ml-20')
         .scrollIntoView()
@@ -262,7 +262,9 @@ describe("Teste - Login", () => {
 
   cy.wait(2000)
 
-  it('Se escreve como Presensial')
+  });
+
+  it('Se escreve como Presensial', ()=> {
   
    //Clica em Fazer Incrição
         cy.get('[ng-click="subscribeClass(class);"]', { timeout: 60000 })
@@ -294,11 +296,11 @@ describe("Teste - Login", () => {
 
         cy.wait(1000)
 
-        cy.contains('Evento Híbrido (Presencial)', { timeout: 60000 })
+        cy.contains('Evento Híbrido (Presencial)', { timeout: 20000 })
   .should('be.visible');
 
         //Clica em voltar
-    cy.get("#hideResource", { timeout: 60000 })
+    cy.get("#hideResource", { timeout: 20000 })
       .should("be.visible")
       .click({ force: true });
 
@@ -357,8 +359,9 @@ describe("Teste - Login", () => {
 
   cy.wait(2000)
 
+  });
   
-  it('Se escreve como Presensial')
+  it('Verifica ao atingir o limite de vaga é derecionado para online', ()=> {
 
    //Clica em Fazer Incrição
         cy.get('[ng-click="subscribeClass(class);"]', { timeout: 60000 })

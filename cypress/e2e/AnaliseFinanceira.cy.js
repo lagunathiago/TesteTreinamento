@@ -37,7 +37,7 @@ describe("Teste - Login", () => {
 
   context("Teste Login", () => {
     
-    /*
+    
 
       it("Teste Login", () => {
 
@@ -850,7 +850,7 @@ cy.get('.modal:visible', { timeout: 60000 })
   cy.wait(5000)
 
     });
-*/
+
      it('Sai do Perfil adm', () => {
 
     //Clioca no icon
@@ -888,8 +888,6 @@ cy.get('.modal:visible', { timeout: 60000 })
     cy.url({ timeout: 60000 }).should('not.include', '/subscribe/login');
   });
   
-
-/*
     it("Envia para a anaise o Treinamento: Campo Personalizado + Aprovação de Gestor + Analise Financeira", () => {
 
      // Clicando na aba Treinamento
@@ -1105,7 +1103,7 @@ cy.get('.modal:visible', { timeout: 60000 })
   .click();
   
     });
-*/
+
     
 it("Vai até os relatóros", ()=> {
 
@@ -1125,7 +1123,7 @@ it("Vai até os relatóros", ()=> {
     cy.wait(3000)
 
 });
-/*
+
      it('Pesquisa o Primeiro treinamento e Aprova a compra', ()=> {
 
       cy.wait(3000)
@@ -1170,7 +1168,7 @@ cy.contains('button', 'Aprovar compra', { timeout: 10000 })
   cy.wait(2000)
 
     });
-*/
+
      it('Pesquisa o Segundo treinamento e Aprova a compra', ()=> {
 
       cy.wait(3000)
@@ -1262,7 +1260,7 @@ cy.contains('button', 'Cancelar análise financeira', { timeout: 10000 })
 
     });
 
-    /*
+    
     it('Verifica se o aluno está em Aguardando Pagamento', ()=> {
 
       // Clicando na aba Treinamento
@@ -1891,6 +1889,6 @@ cy.get('div.modal:visible', { timeout: 20000 })
   cy.log('ALTERE PARA UMA DATA NO FUTURO E NO PASSADO, NÃO DEVE DEIXAR')
 
     });
-    */
+    
    });
   });

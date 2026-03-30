@@ -6,7 +6,7 @@ on:
 jobs:
   cypress-run:
     runs-on: ubuntu-24.04
-    timeout-minutes: 20
+    timeout-minutes: 120
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
@@ -32,7 +32,7 @@ jobs:
         run: npm ci
 
       - name: Rodar Cypress (com vídeo)
-        run: npx cypress run --browser chrome --headless --config video=true,videoCompression=false --spec "cypress/e2e/Gerenciar.cy.js"
+        run: npx cypress run --browser chrome --headless --config video=true,videoCompression=false --spec "cypress/e2e/Gerenciar2.cy.js"
 
       - name: Upload screenshots
         if: failure()

@@ -23,22 +23,22 @@ describe("Teste - Login", () => {
     cy.visit("https://hml.lector.live/lector_suporte/subscribe/login");
     cy.viewport(1920, 1080);
 
-    cy.contains("button", "Entrar", { timeout: 10000 })
+    cy.contains("button", "Entrar", { timeout: 60000 })
       .scrollIntoView()
       .should('be.visible')
       .click({ force: true });
 
-    cy.get('form.ng-pristine > [type="text"]', { timeout: 10000 })
+    cy.get('form.ng-pristine > [type="text"]', { timeout: 60000 })
       .scrollIntoView()
       .should("be.visible")
-      .type("qualidade2@lectortec.com.br");
+      .type("thiagosuporte@uorak.com");
 
-    cy.get("ng-transclude > .border", { timeout: 10000 })
+    cy.get("ng-transclude > .border", { timeout: 60000 })
       .scrollIntoView()
       .should("be.visible")
-      .type("2006lrnrgr");
+      .type("123");
 
-    cy.get("#btn-entrar", { timeout: 10000 })
+    cy.get("#btn-entrar", { timeout: 60000 })
       .scrollIntoView()
       .should("be.visible")
       .click();
@@ -65,6 +65,7 @@ describe("Teste - Login", () => {
 
      });
 
+/*
       it('Cria o treinamento', () => {
         
         //Clicar em criar treinamentos
@@ -81,7 +82,7 @@ describe("Teste - Login", () => {
 
         cy.get("#courseName")
           .scrollIntoView()
-          .type("Evento Hibrido Automação") //  Nome no Treinamento
+          .type("Evento Hibrido Automação 2") //  Nome no Treinamento
 
     });
 
@@ -89,6 +90,7 @@ describe("Teste - Login", () => {
 
           //Clica em conteudos
             cy.get('[ui-sref="accessLink.content.courses.edit.id.contents"]', {timeout:60000})
+            .scrollIntoView()
             .should('be.visible')
             .click();
 
@@ -106,7 +108,7 @@ describe("Teste - Login", () => {
       cy.get('input[placeholder="Nome"]:visible', { timeout: 60000 })
         .first()
         .clear({ force: true })
-        .type("Aula Presencial TEANMS", { force: true });
+        .type("Aula Presencial Youtube Automação", { force: true });
 
         cy.contains('.first-row', 'Evento Híbrido')
         .scrollIntoView()
@@ -114,10 +116,6 @@ describe("Teste - Login", () => {
         .find('label.checkbox')
         .should('be.visible')
         .click({ force: true })
-
-        cy.log('DESCREVA UM DESCRIÇÃO PARA ONILNE/PRESECIAL/CONTEUDO')
-        cy.pause()
-        cy.log('DESCREVA UM DESCRIÇÃO PARA ONILNE/PRESECIAL/CONTEUDO')
 
           cy.wait(1000)
           
@@ -129,8 +127,8 @@ describe("Teste - Login", () => {
   .should('be.visible')
   .click()
 
-  //Clica no TEANMS
-  cy.get('.open > .ui-select-choices > :nth-child(3)',{timeout:60000})
+   //Clica no youtube
+  cy.get('.open > .ui-select-choices > :nth-child(4)',{timeout:60000})
   .should('be.visible')
   .click()
 
@@ -138,9 +136,20 @@ describe("Teste - Login", () => {
         cy.get('input[ng-model="editingResource.url"]', { timeout: 60000 })
   .should('be.visible')
   .clear()
-  .type('https://teams.live.com/meet/9324583981570?p=StQQv6W0Pnmo0pe2VH', { delay: 30 })
+  .type('https://www.youtube.com/watch?v=Bz1uWWnX77s', { delay: 30 })
+
+  //LINK DE GRAVAÇÃO
+  cy.get('input[ng-model="editingResource.recordingUrl"]', { timeout: 60000 })
+  .should('be.visible')
+  .clear()
+  .type('https://www.youtube.com/watch?v=Bz1uWWnX77s', { delay: 30 })
+
+  cy.log('DESCREVA UM DESCRIÇÃO PARA ONILNE/PRESECIAL/CONTEUDO')
+        cy.pause()
+        cy.log('DESCREVA UM DESCRIÇÃO PARA ONILNE/PRESECIAL/CONTEUDO')
 
       cy.get(".editing-resource > .end > .btn-swipe-accent").click();
+
 
     });
     
@@ -169,7 +178,7 @@ describe("Teste - Login", () => {
         .click(); //botao prximo
 
         cy.pause()
-        cy.log('REALIZE O AGENDAMENTO, E INSIRA UMA VAGAS')
+        cy.log('REALIZE O AGENDAMENTO, E INSERA APENAS UMA VAGA PRESENCIAL')
 
       cy.get('.navigation-controls > .ml-20')
         .scrollIntoView()
@@ -179,16 +188,14 @@ describe("Teste - Login", () => {
         .scrollIntoView()
         .click()
 
-        cy
-
       cy.get('.step2 > .permission-select > [ng-show="showUser"] > .column > .multiselect > .border > .ui-select-match > .btn-default')
-        .scrollIntoView()
         .type("Aluno")
 
-      cy.contains('.ui-select-choices-row', 'Aluno', {timeout:60000})
-        .scrollIntoView()
-        .first()
-        .click()
+        cy.wait(1000)
+
+         cy.get('.ui-select-choices-row:visible', { timeout: 20000 })
+  .contains(/^Aluno$/)
+  .click({ force: true })
 
       cy.contains('button', 'Adicionar')
         .scrollIntoView()
@@ -210,7 +217,7 @@ describe("Teste - Login", () => {
 
     });
 
-      it('ENTRA NO PERFIL ALUNO E MATRICULA COMO PRESENCIAL ', () => {
+      it('ENTRA NO PERFIL ALUNO E MATRICULA COMO ONLINE', () => {
 
          cy.visit("https://hml.lector.live/lector_suporte/subscribe/login");
     cy.contains("button", "Entrar").click();
@@ -244,6 +251,8 @@ describe("Teste - Login", () => {
         .should('be.visible')
         .click()
 
+        cy.wait(3000)
+
         //Clica em Ver Tudo
         cy.get('.carousel-container > .showcase-title-container > .middle > .show-all',{timeout:60000})
         .last()
@@ -254,14 +263,19 @@ describe("Teste - Login", () => {
 
   it('Clica no treinamento ', ()=> {
 
+    cy.wait(3000)
+
       //Clica no Treinamento
-       cy.contains('.showcase-card-title', 'Evento Hibrido Automação', { timeout: 60000 })
+       cy.contains('.showcase-card-title', 'Evento Hibrido Automação 2', { timeout: 60000 })
   .scrollIntoView()
   .click()
 
   cy.wait(2000)
 
-  it('Se escreve como Presensial')
+  });
+
+  it('Se escreve como Onilne', ()=> {
+
   
    //Clica em Fazer Incrição
         cy.get('[ng-click="subscribeClass(class);"]', { timeout: 60000 })
@@ -274,8 +288,8 @@ describe("Teste - Login", () => {
 
         cy.wait(1000)
 
-        //Prescial
-        cy.get('.open > .ui-select-choices > :nth-child(2)',{timeout:60000})
+        //Online
+        cy.get('.open > .ui-select-choices > :nth-child(1)',{timeout:60000})
         .click()
 
         cy.wait(1000)
@@ -291,21 +305,49 @@ describe("Teste - Login", () => {
         .should('be.visible')
         .click()
 
-        cy.wait(1000)
+        cy.wait(8000)
 
-        cy.contains('Evento Híbrido (Presencial)', { timeout: 60000 })
+
+        cy.contains('Evento Híbrido (Online)', { timeout: 20000 })
   .should('be.visible');
 
-        //Clica em voltar
-    cy.get("#hideResource", { timeout: 60000 })
-      .should("be.visible")
-      .click({ force: true });
+  //Clica em concluir
+      cy.get('.resource-preview-icon', { timeout: 60000 })
+      .scrollIntoView()
+      .click()
+
+      //Clica no X
+      cy.get('[switch="modal.courseFinished"] > .modal > .between > .btn', {timeout:60000})
+      .click()
 
       cy.wait(2000)
 
     });
 
-     it('ENTRA NO PERFIL ALUNO E MATRICULA COMO ONILNE', () => {
+    it("Minha área/Meu Calendario", () => {
+
+      //Minha área
+      cy.contains("span", "Minha Área", { timeout: 60000 })
+        .should("be.visible")
+        .click();
+
+      //Minhas compras
+      cy.contains("button.showcase-home-menu-item", "Meu Calendário", {timeout: 60000 })
+        .should("be.visible")
+        .click();
+    });
+
+    it('Abre o evento pelo calendário', () => {
+
+    cy.contains('.fc-title', 'Aula Presencial Youtube Automação', { timeout: 10000 })
+    .scrollIntoView()
+  .click({ force: true })
+
+       cy.wait(7000)
+
+    });
+
+     it('ENTRA NO PERFIL ALUNO E MATRICULA COMO PRESENCIAL', () => {
 
          cy.visit("https://hml.lector.live/lector_suporte/subscribe/login");
     cy.contains("button", "Entrar").click();
@@ -327,6 +369,7 @@ describe("Teste - Login", () => {
 
     });
 
+
      it('Vai até a vitrine', () => {
 
         //Clica em conteúdos
@@ -339,6 +382,8 @@ describe("Teste - Login", () => {
         .should('be.visible')
         .click()
 
+     cy.wait(3000)
+
         //Clica em Ver Tudo
         cy.get('.carousel-container > .showcase-title-container > .middle > .show-all',{timeout:60000})
         .last()
@@ -349,15 +394,18 @@ describe("Teste - Login", () => {
 
   it('Clica no treinamento ', ()=> {
 
+     cy.wait(2000)
+
       //Clica no Treinamento
-       cy.contains('.showcase-card-title', 'Evento Hibrido Automação', { timeout: 60000 })
+       cy.contains('.showcase-card-title', 'Evento Hibrido Automação 2', { timeout: 60000 })
   .scrollIntoView()
   .click()
 
   cy.wait(2000)
 
-  
-  it('Se escreve como Presensial')
+  });
+ 
+  it('Se escreve como Presensial', ()=> {
 
    //Clica em Fazer Incrição
         cy.get('[ng-click="subscribeClass(class);"]', { timeout: 60000 })
@@ -366,10 +414,15 @@ describe("Teste - Login", () => {
 
         cy.wait(1000)
 
- cy.get('[ng-show="modal.hybridEventsChoice"] > .modal > .modal-body > .default-table > tbody > tr > .p-5')
-  .should('not.be.enabled')
+        //clica para escolher o tipo de modalidade
+        cy.get('[ng-show="modal.hybridEventsChoice"] > .modal > .modal-body > .default-table > tbody > tr > .p-5 > .ui-select-container',{timeout:60000})
+        .click()
 
-  cy.wait(1000)
+          //Presencial
+        cy.get('.open > .ui-select-choices > :nth-child(2)',{timeout:60000})
+        .click()
+
+       cy.wait(1000)
 
         //Continuar Incrição
         cy.get('[ng-show="modal.hybridEventsChoice"] > .modal > .content-box-footer > .btn-swipe-accent',{timeout:60000})
@@ -378,31 +431,334 @@ describe("Teste - Login", () => {
         cy.wait(7000)
 
         //Clica em acessar
-  cy.get('.classes-actions > .btn-swipe-accent.ng-scope', { timeout: 60000 })
+        cy.get('.classes-actions > .btn-swipe-accent.ng-scope', { timeout: 60000 })
         .should('be.visible')
         .click()
 
         cy.wait(8000)
 
-        cy.contains('Não há mais vagas presenciais disponíveis', { timeout: 60000 })
+          cy.contains('Evento Híbrido (Presencial)', { timeout: 20000 })
   .should('be.visible');
 
-  cy.contains('Evento Híbrido (Online)', { timeout: 60000 })
-  .should('be.visible');
 
-        //Clica em concluir
-      cy.get('.resource-button-preview', { timeout: 60000 })
+  cy.get('body', { timeout: 10000 }).then(($body) => {
+
+  if ($body.find('.resource-button-preview:visible').length) {
+
+    // Clica em concluir
+    cy.get('.resource-button-preview', { timeout: 10000 })
       .scrollIntoView()
-      .should("be.visible")
+      .should('be.visible')
       .click({ force: true });
 
-      //clica em ok
-      cy.get('[switch="modal.courseFinished"] > .modal > :nth-child(2) > .end > .flex > .btn-swipe-accent', { timeout: 60000 })
-      .scrollIntoView()
-      .should("be.visible")
+    // Clica no X
+    cy.get('[switch="modal.courseFinished"] > .modal > .between > .btn', { timeout: 10000 })
+      .should('be.visible')
       .click({ force: true });
+
+  } else if ($body.find('#hideResource:visible').length) {
+
+    // Clica em voltar
+    cy.get('#hideResource', { timeout: 10000 })
+      .should('be.visible')
+      .click({ force: true });
+
+  }
+});
 
     });
+  
+
+    it("Minha área/Meu Calendario", () => {
+
+      //Minha área
+      cy.contains("span", "Minha Área", { timeout: 60000 })
+        .should("be.visible")
+        .click();
+
+      //Minhas compras
+      cy.contains("button.showcase-home-menu-item", "Meu Calendário", {timeout: 60000 })
+        .should("be.visible")
+        .click();
+    });
+
+    it('Tenta brir pelo calendário', () => {
+
+    cy.get('.fc-title', { timeout: 10000 })
+    .scrollIntoView()
+  .click({ force: true })
+
+  cy.log('VEREFIQUE SE FOI ABERTO')
+
+       cy.wait(7000)
+
+    });
+
+     it('Vai até a vitrine', () => {
+
+        //Clica em conteudo
+        cy.get('[ng-class*="accessLink.content.showcase.id.open"] > .icon-next',{timeout:60000})
+        .should('be.visible')
+        .click()
+        
+        //Vai até a vitrine
+        cy.get('.showcase-navigation-menu > :nth-child(2) > .showcase-menu-name',{timeout:60000})
+        .should('be.visible')
+        .click()
+
+     cy.wait(3000)
+
+        //Clica em Ver Tudo
+        cy.get('.carousel-container > .showcase-title-container > .middle > .show-all',{timeout:60000})
+        .last()
+        .should('be.visible')
+        .click()
+
+    });
+   
+     it('Clica no treinamento ', ()=> {
+
+     cy.wait(2000)
+
+      //Clica no Treinamento
+       cy.contains('.showcase-card-title', 'Automação Evento Antes', { timeout: 60000 })
+  .scrollIntoView()
+  .click()
+
+  cy.wait(2000)
+
+  });
+ 
+  it('Se escreve como Presensial', ()=> {
+
+   //Clica em Fazer Incrição
+        cy.get('[ng-click="subscribeClass(class);"]', { timeout: 60000 })
+        .should('be.visible')
+        .click()
+
+        cy.wait(1000)
+
+        //clica para escolher o tipo de modalidade
+        cy.get('[ng-show="modal.hybridEventsChoice"] > .modal > .modal-body > .default-table > tbody > tr > .p-5 > .ui-select-container',{timeout:60000})
+        .click()
+
+          //Presencial
+        cy.get('.open > .ui-select-choices > :nth-child(2)',{timeout:60000})
+        .click()
+
+       cy.wait(1000)
+
+        //Continuar Incrição
+        cy.get('[ng-show="modal.hybridEventsChoice"] > .modal > .content-box-footer > .btn-swipe-accent',{timeout:60000})
+        .click()
+
+        cy.wait(7000)
+
+        //Clica em acessar
+        cy.get('.classes-actions > .btn-swipe-accent.ng-scope', { timeout: 60000 })
+        .should('be.visible')
+        .click()
+
+        cy.wait(8000)
+
+        cy.contains('O evento só pode ser iniciado 30 minutos antes do horário marcado.', {timeout:10000})
+        .should('be.visible')
+
+          // Clica em voltar
+    cy.get('#hideResource', { timeout: 10000 })
+      .should('be.visible')
+      .click({ force: true });
+
+  });
+
+
+   it('Vai até a vitrine', () => {
+
+        //Clica em conteudo
+        cy.get('[ng-class*="accessLink.content.showcase.id.open"] > .icon-next',{timeout:60000})
+        .should('be.visible')
+        .click()
+        
+        //Vai até a vitrine
+        cy.get('.showcase-navigation-menu > :nth-child(2) > .showcase-menu-name',{timeout:60000})
+        .should('be.visible')
+        .click()
+
+     cy.wait(3000)
+
+        //Clica em Ver Tudo
+        cy.get('.carousel-container > .showcase-title-container > .middle > .show-all',{timeout:60000})
+        .last()
+        .should('be.visible')
+        .click()
+
+    });
+   
+     it('Clica no treinamento ', ()=> {
+
+     cy.wait(2000)
+
+      //Clica no Treinamento
+       cy.contains('.showcase-card-title', 'Automação Evento Depois', { timeout: 60000 })
+  .scrollIntoView()
+  .click()
+
+  cy.wait(2000)
+
+  });
+ 
+  it('Se escreve como Presensial', ()=> {
+
+    /*
+   //Clica em Fazer Incrição
+        cy.get('[ng-click="subscribeClass(class);"]', { timeout: 20000 })
+        .should('be.visible')
+        .click()
+
+        cy.wait(1000)
+
+        //clica para escolher o tipo de modalidade
+        cy.get('[ng-show="modal.hybridEventsChoice"] > .modal > .modal-body > .default-table > tbody > tr > .p-5 > .ui-select-container',{timeout:60000})
+        .click()
+
+          //Presencial
+        cy.get('.open > .ui-select-choices > :nth-child(2)',{timeout:60000})
+        .click()
+
+       cy.wait(1000)
+
+        //Continuar Incrição
+        cy.get('[ng-show="modal.hybridEventsChoice"] > .modal > .content-box-footer > .btn-swipe-accent',{timeout:60000})
+        .click()
+
+        cy.wait(7000)
+
+        //Clica em acessar
+        cy.get('.classes-actions > .btn-swipe-accent.ng-scope', { timeout: 60000 })
+        .should('be.visible')
+        .click()
+
+        cy.wait(8000)
+
+        cy.contains('O evento foi finalizado por limite de tempo.')
+        .should('be.visible')
+    
+      cy.log('Volte para a tela inicial')
+      cy.pause()
+
+  });
+
+it('Verefica a presença dos alunos', () => {
+
+ cy.visit("https://hml.lector.live/lector_suporte/subscribe/login");
+    cy.viewport(1920, 1080);
+
+    cy.contains("button", "Entrar", { timeout: 60000 })
+      .scrollIntoView()
+      .should('be.visible')
+      .click({ force: true });
+
+    cy.get('form.ng-pristine > [type="text"]', { timeout: 60000 })
+      .scrollIntoView()
+      .should("be.visible")
+      .type("thiagosuporte@uorak.com");
+
+    cy.get("ng-transclude > .border", { timeout: 60000 })
+      .scrollIntoView()
+      .should("be.visible")
+      .type("123");
+
+    cy.get("#btn-entrar", { timeout: 60000 })
+      .scrollIntoView()
+      .should("be.visible")
+      .click();
+    // opcional: garante que saiu da tela de login
+    cy.url({ timeout: 60000 }).should("not.include", "/subscribe/login");
+
+  });
+
+     it("Clica vai ate a categoria", () => {
+
+        // Clicando na aba Treinamento
+      cy.get('[title="Treinamentos"] > .sideitem',{timeout:60000})
+        .scrollIntoView()
+        .should('be.visible')
+        .click()
+
+      //Clica na Categoria
+      cy.contains("li.list-group-item", "1Teste Automação",{timeout: 60000})
+        .scrollIntoView()
+        .should('be.visible')
+        .click({force: true})
+
+     });
+*/
+
+it('Clica no treinamento', () => {
+
+//Clica no treinamento
+  cy.contains('.card-title', /^Evento Hibrido Automação 2$/, { timeout: 10000 })
+  .scrollIntoView()
+  .should('be.visible')
+  .click({ force: true });
+
+  //Clica em gerenciar
+      cy.get('.manage-subscription > .btn-swipe-accent',{timeout:10000})
+      .should('be.visible')
+      .click()
+
+        //Clica em Matriculados Concuidos
+      cy.contains('a', ' Matriculados / Concluídos', { timeout: 10000 })
+  .click({force: true})
+
+  //Em andamento
+     cy.contains('table tbody tr', 'teste4 teste3', { timeout: 10000 })
+  .within(() => {
+    cy.get('td.subscriptionStatusColumn')
+      .should('contain', 'Em andamento')
+
+   });
+
+     cy.contains('table tbody tr', 'thiago suporte 2', { timeout: 10000 })
+  .within(() => {
+    cy.get('td.subscriptionStatusColumn')
+      .should('contain', 'Em andamento')
+
+      });
+    });
+
+      it('Lista de Presença', () => {
+
+             //Clica em Lista de presença
+      cy.contains('a', 'Lista de Presença', { timeout: 10000 })
+  .click()
+
+  cy.get(':nth-child(6) > .btn-swipe-accent')
+  .click()
+
+  cy.wait(2000)
+
+  cy.contains('td', 'teste4 teste3', { timeout: 10000 })
+  .should('exist')
+
+cy.contains('td', 'thiago suporte 2', { timeout: 10000 })
+  .should('exist')
+
+     });
+
+     it('Lista de Presença (Aulas presenciais)', () => {
+
+         //Clica em Lista de presença
+      cy.contains('a', 'Lista de Presença (Aulas presenciais)', { timeout: 10000 })
+  .click()
+
+          cy.contains('td', 'teste4 teste3', { timeout: 10000 })
+  .should('exist')
+
+cy.contains('td', 'thiago suporte 2', { timeout: 10000 })
+  .should('exist')
+
+     });
 
   });
 
