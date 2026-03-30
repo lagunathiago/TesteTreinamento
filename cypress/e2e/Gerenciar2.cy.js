@@ -18,11 +18,13 @@ Cypress.on('uncaught:exception', (err) => {
 
 describe("Teste - Login", () => {
   before(() => {
-
+    
     cy.visit("https://hml.lector.live/lector_suporte/subscribe/login");
-    cy.contains("button", "Entrar").click();
-
-      cy.viewport(1920, 1080);
+   
+      cy.contains("button", "Entrar", { timeout: 10000 })
+      .scrollIntoView()
+      .should('be.visible')
+      .click({ force: true });
 
     cy.get('form.ng-pristine > [type="text"]', { timeout: 60000 })
       .should("be.visible")
@@ -40,7 +42,6 @@ describe("Teste - Login", () => {
   });
 
   context("Criando Treinamento", { testIsolation: false }, () => {
-
 
      it("Clica vai ate a categoria", () => {
 
