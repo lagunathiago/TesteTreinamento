@@ -65,7 +65,7 @@ describe("Teste - Login", () => {
 
      });
 
-/*
+
       it('Cria o treinamento', () => {
         
         //Clicar em criar treinamentos
@@ -609,7 +609,7 @@ describe("Teste - Login", () => {
  
   it('Se escreve como Presensial', ()=> {
 
-    /*
+    
    //Clica em Fazer Incrição
         cy.get('[ng-click="subscribeClass(class);"]', { timeout: 20000 })
         .should('be.visible')
@@ -692,7 +692,6 @@ it('Verefica a presença dos alunos', () => {
         .click({force: true})
 
      });
-*/
 
 it('Clica no treinamento', () => {
 
