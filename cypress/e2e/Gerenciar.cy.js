@@ -27,11 +27,11 @@ describe("Teste - Login", () => {
 
     cy.get('form.ng-pristine > [type="text"]', { timeout: 60000 })
       .should("be.visible")
-      .type("thiagosuporte@uorak.com");
+      .type("abcaq@mailto.plus");
 
     cy.get("ng-transclude > .border", { timeout: 60000 })
       .should("be.visible")
-      .type("123");
+      .type("1");
 
     cy.get("#btn-entrar", { timeout: 60000 }).should("be.visible").click();
 
@@ -182,7 +182,6 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
       cy.get('.content-box-footer > .flex > .btn-swipe-accent').click()
 
     });
-
 
     it('Digita Treinamento', () => {
        

@@ -49,7 +49,6 @@ describe("Teste - Login", () => {
 
   context("Vai para a categoria", { testIsolation: false }, () => {
 
-
      it("Clica vai ate a categoria", () => {
 
         // Clicando na aba Treinamento

@@ -65,7 +65,7 @@ describe("Teste - Login", () => {
 
      });
 
-/*
+
       it('Cria o treinamento', () => {
         
         //Clicar em criar treinamentos
@@ -176,7 +176,7 @@ describe("Teste - Login", () => {
         .click()
 
     });
-*/
+
     it('Digita Treinamento', () => {
 
       cy.wait(3000) //espera alguns segundos para carregar a pagina
@@ -217,7 +217,6 @@ describe("Teste - Login", () => {
 
      });
 
-     /*
       it('Bairxar o QR Code', () => {
 
         //Baixa o qr code
@@ -259,7 +258,6 @@ describe("Teste - Login", () => {
 
      });
 
-*/
 
 it('Clica na impressora', () => {
 
