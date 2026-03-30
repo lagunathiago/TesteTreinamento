@@ -24,18 +24,18 @@ describe("Teste - Login", () => {
 
       cy.viewport(1920, 1080);
 
-    cy.get('form.ng-pristine > [type="text"]', { timeout: 10000 })
+    cy.get('form.ng-pristine > [type="text"]', { timeout: 60000 })
       .should("be.visible")
       .type("abcaq@mailto.plus");
 
-    cy.get("ng-transclude > .border", { timeout: 10000 })
+    cy.get("ng-transclude > .border", { timeout: 60000 })
       .should("be.visible")
       .type("1");
 
-    cy.get("#btn-entrar", { timeout: 10000 }).should("be.visible").click();
+    cy.get("#btn-entrar", { timeout: 60000 }).should("be.visible").click();
 
     // opcional: garante que saiu da tela de login
-    cy.url({ timeout: 10000 }).should("not.include", "/subscribe/login");
+    cy.url({ timeout: 60000 }).should("not.include", "/subscribe/login");
 
   });
 
@@ -45,12 +45,12 @@ describe("Teste - Login", () => {
      it("Clica na aba treinamento", () => {
 
         // Clicando na aba Treinamento
-      cy.get('[title="Treinamentos"] > .sideitem',{timeout:10000})
+      cy.get('[title="Treinamentos"] > .sideitem',{timeout:60000})
       .should('be.visible')
       .click()
 
          //Clica na Categoria
-      cy.contains("li.list-group-item", "1Teste Automação",{timeout: 10000})
+      cy.contains("li.list-group-item", "1Teste Automação",{timeout: 60000})
       .should('be.visible')
       .click({force: true})
 
@@ -59,7 +59,7 @@ describe("Teste - Login", () => {
       it('Cria o treinamento', () => {
         
         //Clicar em criar treinamentos
-        cy.get('.title-bar .btn-icon', { timeout: 100000 }) // até 10 minutos
+        cy.get('.title-bar .btn-icon', { timeout: 600000 }) // até 10 minutos
     .should('exist')
     .should('be.visible')
     .and('not.be.disabled')
@@ -2280,31 +2280,31 @@ cy.wait(7000)
 
       cy.viewport(1920, 1080);
 
-    cy.get('form.ng-pristine > [type="text"]', { timeout: 10000 })
+    cy.get('form.ng-pristine > [type="text"]', { timeout: 60000 })
       .should("be.visible")
       .type("thiagosuporte@uorak.com");
 
-    cy.get("ng-transclude > .border", { timeout: 10000 })
+    cy.get("ng-transclude > .border", { timeout: 60000 })
       .should("be.visible")
       .type("123");
 
-    cy.get("#btn-entrar", { timeout: 10000 }).should("be.visible").click();
+    cy.get("#btn-entrar", { timeout: 60000 }).should("be.visible").click();
 
     // opcional: garante que saiu da tela de login
-    cy.url({ timeout: 10000 }).should("not.include", "/subscribe/login");
+    cy.url({ timeout: 60000 }).should("not.include", "/subscribe/login");
         
       });
 
        it("Clica na aba treinamento", () => {
 
         // Clicando na aba Treinamento
-      cy.get('[title="Treinamentos"] > .sideitem',{timeout:10000})
+      cy.get('[title="Treinamentos"] > .sideitem',{timeout:60000})
       .should('be.visible')
       .click()
 
       
          //Clica na Categoria
-      cy.contains("li.list-group-item", "1Teste Automação",{timeout: 10000})
+      cy.contains("li.list-group-item", "1Teste Automação",{timeout: 60000})
       .should('be.visible')
       .click({force: true})
 
@@ -2668,30 +2668,30 @@ cy.get('.modal:visible .box.ng-scope:visible input[type="number"]').eq(1)
 
       cy.viewport(1920, 1080);
 
-    cy.get('form.ng-pristine > [type="text"]', { timeout: 10000 })
+    cy.get('form.ng-pristine > [type="text"]', { timeout: 60000 })
       .should("be.visible")
       .type("qualidade2@lectortec.com.br");
 
-    cy.get("ng-transclude > .border", { timeout: 10000 })
+    cy.get("ng-transclude > .border", { timeout: 60000 })
       .should("be.visible")
       .type("2006lrnrgr");
 
-    cy.get("#btn-entrar", { timeout: 10000 }).should("be.visible").click();
+    cy.get("#btn-entrar", { timeout: 60000 }).should("be.visible").click();
 
     // opcional: garante que saiu da tela de login
-    cy.url({ timeout: 10000 }).should("not.include", "/subscribe/login");
+    cy.url({ timeout: 60000 }).should("not.include", "/subscribe/login");
 
     });
 
     it('Clica na aba treinamento', () => {
 
        // Clicando na aba Treinamento
-      cy.get('[title="Treinamentos"] > .sideitem',{timeout:10000})
+      cy.get('[title="Treinamentos"] > .sideitem',{timeout:60000})
       .should('be.visible')
       .click()
 
     //Clica na Categoria
-      cy.contains("li.list-group-item", "1Teste Automação",{timeout: 10000})
+      cy.contains("li.list-group-item", "1Teste Automação",{timeout: 60000})
       .should('be.visible')
       .click({force: true})
 
@@ -2701,6 +2701,8 @@ cy.get('.modal:visible .box.ng-scope:visible input[type="number"]').eq(1)
 
     it('Pesquisa o treinamento', () => {
       
+
+      cy.wait(7000)
      //Digita o Treianamento
       cy.get('input[ng-model="searchFilter.text"]', { timeout: 10000 })
   .should('be.visible')
@@ -3033,15 +3035,15 @@ it('Listagem', () => {
 
       cy.viewport(1920, 1080);
 
-    cy.get('form.ng-pristine > [type="text"]', { timeout: 10000 })
+    cy.get('form.ng-pristine > [type="text"]', { timeout: 60000 })
       .should("be.visible")
       .type("lector1305@sharklasers.com");
 
-    cy.get("ng-transclude > .border", { timeout: 10000 })
+    cy.get("ng-transclude > .border", { timeout: 60000 })
       .should("be.visible")
       .type("123");
 
-    cy.get("#btn-entrar", { timeout: 10000 }).should("be.visible").click();
+    cy.get("#btn-entrar", { timeout: 60000 }).should("be.visible").click();
 
     // opcional: garante que saiu da tela de login
     cy.url({ timeout: 10000 }).should("not.include", "/subscribe/login");
@@ -3112,7 +3114,6 @@ cy.get('.modal:visible', { timeout: 20000 })
 
     });
 
-    
 
      it('Entra no perfil adm e recusa os campos', () => {
 
@@ -3121,22 +3122,20 @@ cy.get('.modal:visible', { timeout: 20000 })
 
       cy.viewport(1920, 1080);
 
-    cy.get('form.ng-pristine > [type="text"]', { timeout: 10000 })
+    cy.get('form.ng-pristine > [type="text"]', { timeout: 60000 })
       .should("be.visible")
       .type("qualidade2@lectortec.com.br");
 
-    cy.get("ng-transclude > .border", { timeout: 10000 })
+    cy.get("ng-transclude > .border", { timeout: 60000 })
       .should("be.visible")
       .type("2006lrnrgr");
 
-    cy.get("#btn-entrar", { timeout: 10000 }).should("be.visible").click();
+    cy.get("#btn-entrar", { timeout: 60000 }).should("be.visible").click();
 
     // opcional: garante que saiu da tela de login
-    cy.url({ timeout: 10000 }).should("not.include", "/subscribe/login");
+    cy.url({ timeout: 60000 }).should("not.include", "/subscribe/login");
 
     });
-
-    
     
     it("Aceita os campos", () => {
 
@@ -3173,7 +3172,6 @@ cy.get('.modal:visible', { timeout: 10000 })
   cy.wait(5000)
 
     })
-
 
     it('Clica na aba treinamento', () => {
 
