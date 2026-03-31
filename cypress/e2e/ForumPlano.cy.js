@@ -64,7 +64,6 @@ describe("Teste - Login", () => {
      });
 
 
-/*
       it('Cria o treinamento Forum Automação', () => {
         
         //Clicar em criar treinamentos
@@ -770,9 +769,8 @@ describe("Teste - Login", () => {
             cy.wait(5000)
 
     });
-*/
 
-it('Clica No', () => {
+it('Clica No Treinamento Forum Automação', () => {
 
     //Clica no treinamento: Gerenciar Teste Automação
   cy.contains('.card-title', /^Forum Automação$/, { timeout: 10000 })
@@ -795,19 +793,594 @@ it('Clica No', () => {
   .click()  
 
     });
-
-    it('Adicinar Forum', () => {
+    
+    it('Adicinar o Forúm', () => {
+      cy.wait(1000)
 
         //Clique em Adicionar
         cy.get('[ng-if="manageSubscriptionsTabs.forums"] > .btn-swipe-accent.ng-scope')
         .click() 
 
+        //Esscreve
       cy.get('input[placeholder="Título"]:visible', { timeout: 20000 })
   .first()
   .click({ force: true })
   .clear({ force: true })
-  .type('Meu título teste', { force: true })
-        
+  .type('Titulo Automação Forúm', { force: true })
+
+ // Clica em Exigir aprovação para publicações
+  cy.get('.class-forum-editor > :nth-child(5) > .icon-checkbox')
+  .click()
+
+  cy.wait(1000)
+
+  //Clica em Habilitar avaliação dos comentários
+  cy.get('.class-forum-editor > :nth-child(6) > .icon-checkbox')
+  .click()
+
+  // Clica em Decrescente (Mais novos primeiro)
+  cy.get('.class-forum-editor > :nth-child(9) > .icon-radio')
+  .click()
+
+  //Clica em Salvar
+  cy.get('.class-forum-editor > .between > .end > .btn-swipe-accent')
+  .click()
+
+  cy.wait(5000)
+
+  cy.get('.btn-publish')
+  .should('be.visible')
+
+  cy.wait(1000)
+
+     //Fecha modal
+  cy.get('[switch="modal.manageSubscriptions"] > .modal > .modal-header > .btn',{ timeout: 60000 })
+  .should('be.visible')
+  .click()
+
+    cy.wait(1000)
+
+    //Clica na categoria
+  cy.get('.breadcrumbs-path > :nth-child(5)')
+  .click()
+
+    });
+
+    it('Clica No Treinamento Tutoria Aprovado Automação', () => {
+
+    //Clica no treinamento: Gerenciar Teste Automação
+  cy.contains('.card-title', /^Tutoria Aprovado Automação$/, { timeout: 10000 })
+  .scrollIntoView()
+  .should('be.visible')
+  .click({ force: true });
+
+  //Clica em gerenciar
+      cy.get('.manage-subscription > .btn-swipe-accent',{timeout:10000})
+      .should('be.visible')
+      .click()
+
+      });
+
+       it('Plano de Tutoria', () => {
+      
+      //Clica em Plano de tutoria
+      cy.contains('a', 'Plano de tutoria', { timeout: 10000 })
+  .should('be.visible')
+  .click()  
+
+    });
+
+    it('Adiciona o plano de aluno aprovado', () => {
+
+      cy.wait(1000)
+
+      //Clica em adicionar
+      cy.get('[ng-show="manageSubscriptionsTabs.tutorPlan && editingSubscriptionsClass.isTutor"] > .btn-swipe-accent')
+      .click()
+
+      cy.wait(1000)
+
+      cy.get('[ng-show="manageSubscriptionsTabs.tutorPlan && editingSubscriptionsClass.isTutor"] > .btn-swipe-accent')
+      .click()
+
+cy.wait(1000)
+
+cy.get('iframe.cke_wysiwyg_frame', { timeout: 60000 })
+  .should('be.visible')
+  .its('0.contentDocument.body')
+  .should('not.be.empty')
+  .then((body) => {
+    cy.wrap(body).click({ force: true })
+  })
+
+cy.get('iframe.cke_wysiwyg_frame', { timeout: 60000 })
+  .its('0.contentDocument.body')
+  .should('not.be.empty')
+  .then((body) => {
+    cy.wrap(body).type(
+      'Olá #NOME_COMPLETO_ALUNO# voce foi aprovado no #TITULO_TREINAMENTO#',
+      { force: true }
+    )
+  })
+
+  cy.wait(1000)
+
+  //Pega uma imagem
+ cy.contains('label', 'Adicionar anexo', { timeout: 60000 })
+  .find('input[type="file"]')
+  .selectFile('cypress/fixtures/images(1).png', { force: true })
+
+  cy.wait(1000)
+
+  cy.get('[ng-if="showingTutorPlanEditingPanel"] > .end > .btn-swipe-accent')
+  .click()
+
+  cy.wait(4000)
+
+
+//Clica para ver a mensagem
+  cy.get('[ng-repeat="tutorPlanItem in tutorPlanList"] > .icon-view')
+  .click()
+
+  cy.log('VISUALIZE A MENSAGEM')
+  cy.wait(4000)
+  
+  //Fecha
+  cy.get('[switch="tutorItemMailTemplate.show"] > .modal > .between > .btn')
+  .click()
+
+   cy.wait(1000)
+
+     //Fecha modal
+  cy.get('[switch="modal.manageSubscriptions"] > .modal > .modal-header > .btn',{ timeout: 60000 })
+  .should('be.visible')
+  .click()
+
+    cy.wait(1000)
+
+   //Clica na Categoria
+      cy.contains("li.list-group-item", "1Teste Automação",{timeout: 60000})
+      .should('be.visible')
+      .click({force: true})
+
+    });
+
+      it('Clica No Treinamento Tutoria Expiração Automação', () => {
+
+    //Clica no treinamento: Gerenciar Teste Automação
+  cy.contains('.card-title', /^Tutoria Expiração Automação$/, { timeout: 10000 })
+  .scrollIntoView()
+  .should('be.visible')
+  .click({ force: true });
+
+  //Clica em gerenciar
+      cy.get('.manage-subscription > .btn-swipe-accent',{timeout:10000})
+      .should('be.visible')
+      .click()
+
+      });
+
+       it('Plano de Tutoria', () => {
+      
+      //Clica em Plano de tutoria
+      cy.contains('a', 'Plano de tutoria', { timeout: 10000 })
+  .should('be.visible')
+  .click()  
+
+    });
+
+    it('Adiciona o plano de expiração', () => {
+
+      cy.wait(1000)
+
+      //Clica em adicionar
+      cy.get('[ng-show="manageSubscriptionsTabs.tutorPlan && editingSubscriptionsClass.isTutor"] > .btn-swipe-accent')
+      .click()
+
+      cy.wait(1000)
+
+      //Clica em expiração
+      cy.get('[ng-show="manageSubscriptionsTabs.tutorPlan && editingSubscriptionsClass.isTutor"] > .btn-swipe-accent')
+      .click()
+
+      cy.wait(1000)
+
+      //1 DIA NO AVISO DE EXPIRAÇÃO
+      cy.get('input[type="number"]', { timeout: 60000 })
+  .eq(0)
+  .type('1', { force: true })
+
+      cy.wait(1000)
+
+      cy.get('[ng-hide="editingSubscriptionsClass.recurrencyInDays"] > .checkbox > .icon-radio')
+      .click()
+
+cy.wait(1000)
+
+cy.get('iframe.cke_wysiwyg_frame', { timeout: 60000 })
+  .should('be.visible')
+  .its('0.contentDocument.body')
+  .should('not.be.empty')
+  .then((body) => {
+    cy.wrap(body).click({ force: true })
+  })
+
+  cy.wait(1000)
+
+cy.get('iframe.cke_wysiwyg_frame', { timeout: 60000 })
+  .its('0.contentDocument.body')
+  .should('not.be.empty')
+  .then((body) => {
+    cy.wrap(body).type(
+      'OLÁ #NOME_COMPLETO_ALUNO# SEU TREINAMENTO #TITULO_TREINAMENTO# SERÁ EXPIRADO EM #DATA_EXPIRACAO#',
+      { force: true }
+    )
+  })
+
+  cy.wait(1000)
+
+  //Pega uma imagem
+ cy.contains('label', 'Adicionar anexo', { timeout: 60000 })
+  .find('input[type="file"]')
+  .selectFile('cypress/fixtures/images(1).png', { force: true })
+
+  cy.wait(1000)
+
+  cy.get('[ng-if="showingTutorPlanEditingPanel"] > .end > .btn-swipe-accent')
+  .click()
+
+  cy.wait(4000)
+
+
+//Clica para ver a mensagem
+  cy.get('[ng-repeat="tutorPlanItem in tutorPlanList"] > .icon-view')
+  .click()
+
+  cy.log('VISUALIZE A MENSAGEM')
+  cy.wait(4000)
+  
+  //Fecha
+  cy.get('[switch="tutorItemMailTemplate.show"] > .modal > .between > .btn')
+  .click()
+
+   cy.wait(1000)
+
+     //Fecha modal
+  cy.get('[switch="modal.manageSubscriptions"] > .modal > .modal-header > .btn',{ timeout: 60000 })
+  .should('be.visible')
+  .click()
+
+    cy.wait(1000)
+
+   //Clica na Categoria
+      cy.contains("li.list-group-item", "1Teste Automação",{timeout: 60000})
+      .should('be.visible')
+      .click({force: true})
+
+    });
+
+       it('Clica No Treinamento Tutoria Prorrogação Automação', () => {
+
+    //Clica no treinamento: Gerenciar Teste Automação
+  cy.contains('.card-title', /^Tutoria Prorrogação Automação$/, { timeout: 10000 })
+  .scrollIntoView()
+  .should('be.visible')
+  .click({ force: true });
+
+  //Clica em gerenciar
+      cy.get('.manage-subscription > .btn-swipe-accent',{timeout:10000})
+      .should('be.visible')
+      .click()
+
+      });
+
+       it('Plano de Tutoria', () => {
+      
+      //Clica em Plano de tutoria
+      cy.contains('a', 'Plano de tutoria', { timeout: 10000 })
+  .should('be.visible')
+  .click()  
+
+    });
+
+    it('Adiciona o plano progresso', () => {
+
+      cy.wait(1000)
+
+      //Clica em adicionar
+      cy.get('[ng-show="manageSubscriptionsTabs.tutorPlan && editingSubscriptionsClass.isTutor"] > .btn-swipe-accent')
+      .click()
+
+      cy.wait(1000)
+
+      //Clica em progresso
+      cy.get('[ng-hide="editingTutorPlanItem.extensionPresent || editingSubscriptionsClass.recurrencyInDays"] > .checkbox > .icon-radio')
+      .click()
+
+      cy.wait(1000)
+
+      //1 DIA NO PROGRESSO
+      cy.get('input[type="number"]', { timeout: 60000 })
+  .eq(1)
+  .type('1', { force: true })
+  
+cy.wait(1000)
+
+cy.get('iframe.cke_wysiwyg_frame', { timeout: 60000 })
+  .should('be.visible')
+  .its('0.contentDocument.body')
+  .should('not.be.empty')
+  .then((body) => {
+    cy.wrap(body).click({ force: true })
+  })
+
+  cy.wait(1000)
+
+cy.get('iframe.cke_wysiwyg_frame', { timeout: 60000 })
+  .its('0.contentDocument.body')
+  .should('not.be.empty')
+  .then((body) => {
+    cy.wrap(body).type(
+      'OLÁ #NOME_COMPLETO_ALUNO# SEU TREINAMENTO #TITULO_TREINAMENTO# SERÁ PRORROGADO EM #PRORROGACAO_EM_DIAS# DIAS',
+      { force: true }
+    )
+  })
+
+  cy.wait(1000)
+
+  //Pega uma imagem
+ cy.contains('label', 'Adicionar anexo', { timeout: 60000 })
+  .find('input[type="file"]')
+  .selectFile('cypress/fixtures/images(1).png', { force: true })
+
+  cy.wait(1000)
+
+  cy.get('[ng-if="showingTutorPlanEditingPanel"] > .end > .btn-swipe-accent')
+  .click()
+
+  cy.wait(4000)
+
+//Clica para ver a mensagem
+  cy.get('[ng-repeat="tutorPlanItem in tutorPlanList"] > .icon-view')
+  .click()
+
+  cy.log('VISUALIZE A MENSAGEM')
+  cy.wait(4000)
+  
+  //Fecha
+  cy.get('[switch="tutorItemMailTemplate.show"] > .modal > .between > .btn')
+  .click()
+
+   cy.wait(1000)
+
+     //Fecha modal
+  cy.get('[switch="modal.manageSubscriptions"] > .modal > .modal-header > .btn',{ timeout: 60000 })
+  .should('be.visible')
+  .click()
+
+    cy.wait(1000)
+
+   //Clica na Categoria
+      cy.contains("li.list-group-item", "1Teste Automação",{timeout: 60000})
+      .should('be.visible')
+      .click({force: true})
+
+    });
+
+        it('Clica No Treinamento Tutoria Progresso Automação', () => {
+
+    //Clica no treinamento: Gerenciar Teste Automação
+  cy.contains('.card-title', /^Tutoria Progresso Automação$/, { timeout: 10000 })
+  .scrollIntoView()
+  .should('be.visible')
+  .click({ force: true });
+
+  //Clica em gerenciar
+      cy.get('.manage-subscription > .btn-swipe-accent',{timeout:10000})
+      .should('be.visible')
+      .click()
+
+      });
+
+       it('Plano de Tutoria', () => {
+      
+      //Clica em Plano de tutoria
+      cy.contains('a', 'Plano de tutoria', { timeout: 10000 })
+  .should('be.visible')
+  .click()  
+
+    });
+
+    it('Adiciona o plano de progresso', () => {
+
+      cy.wait(1000)
+
+      //Clica em adicionar
+      cy.get('[ng-show="manageSubscriptionsTabs.tutorPlan && editingSubscriptionsClass.isTutor"] > .btn-swipe-accent')
+      .click()
+
+      cy.wait(1000)
+
+      //Clica em progresso
+      cy.get(':nth-child(4) > .checkbox > .icon-radio')
+      .click()
+
+      cy.wait(1000)
+
+      //1 DIA NO PROGRESSO
+      cy.get('input[type="number"]', { timeout: 60000 })
+  .eq(2)
+  .type('1', { force: true })
+  
+cy.wait(1000)
+
+cy.get('iframe.cke_wysiwyg_frame', { timeout: 60000 })
+  .should('be.visible')
+  .its('0.contentDocument.body')
+  .should('not.be.empty')
+  .then((body) => {
+    cy.wrap(body).click({ force: true })
+  })
+
+  cy.wait(1000)
+
+cy.get('iframe.cke_wysiwyg_frame', { timeout: 60000 })
+  .its('0.contentDocument.body')
+  .should('not.be.empty')
+  .then((body) => {
+    cy.wrap(body).type(
+      'OLÁ #NOME_COMPLETO_ALUNO# VOCE TEVE PROGRESSO NO TREINAMENTO #TITULO_TREINAMENTO#',
+      { force: true }
+    )
+  })
+
+  cy.wait(1000)
+
+  //Pega uma imagem
+ cy.contains('label', 'Adicionar anexo', { timeout: 60000 })
+  .find('input[type="file"]')
+  .selectFile('cypress/fixtures/images(1).png', { force: true })
+
+  cy.wait(1000)
+
+  cy.get('[ng-if="showingTutorPlanEditingPanel"] > .end > .btn-swipe-accent')
+  .click()
+
+  cy.wait(4000)
+
+//Clica para ver a mensagem
+  cy.get('[ng-repeat="tutorPlanItem in tutorPlanList"] > .icon-view')
+  .click()
+
+  cy.log('VISUALIZE A MENSAGEM')
+  cy.wait(4000)
+  
+  //Fecha
+  cy.get('[switch="tutorItemMailTemplate.show"] > .modal > .between > .btn')
+  .click()
+
+   cy.wait(1000)
+
+     //Fecha modal
+  cy.get('[switch="modal.manageSubscriptions"] > .modal > .modal-header > .btn',{ timeout: 60000 })
+  .should('be.visible')
+  .click()
+
+    cy.wait(1000)
+
+   //Clica na Categoria
+      cy.contains("li.list-group-item", "1Teste Automação",{timeout: 60000})
+      .should('be.visible')
+      .click({force: true})
+
+    });
+
+        it('Clica No Treinamento Tutoria Inatividade Automação', () => {
+
+    //Clica no treinamento: Gerenciar Teste Automação
+  cy.contains('.card-title', /^Tutoria Inatividade Automação$/, { timeout: 10000 })
+  .scrollIntoView()
+  .should('be.visible')
+  .click({ force: true });
+
+  //Clica em gerenciar
+      cy.get('.manage-subscription > .btn-swipe-accent',{timeout:10000})
+      .should('be.visible')
+      .click()
+
+      });
+
+       it('Plano de Tutoria', () => {
+      
+      //Clica em Plano de tutoria
+      cy.contains('a', 'Plano de tutoria', { timeout: 10000 })
+  .should('be.visible')
+  .click()  
+
+    });
+
+    it('Adiciona o plano de expiração', () => {
+
+      cy.wait(1000)
+
+      //Clica em adicionar
+      cy.get('[ng-show="manageSubscriptionsTabs.tutorPlan && editingSubscriptionsClass.isTutor"] > .btn-swipe-accent')
+      .click()
+
+      cy.wait(1000)
+
+      //Clica em INATIVO
+      cy.get(':nth-child(5) > .checkbox > .icon-radio')
+      .click()
+
+      cy.wait(1000)
+
+      //1 EM INATIVO
+      cy.get('input[type="number"]', { timeout: 60000 })
+  .eq(3)
+  .type('1', { force: true })
+  
+cy.wait(1000)
+
+cy.get('iframe.cke_wysiwyg_frame', { timeout: 60000 })
+  .should('be.visible')
+  .its('0.contentDocument.body')
+  .should('not.be.empty')
+  .then((body) => {
+    cy.wrap(body).click({ force: true })
+  })
+
+  cy.wait(1000)
+
+cy.get('iframe.cke_wysiwyg_frame', { timeout: 60000 })
+  .its('0.contentDocument.body')
+  .should('not.be.empty')
+  .then((body) => {
+    cy.wrap(body).type(
+      'OLÁ #NOME_COMPLETO_ALUNO# VOCE ESTÁ INATIVO NO TREINAMENTO #TITULO_TREINAMENTO# POR #TEMPO_INATIVO_SEGUNDOS#',
+      { force: true }
+    )
+  })
+
+  cy.wait(1000)
+
+  //Pega uma imagem
+ cy.contains('label', 'Adicionar anexo', { timeout: 60000 })
+  .find('input[type="file"]')
+  .selectFile('cypress/fixtures/images(1).png', { force: true })
+
+  cy.wait(1000)
+
+  cy.get('[ng-if="showingTutorPlanEditingPanel"] > .end > .btn-swipe-accent')
+  .click()
+
+  cy.wait(4000)
+
+//Clica para ver a mensagem
+  cy.get('[ng-repeat="tutorPlanItem in tutorPlanList"] > .icon-view')
+  .click()
+
+  cy.log('VISUALIZE A MENSAGEM')
+  cy.wait(4000)
+  
+  //Fecha
+  cy.get('[switch="tutorItemMailTemplate.show"] > .modal > .between > .btn')
+  .click()
+
+   cy.wait(1000)
+
+     //Fecha modal
+  cy.get('[switch="modal.manageSubscriptions"] > .modal > .modal-header > .btn',{ timeout: 60000 })
+  .should('be.visible')
+  .click()
+
+    cy.wait(1000)
+
+   //Clica na Categoria
+      cy.contains("li.list-group-item", "1Teste Automação",{timeout: 60000})
+      .should('be.visible')
+      .click({force: true})
+
     });
 
   });
