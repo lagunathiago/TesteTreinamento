@@ -357,6 +357,5 @@ it('Muda para o perfil aluno', () => {
         cy.log(`VEREFIQUE SE OS EMIALS DE EXPIRAÇÃO E LISTA DE ESPERA CHEGUEM NO HORÁRIO QUE VOCE COLOCOU`)
 
     });
-
   });
 });

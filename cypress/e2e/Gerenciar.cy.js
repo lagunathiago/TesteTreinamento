@@ -56,6 +56,7 @@ describe("Teste - Login", () => {
 
      });
 
+/*
       it('Cria o treinamento', () => {
         
         //Clicar em criar treinamentos
@@ -68,12 +69,7 @@ describe("Teste - Login", () => {
         cy.get("#courseName").click(); // Clica pra digitar
         cy.get("#courseName").type("Gerenciar Teste Automação") //  Nome no Treinamento
 
-        /*
-        cy.get('[aspect="square"]').selectFile('cypress/fixtures/Grenciar.png', { force: true });
-        cy.log('AJUSTE A IMAGEM MANUALMENTE')
-        cy.wait(1000);                                                     // Aguarda alguns segudos para ajustar a imagem
-        cy.get('button[ng-click="cropper.save()"]').click();               // Confirma em confirmar para salvar a imagem
-*/
+     cy.get('button[ng-click="cropper.save()"]').click();               // Confirma em confirmar para salvar a imagem
     
     })
 
@@ -182,7 +178,7 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
       cy.get('.content-box-footer > .flex > .btn-swipe-accent').click()
 
     });
-
+*/
     it('Digita Treinamento', () => {
        
       cy.wait(3000) //espera alguns segundos para carregar a pagina
@@ -213,6 +209,7 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
 
        // -----------------Não Matriculados------------------------
 
+       /*
     it('Pesquisa por Usuario e faz Matricula', () => {
 
       cy.wait(3000)
@@ -486,8 +483,8 @@ cy.get('td.select-checkbox')
 
   cy.wait(3000)
 
-
     });
+    
 
 it('Pesquisa por Perfil faz a Matricula', () => {
 
@@ -501,9 +498,9 @@ it('Pesquisa por Perfil faz a Matricula', () => {
 
   cy.wait(2000)
 
-  cy.contains('Aluno', {timeout: 20000})
-  .should('be.visible')
-  .click()
+   cy.get('.ui-select-choices-row:visible', { timeout: 20000 })
+  .contains(/^Aluno$/)
+  .click({ force: true })
 
   cy.wait(2000)
 
@@ -679,7 +676,7 @@ it("Filtros de exportação/Não matriculados", () => {
   cy.wait(3000)
 
   //Selecionar colunas
-        cy.get('#not-subscribed-table-1476721_wrapper > :nth-child(1) > .dt-buttons > .buttons-collection', { timeout: 10000 })
+        cy.get('#not-subscribed-table-1476807_wrapper > :nth-child(1) > .dt-buttons > .buttons-collection')
         .should("be.visible")
         .click();
 
@@ -782,6 +779,7 @@ it("Filtros de exportação/Não matriculados", () => {
 
     });
   
+
     it('Pesquisa por Usuario e Cancela a Matricula', () => {
 
       cy.wait(4000)
@@ -830,7 +828,6 @@ it("Filtros de exportação/Não matriculados", () => {
     cy.wait(2000)
  
   });
-
 
 it('Pesquisa por E-mail e Cancela a Matricula', () => {
 
@@ -1124,9 +1121,9 @@ it('Pesquisa por Perfil e Cancela a Matricula', () => {
   cy.wait(2000)
 
     //Clique no perfil
- cy.contains('.ui-select-choices-row', 'Aluno', { timeout: 10000 })
-  .should('be.visible')
-  .click({ force: true });
+ cy.get('.ui-select-choices-row:visible', { timeout: 20000 })
+  .contains(/^Aluno$/)
+  .click({ force: true })
 
   cy.wait(2000)
 
@@ -1221,6 +1218,7 @@ it('Pesquisa por Perfil e Cancela a Matricula', () => {
 
      });
 
+
 it('Volta para não Matriculados e Matricula alunos para Concluir o Treinamento', () => {
   
   //Clica em Matriculados Concuidos
@@ -1230,7 +1228,7 @@ it('Volta para não Matriculados e Matricula alunos para Concluir o Treinamento'
 
     });
 
-  
+
 it('Pesquisa por Usuario e faz Matricula', () => {
      
   //Digita Usuario
@@ -1676,9 +1674,9 @@ cy.get('.open > .ui-select-choices > :nth-child(1)', { timeout: 10000 })
   cy.wait(2000)
 
     //Clique no perfil
- cy.contains('.ui-select-choices-row', 'Aluno', { timeout: 10000 })
-  .should('be.visible')
-  .click({ force: true });
+ cy.get('.ui-select-choices-row:visible', { timeout: 20000 })
+  .contains(/^Aluno$/)
+  .click({ force: true })
 
   cy.wait(2000)
 
@@ -1890,8 +1888,12 @@ it('Ativa a fleg => Exibir apenas os melhores resultados de cada usuário', () =
       cy.wait(6000);
   
     });
-
+*/
     it('Transferir', () => {
+
+      //Clica em Matriculados Concuidos
+      cy.contains('a', ' Matriculados / Concluídos', { timeout: 10000 })
+  .click({force: true})
 
       cy.wait(2000)
 

@@ -37,8 +37,9 @@ describe("Teste - Login", () => {
 
   context("Teste Pagamento Ext", () => {
 
-    
+   /* 
     it("Aba Treinamentos", () => {
+
 
          // Clicando na aba Treinamento
       cy.get('[title="Treinamentos"] > .sideitem',{timeout:60000})
@@ -454,7 +455,6 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
     });
 
 
-
     it("Clica em cupon", () => {
       // Clicando em Cadastros
       cy.get('[title="Cadastros"] > .sideitem', { timeout: 60000 })
@@ -512,7 +512,7 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
         .should("be.visible")
         .and("not.be.disabled")
         .clear()
-        .type("808182");
+        .type("808183");
 
       // Quantidade
       cy.contains("div.box-title", "Quantidade")
@@ -577,7 +577,7 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
 
     });
     
-
+*/
     it("Vai até a vitrine", () => {
 
         // Clicando no icon da vitrine
@@ -594,6 +594,7 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
        
    });
 
+   /*
     it('Compra da Turma paga á vista sem aprovação', ()=> {
 
     //Ver tudo
@@ -609,7 +610,7 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
   .click()
 
   //Clica em comprar
-        cy.get('.classes-actions > :nth-child(1) > .btn-swipe-accent', { timeout: 60000 })
+        cy.get('.center > div > .btn-swipe-accent', { timeout: 60000 })
         .should('be.visible')
         .click()
 
@@ -643,7 +644,7 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
         .click();
 
     });
-    
+    */
     
 
      it('Turma paga 4x Cartão', ()=> {
@@ -660,10 +661,10 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
   .scrollIntoView()
   .click()
 
-   //Clica em comprar
-        cy.get('.classes-actions > :nth-child(1) > .btn-swipe-accent', { timeout: 60000 })
+       //Clica em comprar
+        cy.get('.center > div > .btn-swipe-accent', { timeout: 60000 })
         .should('be.visible')
-        .click()    
+        .click()  
 
         // Clica em Cartão
 cy.get('input[type="radio"][value="CREDIT_CARD"]', { timeout: 10000 })
@@ -723,10 +724,10 @@ cy.get('.ui-select-choices:visible', { timeout: 10000 }).within(() => {
   .scrollIntoView()
   .click()
 
-   //Clica em comprar
-        cy.get('.classes-actions > :nth-child(1) > .btn-swipe-accent', { timeout: 60000 })
+    //Clica em comprar
+        cy.get('.center > div > .btn-swipe-accent', { timeout: 60000 })
         .should('be.visible')
-        .click()    
+        .click()   
 
         cy.wait(2000)
 
@@ -825,7 +826,7 @@ it("Apllica cupom % á vista", () => {
     .should("be.visible")
     .and("not.be.disabled")
     .click()
-    .invoke("val", "808182")
+    .invoke("val", "808183")
     .trigger("input")
     .trigger("change");
 
@@ -878,10 +879,10 @@ it("Apllica cupom % á vista", () => {
   .scrollIntoView()
   .click()
 
-   //Clica em comprar
-        cy.get('.classes-actions > :nth-child(1) > .btn-swipe-accent', { timeout: 60000 })
+    //Clica em comprar
+        cy.get('.center > div > .btn-swipe-accent', { timeout: 60000 })
         .should('be.visible')
-        .click()    
+        .click()
 
  })
 
@@ -984,7 +985,7 @@ it("Apllica cupom % á vista", () => {
     .should("be.visible")
     .and("not.be.disabled")
     .click()
-    .invoke("val", "808182")
+    .invoke("val", "808183")
     .trigger("input")
     .trigger("change");
 

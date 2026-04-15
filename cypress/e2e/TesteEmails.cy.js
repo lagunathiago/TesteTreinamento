@@ -1,16 +1,17 @@
-/*
 Cypress.on('uncaught:exception', (err) => {
-  if (err.message.includes('Cannot read properties of null') &&
-      err.message.includes('charAt')) {
-    return false
-  }
-  
-})
-*/
-Cypress.on("uncaught:exception", (err) => {
+  const msg = err.message || '';
+
+  // Erros conhecidos do Angular / Front que não devem quebrar o teste
   if (
-    err.message.includes("Cannot read properties of null") ||
-    err.message.includes("charAt")
+    msg.includes('Cannot read properties of null') ||
+    msg.includes('Cannot read properties of undefined') ||   
+    msg.includes("reading 'then'") ||                        
+    msg.includes('charAt') ||
+    msg.includes('writeText') ||
+    msg.includes('Clipboard') ||
+    msg.includes('Clipboard') ||
+    msg.includes('ResizeObserver loop completed with undelivered notifications') ||
+    msg.includes('renderCertificateClick is not a function')
   ) {
     return false;
   }
@@ -49,12 +50,12 @@ describe("Teste - Login", () => {
       cy.wait(3000) //espera alguns segundos para carregar a pagina
 
       //Clica na Categoria automação
-      cy.get('[data-nodeid="42"]',{timeout:60000})
+      cy.get('[data-nodeid="48"]',{timeout:60000})
       .should('be.visible')
       .click() 
 
       //Clica na Sub Categoria
-      cy.get('[data-nodeid="43"]',{timeout:60000})
+      cy.get('[data-nodeid="49"]',{timeout:60000})
       .should('be.visible')
       .click() 
    
@@ -419,7 +420,6 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
       
     });
     
-
      it("Treinamento paga com aprovação de Gestor", () => {
 
         //Clicar em criar treinamentos

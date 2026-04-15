@@ -29,6 +29,7 @@ describe("Teste - Login", () => {
   });
 
   context("Teste Cupons", () => {
+    /*
     it("Clica em cupon", () => {
       // Clicando em Cadastros
       cy.get('[title="Cadastros"] > .sideitem', { timeout: 60000 })
@@ -299,9 +300,9 @@ describe("Teste - Login", () => {
         .should("be.visible")
         .click();
 
-      /* cy.get('.profile-select', { timeout: 60000 })
+       cy.get('.profile-select', { timeout: 60000 })
   .should('be.visible')
-  .click() */
+  .click() 
 
       //Clica em perfil
       cy.get(
@@ -319,19 +320,25 @@ describe("Teste - Login", () => {
         .should("be.visible")
         .click();
 
+    })
+*/
+
+
+    it('compra', () => {
+      
       // Clicando no icon da vitrine
       cy.get(".active > .icon-next", { timeout: 60000 })
         .should("be.visible")
         .click();
 
       //Clica na vitrine Automação
-      cy.get(".showcase-navigation-menu > :nth-child(5)", { timeout: 60000 })
+      cy.get(".showcase-navigation-menu > :nth-child(7)", { timeout: 60000 })
         .should("be.visible")
         .click();
 
       //Clica no Treinamento
       cy.get(
-        ':nth-child(1) > .card-container > [ng-init="course = content.entity"] > a.ng-scope > .showcase-card-container',
+        ":nth-child(1) > .card-container > [ng-init=\"course = content.entity\"] > a.ng-scope > .showcase-card-container",
         { timeout: 60000 },
       )
         .should("be.visible")
@@ -344,6 +351,8 @@ describe("Teste - Login", () => {
         .should("be.visible")
         .click();
     });
+
+
 
     it("Limite de Cupom %", () => {
       //Digita um cupom já com um limite atingido

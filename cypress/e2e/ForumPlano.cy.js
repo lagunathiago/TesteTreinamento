@@ -161,7 +161,6 @@ describe("Teste - Login", () => {
       
       cy.get('.add-content > .end > .btn-swipe-accent').click()
 
-      
       cy.get('.content-box-footer > .flex > .btn-swipe-accent').click()
 
       cy.wait(5000)

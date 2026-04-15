@@ -40,7 +40,12 @@ describe("Teste - Login", () => {
       cy.wait(3000) //espera alguns segundos para carregar a pagina
 
       //Clica na Categoria automação
-      cy.get('[data-nodeid="43"]',{timeout:60000})
+      cy.get('[data-nodeid="45"]',{timeout:60000})
+      .should('be.visible')
+      .click() 
+
+      //Clica na Categoria automação
+      cy.get('[data-nodeid="46"]',{timeout:60000})
       .should('be.visible')
       .click() 
 

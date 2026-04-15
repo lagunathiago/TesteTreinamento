@@ -420,7 +420,6 @@ describe("Teste - Login", () => {
       cy.get(".editing-resource > .end > .btn-swipe-accent").click();
 
     });
-    
 
     it("Conteúdo - Aula Presencial YOUTUBE", () => {
       abrirConteudosENovo();
@@ -796,9 +795,10 @@ describe("Teste - Login", () => {
 
       cy.wait(3000);
 
-      cy.get(".editing-resource > .end > .btn-swipe-accent", { timeout: 60000 })
-        .should("exist")
-        .click({ force: true });
+           cy.get(".editing-resource > .end > .btn-swipe-accent").click();
+
+cy.wait(7000);
+
     });
 
     it("Conteúdo - Entrega de atividade", () => {
