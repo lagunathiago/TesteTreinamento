@@ -54,7 +54,7 @@ describe("Teste - Login", () => {
     cy.get('[data-nodeid="46"]').click();
 
   });
-
+/*
   it("Criação do primeiro treinamento pago com aprovação de campos", () => {
 
     // =============================
@@ -3534,8 +3534,39 @@ it('Exclui todos os Treinamentos', () => {
 
   treinamentos.forEach((nome) => {
     excluirTreinamento(nome);
-    
+
      });
+
+  });
+  */
+
+  it('Exclui o campo criado', () => {
+
+      cy.get('[title="Configurações"] > .sideitem')
+      .click({force:true});
+
+    cy.wait(2000);
+
+    cy.get('[ui-sref="accessLink.content.configurations.account-subscription.custom-fields"]')
+    .click()
+
+   cy.contains('td', 'LECTOR20', { timeout: 60000 })
+  .parents('tr')
+  .within(() => {
+    cy.get('button[ng-click*="showRemoveCustomField"]')
+      .scrollIntoView()
+      .should('be.visible')
+      .click();
+  });
+
+  cy.get('.open-content > [ui-view=""] > .modal-overlay > .modal > :nth-child(2) > .end > .flex > .btn-swipe-accent')
+  .click()
+
+  cy.wait(1000)
+
+  //Salvar
+  cy.get('.open-content > .content-box-footer > .btn-swipe-accent')
+  .click()
 
   });
 
