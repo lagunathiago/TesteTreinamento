@@ -54,7 +54,7 @@ describe("Teste - Login", () => {
     cy.get('[data-nodeid="46"]').click();
 
   });
-/*
+
   it("Criação do primeiro treinamento pago com aprovação de campos", () => {
 
     // =============================
@@ -3538,7 +3538,6 @@ it('Exclui todos os Treinamentos', () => {
      });
 
   });
-  */
 
   it('Exclui o campo criado', () => {
 

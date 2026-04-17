@@ -717,7 +717,6 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna',{timeout:60000})
 .should('be.visible')
 .click();
 
-
             //Clica em adicionar 
             cy.get('.flex > .middle > .btn-swipe-accent',{timeout:60000})
             .should('be.visible')
@@ -901,8 +900,11 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna',{timeout:60000})
         cy.get('ui-view.ng-scope > .flex > .btn-swipe-accent').click()                 // Clica em novo
         //Doc
         cy.get('.editing-resource > :nth-child(2) > .w-100').click()                   // Clicou na aba
+
         cy.get(".open > .ui-select-choices > :nth-child(2)").click();                  // Selecionar documentos como tipo de conteúdo
+
         cy.get(".weight").type("1");                                                   // Selecionar peso
+        
         cy.get(".open > .ui-select-choices > :nth-child(2)").click();                  // Selecionar peso 1
         
          cy.contains('.ui-select-container', 'Escolha um documento')
@@ -942,13 +944,13 @@ cy.get(".editing-resource > .end > .btn-swipe-accent").click();
        cy.get('.column > :nth-child(1) > .icon-checkbox').click(); // desativa aprovação
 
 
-      
     cy.get('.field2 > div.mt-20 > .middle > .checkbox > .icon-checkbox').click() //Deixar em branco
       
       cy.get('.navigation-controls > .ml-20').click()//botao prximo
       cy.get('.navigation-controls > .ml-20').click()//botao prximo
       
      cy.get('tr.ng-scope > :nth-child(4) > .middle > .btn').click()
+
       cy.get('.step2 > .permission-select > [ng-show="showUser"] > .column > .multiselect > .border > .ui-select-match > .btn-default').type("thiago laguna")
       cy.get('.ui-select-dropdown')
   .should('be.visible')

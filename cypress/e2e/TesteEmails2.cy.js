@@ -115,7 +115,6 @@ describe("Teste - Login", () => {
         .should('be.visible')
         .click();
 
-   //Clica no Treinamento
    
             //Clica no Treinamento
        cy.contains('.showcase-card-title', 'Treinamento pago com recorrência sem aprovação', { timeout: 60000 })
@@ -594,7 +593,6 @@ it("Aba Treinamentos", () => {
 
    });
 
-
    it("Recusa o Treinamento paga com aprovação de Gestor", () => {
 
       //Clica no Treinamento
@@ -902,7 +900,6 @@ it("Aba Treinamentos", () => {
         cy.get('.classes-actions > .btn-swipe-accent.ng-scope', { timeout: 60000 })
         .should('be.visible')
         .click()
-
 
         //Escreve nos dois campos
         cy.get('.modal:visible').within(() => {
