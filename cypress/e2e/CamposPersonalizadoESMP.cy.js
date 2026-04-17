@@ -466,6 +466,20 @@ describe("Teste - Login", () => {
             .should('be.visible')
             .click({force:true})
 
+            //Clica em 'Selecionar um campo personalizado"
+            cy.get('.flex > .ng-isolate-scope > .multiselect > .border > .ui-select-match > .btn-default',{timeout:60000})
+            .should('be.visible')
+            .click({force:true})
+
+             cy.contains('.ui-select-choices-row span.ng-binding','teste 09/12/2025 campo',{ timeout: 60000 })
+.should('be.visible')
+.click();
+
+            //Clica em adicionar 
+            cy.get('.flex > .middle > .btn-swipe-accent',{timeout:60000})
+            .should('be.visible')
+            .click({force:true})
+
             cy.wait(1000)
 
     // =============================
