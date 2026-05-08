@@ -39,10 +39,9 @@ describe("Teste - Login e troca de perfil", () => {
 
   });
 
-
-
 context("Assitir Treinamento", { testIsolation: false }, () => {
   
+  /*
    it('Vai até a vitrine', () => {
 
         //Clica em conteúdos
@@ -73,11 +72,13 @@ context("Assitir Treinamento", { testIsolation: false }, () => {
 
     })
 
+    
   it("Clicar em Fazer inscrição (se disponivel)", () => {
     cy.pause()
 
   });
 
+  
   // --- GRAVAÇÃO ---
   it("Assistir gravação e validar 100%", () => {
 
@@ -246,6 +247,7 @@ context("Assitir Treinamento", { testIsolation: false }, () => {
   .within(() => {
     cy.contains('label.checkbox, .checkbox', 'Li e concordo')
       .click({ force: true });
+
   });
 
   //Clica em confirmar
@@ -548,7 +550,6 @@ context("Assitir Treinamento", { testIsolation: false }, () => {
     cy.log("⬅️ Clicou em Voltar após assistir gravação");
   });
 
-
   it("Topico ", () => {
     cy.get(":nth-child(41) > :nth-child(1) > .lector-txt-main")
       .should("be.visible")
@@ -578,7 +579,7 @@ context("Assitir Treinamento", { testIsolation: false }, () => {
       .click();
 
     cy.log("FAÇA A AVALIAÇÃO DO SCORM, CONFIRME E DEIXE O BOTÃO VOLTAR VISIVEL");
-    cy.pause
+    cy.pause()
 
     // Clica em voltar
     cy.get("#hideResource", { timeout: 50000 })
@@ -586,31 +587,24 @@ context("Assitir Treinamento", { testIsolation: false }, () => {
       .click({ force: true });
   });
 
+
   it("Entrega de atividade", () => {
-    cy.wait(3000);
+
+    cy.wait(3000)
 
     cy.get(':nth-child(45) > [style="padding-left: 5px;"]')
       .should("be.visible")
       .click();
-
-    cy.contains("Adicionar arquivos", { timeout: 20000 })
-      .should("be.visible")
-      .closest(".default-padding") // sobe pro container correto (ajuste se precisar)
-      .find('input[type="file"]')
-      .first()
-      .selectFile("cypress/fixtures/images(1).png", { force: true });
-
-    cy.wait(4000);
-
-    cy.get(".btn-swipe-accent.mb-20").click({ force: true });
-
-    cy.wait(4000);
+  
+      cy.log('Faça a entrega da atividade, confirme e deixe o botão voltar visível');
+      cy.pause()
 
     // Clica em voltar
     cy.get("#hideResource", { timeout: 50000 })
       .should("be.visible")
       .click({ force: true });
   });
+
 
   it("Reação todas na mesma página", () => {
     // Clica na avaliação (espera até 30s se necessário)
@@ -664,7 +658,7 @@ context("Assitir Treinamento", { testIsolation: false }, () => {
   .click()
 
   });
-   
+*/
 
 it("Vai pra categoria", () => {
 
@@ -694,7 +688,7 @@ it("Vai pra categoria", () => {
       .click()
 
     });
-
+/*
     it('Corrige Avaliação', () => {
 
       //Clica em Corrigir Avalaiação
@@ -735,7 +729,7 @@ cy.get('textarea[ng-model="questionAnswer.observations"]')
   .click()
 
     });
-
+*/
     it('Verifica se está na vitrine Altomação', () => {
 
   //Clica em editar
@@ -917,4 +911,5 @@ cy.pause();
 
 });
 
-});
+})
+

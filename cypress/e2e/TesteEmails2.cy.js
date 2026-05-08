@@ -31,6 +31,7 @@ describe("Teste - Login", () => {
 
   context("Validações gerais do fluxo de e-mails", () => {
 
+    
       it("Vai até a vitrine", () => {
 
         // Clicando no icon da vitrine
@@ -51,6 +52,7 @@ describe("Teste - Login", () => {
 
     //Ver tudo
         cy.get('.show-all', { timeout: 60000 })
+        .first()
         .should('be.visible')
         .click();
 
@@ -78,6 +80,7 @@ describe("Teste - Login", () => {
 
    });
 
+   
    it('Compra do Treinamento pago á vista sem aprovação', ()=> {
 
     //Ver tudo
@@ -96,7 +99,6 @@ describe("Teste - Login", () => {
         .should('be.visible')
         .click()
 
-        8
 
         //Volta pra vitrine
         cy.get('.showcase-head-2 > .btn', {timeout:60000})
@@ -148,6 +150,7 @@ describe("Teste - Login", () => {
 
     //Ver tudo
         cy.get('.show-all', { timeout: 60000 })
+        .first()
         .should('be.visible')
         .click();
 
@@ -179,6 +182,7 @@ describe("Teste - Login", () => {
 
     //Ver tudo
         cy.get('.show-all', { timeout: 60000 })
+        .first()
         .should('be.visible')
         .click();
 
@@ -191,7 +195,7 @@ describe("Teste - Login", () => {
   .click()
 
         //Clica em comprar
-        cy.get('.classes-actions > :nth-child(1) > .btn-swipe-accent', { timeout: 60000 })
+        cy.get('.center > div > .btn-swipe-accent', { timeout: 60000 })
         .should('be.visible')
         .click()
 
@@ -207,10 +211,12 @@ describe("Teste - Login", () => {
 
     });
 
+    
       it('Solicita a incrição no Treinamento pago com recorrência e aprovação de gestor', ()=> {
 
     //Ver tudo
         cy.get('.show-all', { timeout: 60000 })
+        .first()
         .should('be.visible')
         .click();
 
@@ -243,6 +249,7 @@ describe("Teste - Login", () => {
 
         //Ver tudo
         cy.get('.show-all', { timeout: 60000 })
+        .first()
         .should('be.visible')
         .click();
    
@@ -287,6 +294,7 @@ cy.get('.modal:visible', { timeout: 20000 })
 
         //Ver tudo
         cy.get('.show-all', { timeout: 60000 })
+        .first()
         .should('be.visible')
         .click();
    
@@ -296,10 +304,10 @@ cy.get('.modal:visible', { timeout: 20000 })
   .scrollIntoView()
   .click()
 
-        //Clica em comprar
-        cy.get('.classes-actions > :nth-child(1) > .btn-swipe-accent', { timeout: 60000 })
+          //Clica em comprar
+        cy.get('.center > div > .btn-swipe-accent', { timeout: 60000 })
         .should('be.visible')
-        .click();
+        .click()
  
         //Escreve nos dois campos
         cy.get('.modal:visible').within(() => {
@@ -308,6 +316,7 @@ cy.get('.modal:visible', { timeout: 20000 })
     .type('SEGUNDO Campo Teste Automação');
 
 });
+
 
 //Confirma o envio
 cy.get('.modal:visible', { timeout: 20000 })
@@ -331,6 +340,7 @@ cy.get('.modal:visible', { timeout: 20000 })
 
         //Ver tudo
         cy.get('.show-all', { timeout: 60000 })
+        .first()
         .should('be.visible')
         .click();
    
@@ -375,6 +385,7 @@ cy.get('.modal:visible', { timeout: 20000 })
 
         //Ver tudo
         cy.get('.show-all', { timeout: 60000 })
+        .first()
         .should('be.visible')
         .click();
    
@@ -419,6 +430,7 @@ cy.get('.modal:visible', { timeout: 20000 })
 
         //Ver tudo
         cy.get('.show-all', { timeout: 60000 })
+        .first()
         .should('be.visible')
         .click();
    
@@ -428,10 +440,10 @@ cy.get('.modal:visible', { timeout: 20000 })
   .scrollIntoView()
   .click()
 
-  //Clica em comprar
-        cy.get('.classes-actions > :nth-child(1) > .btn-swipe-accent', { timeout: 60000 })
+   //Clica em comprar
+        cy.get('.center > div > .btn-swipe-accent', { timeout: 60000 })
         .should('be.visible')
-        .click();
+        .click()
  
         //Escreve nos dois campos
         cy.get('.modal:visible').within(() => {
@@ -477,7 +489,6 @@ cy.get('.modal:visible', { timeout: 20000 })
   .click()
 
     });
-
     it("Recusa os campos", () => {
 
      //Clioca no icon de notivicações
@@ -582,12 +593,12 @@ it("Aba Treinamentos", () => {
       cy.wait(3000) //espera alguns segundos para carregar a pagina
 
       //Clica na Categoria automação
-      cy.get('[data-nodeid="45"]',{timeout:60000})
+      cy.get('[data-nodeid="48"]',{timeout:60000})
       .should('be.visible')
       .click() 
 
       //Clica na Sub Categoria
-      cy.get('[data-nodeid="46"]',{timeout:60000})
+      cy.get('[data-nodeid="49"]',{timeout:60000})
       .should('be.visible')
       .click();
 
@@ -763,7 +774,7 @@ it("Aba Treinamentos", () => {
   cy.pause()
 
    });
-   
+  
    it("Muda para o perfil aluno", ()=> {
 
         //Clioca no icon
@@ -801,8 +812,9 @@ it("Aba Treinamentos", () => {
 
      it('Solicita incrição no Treinamento gratuito com aprovação', ()=> {
 
-    //Ver tudo
+   //Ver tudo
         cy.get('.show-all', { timeout: 60000 })
+        .first()
         .should('be.visible')
         .click();
 
@@ -829,8 +841,9 @@ it("Aba Treinamentos", () => {
 
      it('Solicita incrição no Treinamento paga com aprovação de Gestor', ()=> {
 
-    //Ver tudo
+   //Ver tudo
         cy.get('.show-all', { timeout: 60000 })
+        .first()
         .should('be.visible')
         .click();
    
@@ -840,8 +853,8 @@ it("Aba Treinamentos", () => {
   .scrollIntoView()
   .click()
 
-        //Clica em comprar
-        cy.get('.classes-actions > :nth-child(1) > .btn-swipe-accent', { timeout: 60000 })
+      //Clica em comprar
+        cy.get('.center > div > .btn-swipe-accent', { timeout: 60000 })
         .should('be.visible')
         .click()
 
@@ -854,10 +867,12 @@ it("Aba Treinamentos", () => {
 
     });
 
+    
       it('Solicita a incrição no Treinamento pago com recorrência e aprovação de gestor', ()=> {
 
-    //Ver tudo
+  //Ver tudo
         cy.get('.show-all', { timeout: 60000 })
+        .first()
         .should('be.visible')
         .click();
 
@@ -885,12 +900,13 @@ it("Aba Treinamentos", () => {
 
     it("Envia os campos do Treinamento gratuito com aprovação de campos personalizados ", () => {
 
-        //Ver tudo
+    //Ver tudo
         cy.get('.show-all', { timeout: 60000 })
+        .first()
         .should('be.visible')
         .click();
-   
-            //Clica no Treinamento
+
+          //Clica no Treinamento
        cy.contains('.showcase-card-title', 'Treinamento gratuito com aprovação de campos personalizados', { timeout: 60000 })
   .should('be.visible')
   .scrollIntoView()
@@ -926,8 +942,9 @@ cy.get('.modal:visible', { timeout: 20000 })
 
    it("Envia os campos do Treinamento pago com aprovação de campos personalizados", () => {
 
-        //Ver tudo
+       //Ver tudo
         cy.get('.show-all', { timeout: 60000 })
+        .first()
         .should('be.visible')
         .click();
    
@@ -969,6 +986,7 @@ cy.get('.modal:visible', { timeout: 20000 })
 
         //Ver tudo
         cy.get('.show-all', { timeout: 60000 })
+        .first()
         .should('be.visible')
         .click();
    
@@ -1010,6 +1028,7 @@ cy.get('.modal:visible', { timeout: 20000 })
 
         //Ver tudo
         cy.get('.show-all', { timeout: 60000 })
+        .first()
         .should('be.visible')
         .click();
    
@@ -1045,15 +1064,15 @@ cy.get('.modal:visible', { timeout: 20000 })
         .should('be.visible')
         .click()
  
-
    });
 
    it("Envia os campos do Treinamento pago com aprovação de gestor e campos personalizados", () => {
 
-        //Ver tudo
+      //Ver tudo
         cy.get('.show-all', { timeout: 60000 })
+        .first()
         .should('be.visible')
-        .click();
+        .click();;
    
             //Clica no Treinamento
        cy.contains('.showcase-card-title', 'Treinamento pago com aprovação de gestor e campos personalizados', { timeout: 60000 })
@@ -1086,7 +1105,6 @@ cy.get('.modal:visible', { timeout: 20000 })
         cy.get('.showcase-head-2 > .btn', {timeout:60000})
         .should('be.visible')
         .click()
-
 
    });
 
@@ -1226,7 +1244,7 @@ it("Aba Treinamentos", () => {
 
    });
 
-
+   
    it("Recusa o Treinamento paga com aprovação de Gestor", () => {
 
       //Clica no Treinamento
@@ -1416,7 +1434,6 @@ it("Aba Treinamentos", () => {
   .click()
 
    });
-
     it("Vai até a vitrine", () => {
 
         // Clicando no icon da vitrine
@@ -1433,10 +1450,12 @@ it("Aba Treinamentos", () => {
         
    });
 
+   
      it('Solicita incrição no Treinamento gratuito com aprovação', ()=> {
 
     //Ver tudo
         cy.get('.show-all', { timeout: 60000 })
+        .first()
         .should('be.visible')
         .click();
 
@@ -1461,10 +1480,12 @@ it("Aba Treinamentos", () => {
 
     });
 
+
      it('Solicita incrição no Treinamento paga com aprovação de Gestor', ()=> {
 
-    //Ver tudo
+   //Ver tudo
         cy.get('.show-all', { timeout: 60000 })
+        .first()
         .should('be.visible')
         .click();
    
@@ -1474,8 +1495,8 @@ it("Aba Treinamentos", () => {
   .scrollIntoView()
   .click()
 
-        //Clica em comprar
-        cy.get('.classes-actions > :nth-child(1) > .btn-swipe-accent', { timeout: 60000 })
+       //Clica em comprar
+        cy.get('.center > div > .btn-swipe-accent', { timeout: 60000 })
         .should('be.visible')
         .click()
 
@@ -1488,14 +1509,14 @@ it("Aba Treinamentos", () => {
 
     });
 
+    
       it('Solicita a incrição no Treinamento pago com recorrência e aprovação de gestor', ()=> {
 
     //Ver tudo
         cy.get('.show-all', { timeout: 60000 })
+        .first()
         .should('be.visible')
         .click();
-
-   //Clica no Treinamento
    
             //Clica no Treinamento
        cy.contains('.showcase-card-title', ' Treinamento pago com recorrência e aprovação de gestor', { timeout: 60000 })
@@ -1519,8 +1540,9 @@ it("Aba Treinamentos", () => {
 
     it("Envia os campos do Treinamento gratuito com aprovação de campos personalizados ", () => {
 
-        //Ver tudo
+      //Ver tudo
         cy.get('.show-all', { timeout: 60000 })
+        .first()
         .should('be.visible')
         .click();
    
@@ -1534,7 +1556,6 @@ it("Aba Treinamentos", () => {
         cy.get('.classes-actions > .btn-swipe-accent.ng-scope', { timeout: 60000 })
         .should('be.visible')
         .click()
-
 
         //Escreve nos dois campos
         cy.get('.modal:visible').within(() => {
@@ -1561,8 +1582,9 @@ cy.get('.modal:visible', { timeout: 20000 })
 
    it("Envia os campos do Treinamento pago com aprovação de campos personalizados", () => {
 
-        //Ver tudo
+      //Ver tudo
         cy.get('.show-all', { timeout: 60000 })
+        .first()
         .should('be.visible')
         .click();
    
@@ -1600,6 +1622,7 @@ cy.get('.modal:visible', { timeout: 20000 })
 
    });
 
+   
     it("Envia os campos do Treinamento pago com recorrência e aprovação de campos personalizados", () => {
 
         //Ver tudo
@@ -1643,8 +1666,9 @@ cy.get('.modal:visible', { timeout: 20000 })
 
    it("Envia os campos do Treinamento gratuito com aprovação de gestor e campos personalizados", () => {
 
-        //Ver tudo
+       //Ver tudo
         cy.get('.show-all', { timeout: 60000 })
+        .first()
         .should('be.visible')
         .click();
    
@@ -1685,8 +1709,9 @@ cy.get('.modal:visible', { timeout: 20000 })
 
    it("Envia os campos do Treinamento pago com aprovação de gestor e campos personalizados", () => {
 
-        //Ver tudo
+       //Ver tudo
         cy.get('.show-all', { timeout: 60000 })
+        .first()
         .should('be.visible')
         .click();
    
@@ -1747,7 +1772,6 @@ cy.get('.modal:visible', { timeout: 20000 })
     });
 
     
-
     it("Aprova os Campos Personalizado", () => {
 
      //Clioca no icon de notivicações
@@ -1810,12 +1834,12 @@ it("Aba Treinamentos", () => {
       cy.wait(3000) //espera alguns segundos para carregar a pagina
 
       //Clica na Categoria automação
-      cy.get('[data-nodeid="45"]',{timeout:60000})
+      cy.get('[data-nodeid="48"]',{timeout:60000})
       .should('be.visible')
       .click() 
 
       //Clica na Sub Categoria
-      cy.get('[data-nodeid="46"]',{timeout:60000})
+      cy.get('[data-nodeid="49"]',{timeout:60000})
       .should('be.visible')
       .click();
 

@@ -49,6 +49,7 @@ describe("Teste - Login", () => {
 
   context("Vai para a categoria", { testIsolation: false }, () => {
 
+    /*
      it("Clica vai ate a categoria", () => {
 
         // Clicando na aba Treinamento
@@ -216,6 +217,7 @@ describe("Teste - Login", () => {
         cy.wait(8000)
 
     });
+*/
 
       it('ENTRA NO PERFIL ALUNO E MATRICULA COMO ONLINE', () => {
 

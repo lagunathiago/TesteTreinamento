@@ -65,7 +65,6 @@ describe("Teste - Login", () => {
 
      });
 
-
       it('Cria o treinamento', () => {
         
         //Clicar em criar treinamentos
@@ -182,7 +181,7 @@ describe("Teste - Login", () => {
       cy.wait(3000) //espera alguns segundos para carregar a pagina
 
       //Digita o Treianamento
-      cy.get('input[ng-model="searchFilter.text"]', { timeout: 20000 })
+      cy.get('input[ng-model="searchFilter.text"]', { timeout: 60000 })
         .scrollIntoView()
         .should('be.visible')
         .clear()
@@ -199,7 +198,6 @@ describe("Teste - Login", () => {
       .scrollIntoView()
         .click({ force: true });
 
-
       //Clica em gerenciar
       cy.get('.manage-subscription > .btn-swipe-accent',{timeout:60000})
         .should('be.visible')
@@ -207,6 +205,7 @@ describe("Teste - Login", () => {
 
       });
 
+      
        it('Lista de Presença (Aulas presenciais)', () => {
   
       //Clica em Aula Presencial
@@ -235,10 +234,12 @@ describe("Teste - Login", () => {
 
        it('Abre do novo', () => {
 
+        cy.wait(3000) //espera alguns segundos para carregar a pagina
+
       //Clica em gerenciar
       cy.get('.manage-subscription > .btn-swipe-accent',{timeout:60000})
         .should('be.visible')
-        .click()
+        .click({ force: true })
 
       });
 
@@ -257,7 +258,6 @@ describe("Teste - Login", () => {
   .should('not.be.empty');
 
      });
-
 
 it('Clica na impressora', () => {
 

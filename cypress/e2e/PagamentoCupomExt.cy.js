@@ -29,7 +29,7 @@ describe("Teste - Login", () => {
   });
 
   context("Teste Cupons", () => {
-    /*
+    
     it("Clica em cupon", () => {
       // Clicando em Cadastros
       cy.get('[title="Cadastros"] > .sideitem', { timeout: 60000 })
@@ -321,7 +321,6 @@ describe("Teste - Login", () => {
         .click();
 
     })
-*/
 
 
     it('compra', () => {

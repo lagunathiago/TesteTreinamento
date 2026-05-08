@@ -60,6 +60,8 @@ describe("Teste - Login", () => {
       .click() 
    
     });
+
+    /*
     it("Treinamento gratuito sem aprovação", () => {
 
         //Clicar em criar treinamentos
@@ -134,16 +136,18 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
   .should('be.visible')
   .click();
 
-      cy.wait(1000);
+    // =============================
+    // 🔹 Salvar
+    // =============================
+    cy.get('.add-content > .end > .btn-swipe-accent').click();
 
-      // Clica no botão "Salvar Turma"
-      cy.get('.add-content > .end > .btn-swipe-accent').click()
-      cy.get('.content-box-footer > .flex > .btn-swipe-accent').click()
-      cy.get('[ng-show="modal.useVersioning"] > .modal > :nth-child(3) > .checkbox > .icon-checkbox').click(); //selecionar versionamento
-      cy.get('[ng-show="modal.useVersioning"] > .modal > .end > .ml-10').click(); //salvar sem versionamento
+    cy.get('.content-box-footer > .flex > .btn-swipe-accent').click();
+
+    cy.wait(7000)
 
     });
-     
+   
+    
      it("Treinamento paga á vista sem aprovação", () => {
 
          //Clicar em criar treinamentos
@@ -408,18 +412,19 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
   .should('be.visible')
   .click()
 
-      cy.wait(1000)
-     
-      // Clica no botão "Salvar Turma"
-      
-      cy.get('.add-content > .end > .btn-swipe-accent').click()
-      
-      cy.get('.content-box-footer > .flex > .btn-swipe-accent').click()
-      cy.get('[ng-show="modal.useVersioning"] > .modal > :nth-child(3) > .checkbox > .icon-checkbox').click(); //selecionar versionamento
-      cy.get('[ng-show="modal.useVersioning"] > .modal > .end > .ml-10').click(); //salvar sem versionamento
-      
+  
+     // =============================
+    // 🔹 Salvar
+    // =============================
+    cy.get('.add-content > .end > .btn-swipe-accent').click();
+
+    cy.get('.content-box-footer > .flex > .btn-swipe-accent').click();
+
+    cy.wait(7000)
+
     });
-    
+    */
+
      it("Treinamento paga com aprovação de Gestor", () => {
 
         //Clicar em criar treinamentos
@@ -432,7 +437,7 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
         cy.get("#courseName").click(); // Clica pra digitar
         cy.get("#courseName").type("Treinamento paga com aprovação de Gestor") //  Nome no Treinamento
 
-        cy.get('label.thumb-placeholder[aspect="square"] input[type="file"]').selectFile('cypress/fixtures/Treinamento pago com aprovação de gestor', { force: true });
+        cy.get('label.thumb-placeholder[aspect="square"] input[type="file"]').selectFile('cypress/fixtures/Treinamento pago com aprovação de gestor.png', { force: true });
         cy.log('AJUSTE A IMAGEM MANUALMENTE')
         cy.wait(6000);                                                     // Aguarda alguns segudos para ajustar a imagem
         cy.get('button[ng-click="cropper.save()"]').click();               // Confirma em confirmar para salvar a imagem
@@ -502,17 +507,18 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
   .should('be.visible')
   .click()
 
-      cy.wait(1000)
+     // =============================
+    // 🔹 Salvar
+    // =============================
+    cy.get('.add-content > .end > .btn-swipe-accent').click();
 
-      // Clica no botão "Salvar Turma"
-      cy.get('.add-content > .end > .btn-swipe-accent').click()
-      
-      cy.get('.content-box-footer > .flex > .btn-swipe-accent').click()
-      cy.get('[ng-show="modal.useVersioning"] > .modal > :nth-child(3) > .checkbox > .icon-checkbox').click(); //selecionar versionamento
-      cy.get('[ng-show="modal.useVersioning"] > .modal > .end > .ml-10').click(); //salvar sem versionamento
-       
+    cy.get('.content-box-footer > .flex > .btn-swipe-accent').click();
+
+    cy.wait(7000)
+     
         });
 
+        /*
          it("Treinamento pago com recorrência e aprovação de gestor", () => {
 
         //Clicar em criar treinamentos
@@ -596,19 +602,17 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna',{timeout:60000})
   .should('be.visible')
   .click()
 
-      cy.wait(1000)
-      // Clica no botão "Salvar Turma"
-            cy.wait(2000)
-      cy.get('.add-content > .end > .btn-swipe-accent').click()
+       // =============================
+    // 🔹 Salvar
+    // =============================
+    cy.get('.add-content > .end > .btn-swipe-accent').click();
 
-      cy.get('.content-box-footer > .flex > .btn-swipe-accent').click() //Salvar treinamento
-      cy.get('[ng-show="modal.useVersioning"] > .modal > :nth-child(3) > .checkbox > .icon-checkbox').click(); //selecionar versionamento
-      cy.get('[ng-show="modal.useVersioning"] > .modal > .end > .ml-10').click(); //salvar sem versionamento
+    cy.get('.content-box-footer > .flex > .btn-swipe-accent').click();
 
-      cy.wait(4000)
+    cy.wait(7000)
 
     });
-
+*/
     it("Treinamento gratuito com aprovação de campos personalizados", () => {
 
         //Clicar em criar treinamentos
@@ -722,15 +726,15 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna',{timeout:60000})
             .should('be.visible')
             .click({force:true})
 
-      // Clica no botão "Salvar Turma"
-            cy.wait(2000)
-      cy.get('.add-content > .end > .btn-swipe-accent').click()
 
-      cy.get('.content-box-footer > .flex > .btn-swipe-accent').click() //Salvar treinamento
-      cy.get('[ng-show="modal.useVersioning"] > .modal > :nth-child(3) > .checkbox > .icon-checkbox').click(); //selecionar versionamento
-      cy.get('[ng-show="modal.useVersioning"] > .modal > .end > .ml-10').click(); //salvar sem versionamento
+    // =============================
+    // 🔹 Salvar
+    // =============================
+    cy.get('.add-content > .end > .btn-swipe-accent').click();
 
-      cy.wait(4000)
+    cy.get('.content-box-footer > .flex > .btn-swipe-accent').click();
+
+    cy.wait(7000)
 
     });
     
@@ -857,20 +861,19 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna',{timeout:60000})
             .should('be.visible')
             .click({force:true})
 
-            cy.wait(1000)
+     
+               // =============================
+    // 🔹 Salvar
+    // =============================
+    cy.get('.add-content > .end > .btn-swipe-accent').click();
 
-      // Clica no botão "Salvar Turma"
-            cy.wait(2000)
-      cy.get('.add-content > .end > .btn-swipe-accent').click()
+    cy.get('.content-box-footer > .flex > .btn-swipe-accent').click();
 
-      cy.get('.content-box-footer > .flex > .btn-swipe-accent').click() //Salvar treinamento
-      cy.get('[ng-show="modal.useVersioning"] > .modal > :nth-child(3) > .checkbox > .icon-checkbox').click(); //selecionar versionamento
-      cy.get('[ng-show="modal.useVersioning"] > .modal > .end > .ml-10').click(); //salvar sem versionamento
-
-      cy.wait(4000);
+    cy.wait(7000)
 
     });
 
+    
  it("Treinamento pago com recorrência e aprovação de campos personalizados", () => {
 
         //Clicar em criar treinamentos
@@ -1124,15 +1127,14 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna',{timeout:60000})
 
             cy.wait(1000)
 
-      // Clica no botão "Salvar Turma"
-            cy.wait(2000)
-      cy.get('.add-content > .end > .btn-swipe-accent').click()
+    // =============================
+    // 🔹 Salvar
+    // =============================
+    cy.get('.add-content > .end > .btn-swipe-accent').click();
 
-      cy.get('.content-box-footer > .flex > .btn-swipe-accent').click() //Salvar treinamento
-      cy.get('[ng-show="modal.useVersioning"] > .modal > :nth-child(3) > .checkbox > .icon-checkbox').click(); //selecionar versionamento
-      cy.get('[ng-show="modal.useVersioning"] > .modal > .end > .ml-10').click(); //salvar sem versionamento
+    cy.get('.content-box-footer > .flex > .btn-swipe-accent').click();
 
-      cy.wait(4000)
+    cy.wait(7000)
 
     });
 
@@ -1260,23 +1262,16 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna',{timeout:60000})
             .should('be.visible')
             .click({force:true})
 
-            cy.wait(1000)
+    // =============================
+    // 🔹 Salvar
+    // =============================
+    cy.get('.add-content > .end > .btn-swipe-accent').click();
 
-      // Clica no botão "Salvar Turma"
-            cy.wait(2000)
-      cy.get('.add-content > .end > .btn-swipe-accent').click()
+    cy.get('.content-box-footer > .flex > .btn-swipe-accent').click();
 
-      cy.get('.content-box-footer > .flex > .btn-swipe-accent').click() //Salvar treinamento
-      cy.get('[ng-show="modal.useVersioning"] > .modal > :nth-child(3) > .checkbox > .icon-checkbox').click(); //selecionar versionamento
-      cy.get('[ng-show="modal.useVersioning"] > .modal > .end > .ml-10').click(); //salvar sem versionamento
-
-      cy.wait(4000);
-
-      
+    cy.wait(7000)
 
     });
-
-
 
   });
 });

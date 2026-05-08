@@ -36,10 +36,8 @@ describe("Teste - Login", () => {
   });
 
   context("Teste Pagamento Ext", () => {
-
-   /* 
+  
     it("Aba Treinamentos", () => {
-
 
          // Clicando na aba Treinamento
       cy.get('[title="Treinamentos"] > .sideitem',{timeout:60000})
@@ -49,14 +47,13 @@ describe("Teste - Login", () => {
       cy.wait(3000) //espera alguns segundos para carregar a pagina
 
       // Clica na Categoria automação (pelo nodeid, no elemento clicável)
-      cy.contains('span.text-area', 'TesteAutomação', { timeout: 60000 })
+      cy.get('[data-nodeid="2"]',{timeout:10000})
   .should('be.visible')
   .scrollIntoView()
   .click({ force: true });
 
-
     });
-    
+
     it("Criando Turma paga á vista ", () => {
 
         //Clicar em criar treinamentos
@@ -142,8 +139,7 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
       cy.get('.add-content > .end > .btn-swipe-accent').click()
       
       cy.get('.content-box-footer > .flex > .btn-swipe-accent').click()
-      cy.get('[ng-show="modal.useVersioning"] > .modal > :nth-child(3) > .checkbox > .icon-checkbox').click(); //selecionar versionamento
-      cy.get('[ng-show="modal.useVersioning"] > .modal > .end > .ml-10').click(); //salvar sem versionamento
+     
      
     });
 
@@ -248,8 +244,6 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
       cy.get('.add-content > .end > .btn-swipe-accent').click()
       
       cy.get('.content-box-footer > .flex > .btn-swipe-accent').click()
-      cy.get('[ng-show="modal.useVersioning"] > .modal > :nth-child(3) > .checkbox > .icon-checkbox').click(); //selecionar versionamento
-      cy.get('[ng-show="modal.useVersioning"] > .modal > .end > .ml-10').click(); //salvar sem versionamento
      
     });
 
@@ -345,8 +339,6 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
 cy.wait(3000)
 
     });
-
-    
 
     it("Criar turma paga cartão e cupom", () => {
 
@@ -449,8 +441,6 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
       cy.get('.add-content > .end > .btn-swipe-accent').click()
       
       cy.get('.content-box-footer > .flex > .btn-swipe-accent').click()
-      cy.get('[ng-show="modal.useVersioning"] > .modal > :nth-child(3) > .checkbox > .icon-checkbox').click(); //selecionar versionamento
-      cy.get('[ng-show="modal.useVersioning"] > .modal > .end > .ml-10').click(); //salvar sem versionamento
      
     });
 
@@ -466,8 +456,6 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
         .should("be.visible")
         .click();
     });
-
-
     
     it("Criar cupom %", () => {
       //Clica em criar cupons
@@ -553,10 +541,7 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
 
     });
 
-
-
      it('Sai do Perfil adm', () => {
-
 
     //Clioca no icon
   cy.contains('div', 'Administrador',{ timeout: 60000 })
@@ -576,8 +561,7 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
   cy.wait(10000)
 
     });
-    
-*/
+
     it("Vai até a vitrine", () => {
 
         // Clicando no icon da vitrine
@@ -593,8 +577,7 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
         .click();
        
    });
-
-   /*
+   
     it('Compra da Turma paga á vista sem aprovação', ()=> {
 
     //Ver tudo
@@ -644,8 +627,7 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
         .click();
 
     });
-    */
-    
+
 
      it('Turma paga 4x Cartão', ()=> {
 
@@ -661,10 +643,15 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
   .scrollIntoView()
   .click()
 
+
        //Clica em comprar
-        cy.get('.center > div > .btn-swipe-accent', { timeout: 60000 })
+        cy.get('.center > div > .btn-swipe-accent', { timeout: 10000 })
         .should('be.visible')
-        .click()  
+        .click() 
+        
+
+        cy.wait(2000)
+
 
         // Clica em Cartão
 cy.get('input[type="radio"][value="CREDIT_CARD"]', { timeout: 10000 })
@@ -707,7 +694,6 @@ cy.get('.ui-select-choices:visible', { timeout: 10000 }).within(() => {
         .click();   
 
     });
-
 
 
     it('Pagamento Pagamento á vista com cupom', ()=> {
@@ -1166,8 +1152,6 @@ it("Valida compra da Turma paga á vista", () => {
   .should('contain.text', 'Turma paga 4x Cartão');
 
       });
-
-
       
       it("Turma paga Cartão e Cupom", () => {
       //Digita o treinamernto

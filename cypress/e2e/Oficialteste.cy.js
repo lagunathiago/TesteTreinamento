@@ -19,7 +19,7 @@ Cypress.on('uncaught:exception', (err) => {
 describe("Teste - Login", () => {
   before(() => {
 
-    cy.visit("https://hml.lector.live/lector_suporte/subscribe/login");
+    cy.visit("https://lector.live/lector_suporte/subscribe/login");
     cy.contains("button", "Entrar").click();
 
       cy.viewport(1920, 1080);

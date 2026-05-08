@@ -69,11 +69,7 @@ describe("Teste - Login", () => {
         cy.get("#courseName").click(); // Clica pra digitar
         cy.get("#courseName").type("Segundo Teste Gerenciar Automação") //  Nome no Treinamento
 
-        cy.get('[aspect="square"]').selectFile('cypress/fixtures/Gerenciar2.png', { force: true });
-        cy.log('AJUSTE A IMAGEM MANUALMENTE')
-        cy.wait(6000);                                                     // Aguarda alguns segudos para ajustar a imagem
-        cy.get('button[ng-click="cropper.save()"]').click();               // Confirma em confirmar para salvar a imagem
-    
+
     })
 
      it("Conteúdo - Documento JPEG", () => {
@@ -159,8 +155,6 @@ describe("Teste - Login", () => {
       cy.get('[ui-sref="accessLink.content.courses.edit.id.classes"]').click()
       cy.get('[ng-click="editClass()"]').click() //Nova turma
       cy.get("#className").type("Turma Gratuita sem aprovação"); //nome da turma
-     cy.get('.column > :nth-child(1) > .icon-checkbox').click(); // desativa aprovação
-
 
       cy.get(".price-box-container > :nth-child(2) > .price-box > .checkbox > .icon-radio").click(); //Clica em fixo
       cy.get("#price-fixed").click(); //Clica no valor

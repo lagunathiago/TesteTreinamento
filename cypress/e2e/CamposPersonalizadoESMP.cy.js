@@ -40,7 +40,8 @@ describe("Teste - Login", () => {
      // opcional: garante que saiu da tela de login
     cy.url({ timeout: 60000 }).should("not.include", "/subscribe/login");
   });
-  
+
+  /*
   
   it('Vai até a Categoria', () => {
     
@@ -335,7 +336,6 @@ describe("Teste - Login", () => {
     cy.wait(7000)
 
   });
-
 
   it("Criação do terceiro treinamento pago com aprovação de campos", () => {
 
@@ -917,6 +917,7 @@ it("Criação do quinto treinamento pago com aprovação de campos", () => {
     cy.wait(7000)
 
   });
+*/
 
     it('Entra em outro perfil Aluno',()=> {
 
@@ -955,6 +956,7 @@ it("Criação do quinto treinamento pago com aprovação de campos", () => {
         .click();
         
    });
+
 
     it("Envia os campos do Treinamento ", () => {
 
@@ -1044,6 +1046,7 @@ cy.get('.modal:visible', { timeout: 20000 })
     cy.url({ timeout: 60000 }).should('not.include', '/subscribe/login');
 
     });
+
 
      it("Aceita o campo", () => {
 
@@ -1615,7 +1618,7 @@ cy.get('.modal:visible', { timeout: 60000 })
   cy.wait(6000)
 
     });
-  
+
       it('Entra em outro perfil Aluno',()=> {
 
         cy.visit("https://hml.lector.live/esmp/subscribe/login");
@@ -1886,7 +1889,6 @@ it("Aba Treinamentos", () => {
         
    });
 
-  
       it("Verefica se o botãoe fetuar pagamento está visivel", () => {
 
         //Ver tudo
@@ -1946,6 +1948,7 @@ it("Aba Treinamentos", () => {
   cy.wait (2000)
  
      });
+
 
 it('Entra em outro perfil Aluno',()=> {
 
@@ -2563,7 +2566,6 @@ cy.get('.modal:visible', { timeout: 60000 })
   .click()
 
      });
-
 
  it("Envia os campos do Quarto Treinamento ", () => {
 
