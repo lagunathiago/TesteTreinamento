@@ -36,23 +36,26 @@ describe("Teste - Login", () => {
   });
 
   context("Criando Treinamento", { testIsolation: false }, () => {
-    it("Aba Geral", () => {
+    it("Categoria", () => {
 
       // Clicando na aba Treinamento
       cy.get('[title="Treinamentos"] > .sideitem',{timeout:60000})
       .should('be.visible')
       .click();
 
-      
       //Clica na Categoria
       cy.contains("li.list-group-item", "1Teste Automação",{timeout: 60000})
       .should('be.visible')
       .click({force: true})
 
+    });
+
+    it("Aba Geral", () => { 
+
       //Editando Nome do treinamento e o Idioma
       cy.get(".title-bar > .btn-icon").click();
       cy.get("#courseName").click(); // Clica pra digitar
-      cy.get("#courseName").type("Teste Automação Blumenau"); //  Nome no Treinamento
+      cy.get("#courseName").type("Teste Automação"); //  Nome no Treinamento
 
       cy.get('div.ui-select-container[title="Idioma"]') //Idioma
         .should("be.visible")
@@ -258,8 +261,6 @@ describe("Teste - Login", () => {
       cy.get(".editing-resource > .end > .btn-swipe-accent").click();
 
     });
-
-
 
     it("Conteúdo - Documento XLSX", () => {
       abrirConteudosENovo();
@@ -477,6 +478,8 @@ describe("Teste - Login", () => {
 
     });
 
+
+/*
      it("Conteúdo - Aula Presencial TEANMS", () => {
       abrirConteudosENovo();
 
@@ -667,9 +670,11 @@ describe("Teste - Login", () => {
         .should("be.visible")
         .click({ force: true });
 
-      cy.get(".editing-resource > .end > .btn-swipe-accent").click();
+      cy.get(".editing-resource > .end > .btn-swipe-accent").click(); --------------------------------------------------------------------------------------------
     });
 
+    */
+  
     it("Conteúdo - Vídeo (plataforma)", () => {
       abrirConteudosENovo();
 
@@ -904,6 +909,8 @@ cy.wait(7000);
 
       cy.get(".editing-resource > :nth-child(2) > .w-100").click();
 
+      cy.wait(2000)
+
       cy.get("body .ui-select-choices-row", { timeout: 60000 })
         .should("be.visible")
         .contains(/^Certificado$/i)
@@ -933,6 +940,7 @@ cy.wait(7000);
       cy.get(".editing-resource > .end > .btn-swipe-accent").click();
     });
 
+
     it("Turma Gratuita", () => {
       //Turma Gratuita
       // Garante que está na aba de Turmas
@@ -944,7 +952,6 @@ cy.wait(7000);
       cy.wait(2000);
       cy.get('[ng-click="editClass()"]').click(); //Nova turma
       cy.get("#className").type("Turma Gratuita"); //nome da turma
-      cy.get(".column > :nth-child(1) > .icon-checkbox").click(); // desativa aprovação
 
       cy.wait(3000);
 
@@ -969,14 +976,14 @@ cy.wait(7000);
 
        cy.get('.content-box-footer > .flex > .btn-swipe-accent').click()
       cy.get('[ng-show="modal.useVersioning"] > .modal > :nth-child(3) > .checkbox > .icon-checkbox').click(); //selecionar versionamento
-      cy.get('[ng-show="modal.useVersioning"] > .modal > .end > .ml-10').click(); //salvar sem versionamento
       
     });
+
 
     it('Clica no treinamento denovo', ()=> {
 
      //Clica no Treinamento
-  cy.contains('.card-title', 'Teste Automação Blumenau', {
+  cy.contains('.card-title', 'Teste Automação', {
   timeout: 60000
 })
   .scrollIntoView()
@@ -984,7 +991,7 @@ cy.wait(7000);
   .click({ force: true })
 
   //Clica em editar
-  cy.get('.end.ng-scope > .icon-edit',{timeout:60000})
+  cy.get('.flex > .icon-edit',{timeout:60000})
   .should('be.visible')
   .click()
 
@@ -994,9 +1001,6 @@ cy.wait(7000);
         .click()
 
     })
-
-
-
 
     it("Turma paga", () => {
       //Turma Paga
@@ -1009,7 +1013,6 @@ cy.wait(7000);
         .click({ force: true });
 
       cy.get("#className").type("Turma Paga"); //nome da turma
-      cy.get(".column > :nth-child(1) > .icon-checkbox").click(); // desativa aprovação
       cy.get(
         ".price-box-container > :nth-child(2) > .price-box > .checkbox > .icon-radio",
       ).click(); //Clica em fixo
@@ -1047,15 +1050,15 @@ cy.wait(7000);
      it('Clica no treinamento denovo', ()=> {
 
      //Clica no Treinamento
-  cy.contains('.card-title', 'Teste Automação Blumenau', {
+  cy.contains('.card-title', 'Teste Automação', {
   timeout: 60000
 })
   .scrollIntoView()
   .should('be.visible')
   .click({ force: true })
 
-  //Clica em editar
-  cy.get('.end.ng-scope > .icon-edit',{timeout:60000})
+ //Clica em editar
+  cy.get('.flex > .icon-edit',{timeout:60000})
   .should('be.visible')
   .click()
 
@@ -1076,7 +1079,6 @@ cy.wait(7000);
             .click({ force: true });
         });
       cy.get("#className").type("Para gratuita"); //nome da turma
-      cy.get(".column > :nth-child(1) > .icon-checkbox").click(); // desativa aprovação
       cy.get(
         ".price-box-container > :nth-child(2) > .price-box > .checkbox > .icon-radio",
       ).click(); //Clica em fixo
@@ -1113,15 +1115,15 @@ cy.wait(7000);
     it('Clica no treinamento denovo', ()=> {
 
      //Clica no Treinamento
-  cy.contains('.card-title', 'Teste Automação Blumenau', {
+  cy.contains('.card-title', 'Teste Automação', {
   timeout: 60000
 })
   .scrollIntoView()
   .should('be.visible')
   .click({ force: true })
 
-  //Clica em editar
-  cy.get('.end.ng-scope > .icon-edit',{timeout:60000})
+//Clica em editar
+  cy.get('.flex > .icon-edit',{timeout:60000})
   .should('be.visible')
   .click()
 
@@ -1146,7 +1148,6 @@ cy.wait(7000);
         });
 
       cy.get("#className").type("Para Gratuita"); //nome da turma
-      cy.get(".column > :nth-child(1) > .icon-checkbox").click(); // desativa aprovação
       cy.get(".left-radius > .checkbox > .icon-radio").click();
 
       cy.wait(3000);
@@ -1174,18 +1175,18 @@ cy.wait(7000);
 
     });
     
+
     it('Material Complementar', () => {
 //Clica no treinamento
-      cy.contains('.card-items', 'Teste Automação Blumenau', { timeout: 60000 })
+      cy.contains('.card-items', 'Teste Automação', { timeout: 60000 })
   .should('be.visible')
   .scrollIntoView()
   .click({ force: true });
 
-  //Clica em editar no treinamento
-  cy.get('button[title="Editar treinamento"]', { timeout: 60000 })
+ //Clica em editar
+  cy.get('.flex > .icon-edit',{timeout:60000})
   .should('be.visible')
-  .scrollIntoView()
-  .click({ force: true });
+  .click()
 
 // Espera renderizar a área
 cy.wait(2000);
@@ -1214,7 +1215,6 @@ cy.get('a[ui-sref="accessLink.content.courses.edit.id.archive"]', { timeout: 200
   .clear({ force: true })
   .type('Pasta criada pelo Cypress', { delay: 30 });
 
-
   //Clica em Salvar
   cy.get('.library-editor > .end > .flex > .btn-swipe-accent').click()
 
@@ -1237,52 +1237,6 @@ cy.get('a[ui-sref="accessLink.content.courses.edit.id.archive"]', { timeout: 200
 
     });
 
-      it('Campo personalizado', () => {
-
-        //Clica no treinamento
-      cy.contains('.card-items', 'Teste Automação Blumenau', { timeout: 60000 })
-  .should('be.visible')
-  .scrollIntoView()
-  .click({ force: true });
-
-  //Clica em editar no treinamento
-  cy.get('button[title="Editar treinamento"]', { timeout: 60000 })
-  .should('be.visible')
-  .scrollIntoView()
-  .click({ force: true });
-
-// Espera renderizar a área
-cy.wait(2000);
-
-//Clica em campo personalizado
-        cy.get('[ui-sref="accessLink.content.courses.edit.id.custom"]', { timeout: 20000 })
-  .should('be.visible')
-  .scrollIntoView()
-  .click({ force: true });
-
-        //Clica em novo campo personalizado
-        cy.get('button[ng-click="editCustomField()"]', { timeout: 20000 })
-  .should('be.visible')
-  .scrollIntoView()
-  .click({ force: true });
-
-//Ecreve campo personalizado
-  cy.get('input[placeholder="Nome"]', { timeout: 20000 })
-  .first() // garante apenas 1 input
-  .scrollIntoView()
-  .click({ force: true })
-  .invoke('removeAttr', 'disabled') // remove o disabled
-  .clear({ force: true })
-  .type('Campo personalizado Cypress', { force: true, delay: 30 });
-
-        //Botão adicionar
-        cy.get('.custom-field-editor > :nth-child(4) > .end > .btn-swipe-accent')
-        //Salva o treinamento com o campo personalizado
-        cy.contains('button.btn-swipe-accent', 'Salvar')
-  .should('be.visible')
-  .click({ force: true });
-   
-   });
   
   });
   

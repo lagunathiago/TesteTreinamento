@@ -61,7 +61,7 @@ describe("Teste - Login", () => {
    
     });
 
-    /*
+  
     it("Treinamento gratuito sem aprovação", () => {
 
         //Clicar em criar treinamentos
@@ -423,7 +423,7 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
     cy.wait(7000)
 
     });
-    */
+    
 
      it("Treinamento paga com aprovação de Gestor", () => {
 
@@ -518,7 +518,6 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
      
         });
 
-        /*
          it("Treinamento pago com recorrência e aprovação de gestor", () => {
 
         //Clicar em criar treinamentos
@@ -612,7 +611,7 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna',{timeout:60000})
     cy.wait(7000)
 
     });
-*/
+
     it("Treinamento gratuito com aprovação de campos personalizados", () => {
 
         //Clicar em criar treinamentos

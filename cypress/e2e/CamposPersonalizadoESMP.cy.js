@@ -41,18 +41,24 @@ describe("Teste - Login", () => {
     cy.url({ timeout: 60000 }).should("not.include", "/subscribe/login");
   });
 
-  /*
   
   it('Vai até a Categoria', () => {
     
-    // =============================
-    // 🔹 Acessa Treinamentos
-    // =============================
-    cy.get('[title="Treinamentos"] > .sideitem').click();
+    cy.get('[title="Treinamentos"] > .sideitem', { timeout: 10000 })
+    .should('be.visible')
+    .click();
+
     cy.wait(3000);
 
-    cy.get('[data-nodeid="45"]').click();
-    cy.get('[data-nodeid="46"]').click();
+    //Clica na Categoria automação
+      cy.get('[data-nodeid="41"]',{timeout:60000})
+      .should('be.visible')
+      .click() 
+
+      //Clica na Sub Categoria
+      cy.get('[data-nodeid="42"]',{timeout:60000})
+      .should('be.visible')
+      .click() 
 
   });
 
@@ -917,7 +923,6 @@ it("Criação do quinto treinamento pago com aprovação de campos", () => {
     cy.wait(7000)
 
   });
-*/
 
     it('Entra em outro perfil Aluno',()=> {
 

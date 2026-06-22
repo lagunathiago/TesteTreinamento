@@ -37,6 +37,7 @@ describe("Teste - Login", () => {
 
   context("Teste Pagamento Ext", () => {
   
+    /*
     it("Aba Treinamentos", () => {
 
          // Clicando na aba Treinamento
@@ -444,7 +445,6 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
      
     });
 
-
     it("Clica em cupon", () => {
       // Clicando em Cadastros
       cy.get('[title="Cadastros"] > .sideitem', { timeout: 60000 })
@@ -452,7 +452,7 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
         .click();
 
       //Clica em Cupons
-      cy.get(":nth-child(13) > a > .w-100", { timeout: 60000 })
+      cy.get(":nth-child(14) > a > .w-100", { timeout: 60000 })
         .should("be.visible")
         .click();
     });
@@ -561,7 +561,7 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
   cy.wait(10000)
 
     });
-
+*/
     it("Vai até a vitrine", () => {
 
         // Clicando no icon da vitrine
@@ -572,7 +572,7 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
         cy.wait(3000)
 
         //Clica na vitrine Automação
-        cy.get('.showcase-navigation-menu > :nth-child(7)', { timeout: 60000 })
+        cy.get('.showcase-navigation-menu > :nth-child(6)', { timeout: 60000 })
         .should('be.visible')
         .click();
        

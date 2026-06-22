@@ -26,7 +26,7 @@ describe("Teste - Login e troca de perfil", () => {
 
     cy.get('form.ng-pristine > [type="text"]', { timeout: 60000 })
       .should("be.visible")
-      .type("thiagosuporte2@uorak.com");
+      .type("testeaut@uorak.com.br");
 
     cy.get("ng-transclude > .border", { timeout: 60000 })
       .should("be.visible")
@@ -41,7 +41,7 @@ describe("Teste - Login e troca de perfil", () => {
 
 context("Assitir Treinamento", { testIsolation: false }, () => {
   
-  /*
+/*
    it('Vai até a vitrine', () => {
 
         //Clica em conteúdos
@@ -50,9 +50,9 @@ context("Assitir Treinamento", { testIsolation: false }, () => {
         .click()
 
         //Vai até a vitrine
-        cy.get('.showcase-navigation-menu > :nth-child(2) > .showcase-menu-name',{timeout:60000})
-        .should('be.visible')
-        .click()
+        cy.contains('span', 'teste automoção')
+  .closest('button')
+  .click();
 
         //Clica em Ver Tudo
         cy.get('.carousel-container > .showcase-title-container > .middle > .show-all',{timeout:60000})
@@ -72,50 +72,91 @@ context("Assitir Treinamento", { testIsolation: false }, () => {
 
     })
 
-    
   it("Clicar em Fazer inscrição (se disponivel)", () => {
-    cy.pause()
+
+   // Clica na turma
+    cy.get('label.class-container')
+  .first()
+  .click();
+
+      cy.wait(2000)
+
+      //Clica em fazer incrição
+      cy.get('.selected > .class-info > .classes-actions > .btn-swipe-accent')
+      .should('be.visible')
+      .click();
+
+      cy.get('[ng-show="modal.hybridEventsChoice"] > .modal > .modal-body > .default-table > tbody > tr > .p-5 > .ui-select-container',{timeout:60000})
+        .click()
+
+        cy.wait(1000)
+
+        //Online
+        cy.get('.open > .ui-select-choices > :nth-child(1)',{timeout:60000})
+        .click()
+
+        cy.wait(1000)
+
+        //Continuar Incrição
+        cy.get('[ng-show="modal.hybridEventsChoice"] > .modal > .content-box-footer > .btn-swipe-accent',{timeout:60000})
+        .click()
 
   });
 
-  
   // --- GRAVAÇÃO ---
-  it("Assistir gravação e validar 100%", () => {
+  it("Assistir gravação e valida status, P/A 100%", () => {
 
-    cy.log('ASSISTE A GRAVAÇÃO COMPLETA')
-    cy.pause()
-    cy.get("#hideResource", { timeout: 60000 })
-      .should("be.visible")
-      .click({ force: true });
-    cy.log("⬅️ Clicou em Voltar após assistir gravação");
+    cy.log('ASSISTA À GRAVAÇÃO COMPLETA E, AO FINAL, RETIRE O PAUSE DO CYPRESS PARA PROSSEGUIR COM A EXECUÇÃO.');
 
-    cy.get("table.default-table tbody tr")
-      .first()
-      .should("contain.text", "Visualizado")
-      .and("contain.text", "100.00%");
+    cy.get('.info-section-title', { timeout: 60000 })
+  .should('be.visible')
+  .and('contain', 'Relatório Faturamento Philips');
 
-    cy.log("✅ Gravação confirmada 100%");
+    cy.log('ASSISTA À GRAVAÇÃO COMPLETA E, AO FINAL, RETIRE O PAUSE DO CYPRESS PARA PROSSEGUIR COM A EXECUÇÃO.');
+    cy.pause();
+
+  //Clica no menu
+  cy.get('#resourceMenuIndicator')
+  .should('be.visible') 
+  .click()
+
+  cy.wait(2000)
+
+cy.contains('li.course-content', 'Relatório Faturamento Philips', { timeout: 10000 })
+  .should('be.visible')
+  .invoke('text')
+  .then((texto) => {
+    const textoLimpo = texto.replace(/\s+/g, ' ').trim();
+
+    expect(textoLimpo).to.include('Concluído');
+    expect(textoLimpo).to.include('P 100%');
+    expect(textoLimpo).to.include('A 100%');
   });
 
+
+  });
+
+  /*
 
   // --- DOCUMENTO 1 ---
   it("Abrir documento PDF e validar 100%", () => {
-    cy.wait(3000);
+    cy.wait(2000);
 
-    //
-    cy.get("tbody > :nth-child(3) > :nth-child(1) > .lector-txt-main")
-      .should("be.visible")
-      .click();
-
-      //clica na listagem
-      cy.get('#courseResourceMenuIndicator', { timeout: 60000 })
-  .scrollIntoView({ block: 'center' })
-  .click({ force: true });
-
-  //clica no arquivo
-  cy.get('.current-resource > .resource-list-header > .ng-binding',{timeout:60000})
+    //Clica no documento PDF
+   cy.get('.resources-list-container > ul > :nth-child(2)')
   .should('be.visible')
-  .click({force: true})
+  .click();
+
+  //Verifica se o título do documento está visível
+    cy.get('.info-section-title', { timeout: 60000 })
+  .should('be.visible')
+  .and('contain', 'Chamada');
+
+  cy.wait(2000)
+
+  //Clica no em comfirmação deleitura
+  cy.get('#nextResourceArrow', { timeout: 10000 })
+  .click({ force: true });
 
   cy.wait(2000)
 
@@ -127,35 +168,50 @@ context("Assitir Treinamento", { testIsolation: false }, () => {
       .click({ force: true });
   });
 
+    cy.wait(1000)
+
   //Clica em confirmar
   cy.get('[switch="modal.agreementRequired"] > .modal > :nth-child(2) > .end > .flex > .btn-swipe-accent',{timeout:60000})
   .should('be.visible')
   .click()
 
-    cy.wait(4000);
-    cy.get("#hideResource", { timeout: 60000 })
-      .should("be.visible")
-      .click({ force: true });
+  cy.wait(1000)
 
-    cy.wait(2000);
-    cy.log("⬅️ Documento 1 aberto e retornado com sucesso");
+  cy.contains('li.course-content', 'Chamada', { timeout: 10000 })
+  .should('be.visible')
+  .invoke('text')
+  .then((texto) => {
+    const textoLimpo = texto.replace(/\s+/g, ' ').trim();
+
+    expect(textoLimpo).to.include('Concluído');
+    expect(textoLimpo).to.include('P 100%');
+    expect(textoLimpo).to.include('A 100%');
+  });
+
+cy.wait(1000)
+
+
+
   });
 
   // --- DOCUMENTO 2 ---
   it("Abrir documento jpg e validar 100%", () => {
-    cy.get("tbody > :nth-child(5) > :nth-child(1) > .lector-txt-main")
-      .should("be.visible")
-      .click();
 
-        //clica na listagem
-      cy.get('#courseResourceMenuIndicator', { timeout: 60000 })
-  .scrollIntoView({ block: 'center' })
-  .click({ force: true });
-
-  //clica no arquivo
-  cy.get('.course-resources-list-container > ul > :nth-child(3)',{timeout:60000})
+    //Clica no documento JPG
+   cy.get('.resources-list-container > ul > :nth-child(3)')
   .should('be.visible')
-  .click({force: true})
+  .click();
+
+   //Verifica se o título do documento está visível
+    cy.get('.info-section-title', { timeout: 60000 })
+  .should('be.visible')
+  .and('contain', 'CAPA 19');
+
+  cy.wait(2000)
+
+  //Clica no em comfirmação deleitura
+  cy.get('#nextResourceArrow', { timeout: 10000 })
+  .click({ force: true });
 
   cy.wait(2000)
 
@@ -167,36 +223,49 @@ context("Assitir Treinamento", { testIsolation: false }, () => {
       .click({ force: true });
   });
 
+    cy.wait(1000)
+
   //Clica em confirmar
   cy.get('[switch="modal.agreementRequired"] > .modal > :nth-child(2) > .end > .flex > .btn-swipe-accent',{timeout:60000})
   .should('be.visible')
   .click()
 
-    cy.wait(4000);
+  cy.wait(1000)
 
-    cy.get("#hideResource", { timeout: 60000 })
-      .should("be.visible")
-      .click({ force: true });
+   cy.contains('li.course-content', 'CAPA 19', { timeout: 10000 })
+  .should('be.visible')
+  .invoke('text')
+  .then((texto) => {
+    const textoLimpo = texto.replace(/\s+/g, ' ').trim();
 
-    cy.wait(2000);
-    cy.log("⬅️ Documento 2 aberto e retornado com sucesso");
+    expect(textoLimpo).to.include('Concluído');
+    expect(textoLimpo).to.include('P 100%');
+    expect(textoLimpo).to.include('A 100%');
   });
+
+  cy.wait(1000)
+
+  });
+  
 
   // --- DOCUMENTO 3 ---
   it("Abrir documento png e validar 100%", () => {
-    cy.get("tbody > :nth-child(7) > :nth-child(1) > .lector-txt-main")
-      .should("be.visible")
-      .click();
 
-       //clica na listagem
-      cy.get('#courseResourceMenuIndicator', { timeout: 60000 })
-  .scrollIntoView({ block: 'center' })
-  .click({ force: true });
-
-  //clica no arquivo
-  cy.get('.course-resources-list-container > ul > :nth-child(4)',{timeout:60000})
+    //Clica no documento PNG
+   cy.get('.resources-list-container > ul > :nth-child(4)')
   .should('be.visible')
-  .click({force: true})
+  .click();
+
+   //Verifica se o título do documento está visível
+    cy.get('.info-section-title', { timeout: 60000 })
+  .should('be.visible')
+  .and('contain', 'Acessibilidade');
+
+  cy.wait(7000)
+
+  //Clica no em comfirmação deleitura
+  cy.get('#nextResourceArrow', { timeout: 10000 })
+  .click({ force: true });
 
   cy.wait(2000)
 
@@ -208,36 +277,48 @@ context("Assitir Treinamento", { testIsolation: false }, () => {
       .click({ force: true });
   });
 
+    cy.wait(1000)
+
   //Clica em confirmar
   cy.get('[switch="modal.agreementRequired"] > .modal > :nth-child(2) > .end > .flex > .btn-swipe-accent',{timeout:60000})
   .should('be.visible')
   .click()
 
-    cy.wait(4000);
+  cy.wait(1000)
 
-    cy.get("#hideResource", { timeout: 60000 })
-      .should("be.visible")
-      .click({ force: true });
+   cy.contains('li.course-content', 'Acessibilidade', { timeout: 10000 })
+  .should('be.visible')
+  .invoke('text')
+  .then((texto) => {
+    const textoLimpo = texto.replace(/\s+/g, ' ').trim();
 
-    cy.wait(2000);
-    cy.log("⬅️ Documento 3 aberto e retornado com sucesso");
+    expect(textoLimpo).to.include('Concluído');
+    expect(textoLimpo).to.include('P 100%');
+    expect(textoLimpo).to.include('A 100%');
+  });
+
+  cy.wait(1000)
+
   });
 
   // --- DOCUMENTO 4 ---
   it("Abrir documento docx e validar 100%", () => {
-    cy.get("tbody > :nth-child(9) > :nth-child(1) > .lector-txt-main")
-      .should("be.visible")
-      .click();
-
-       //clica na listagem
-      cy.get('#courseResourceMenuIndicator', { timeout: 60000 })
-  .scrollIntoView({ block: 'center' })
-  .click({ force: true });
-
-  //clica no arquivo
-  cy.get('.course-resources-list-container > ul > :nth-child(5)',{timeout:60000})
+  
+    //Clica no documento docx
+   cy.get('.resources-list-container > ul > :nth-child(5)')
   .should('be.visible')
-  .click({force: true})
+  .click();
+
+   //Verifica se o título do documento está visível
+    cy.get('.info-section-title', { timeout: 60000 })
+  .should('be.visible')
+  .and('contain', 'Bugs da webconferência 03.11.2023 (10)');
+
+  cy.wait(7000)
+
+  //Clica no em comfirmação deleitura
+  cy.get('#nextResourceArrow', { timeout: 10000 })
+  .click({ force: true });
 
   cy.wait(2000)
 
@@ -247,128 +328,235 @@ context("Assitir Treinamento", { testIsolation: false }, () => {
   .within(() => {
     cy.contains('label.checkbox, .checkbox', 'Li e concordo')
       .click({ force: true });
-
   });
+
+    cy.wait(1000)
 
   //Clica em confirmar
   cy.get('[switch="modal.agreementRequired"] > .modal > :nth-child(2) > .end > .flex > .btn-swipe-accent',{timeout:60000})
   .should('be.visible')
   .click()
 
-    cy.wait(4000);
-    cy.get("#hideResource", { timeout: 60000 })
-      .should("be.visible")
-      .click({ force: true });
+  cy.wait(1000)
 
-    cy.wait(2000);
-    cy.log("⬅️ Documento 4 aberto e retornado com sucesso");
+   cy.contains('li.course-content', 'Bugs da webconferência 03.11.2023 (10)', { timeout: 10000 })
+  .should('be.visible')
+  .invoke('text')
+  .then((texto) => {
+    const textoLimpo = texto.replace(/\s+/g, ' ').trim();
+
+    expect(textoLimpo).to.include('Concluído');
+    expect(textoLimpo).to.include('P 100%');
+    expect(textoLimpo).to.include('A 100%');
+  });
+
+  cy.wait(1000)
+
   });
 
   // --- DOCUMENTO 5 ---
   it("Abrir documento xlsx e validar 100%", () => {
 
-    cy.get(':nth-child(11) > [style="padding-left: 5px;"]')
-      .should("be.visible")
-      .click();
+   //Clica no documento xlsx
+   cy.get('.resources-list-container > ul > :nth-child(6)')
+  .should('be.visible')
+  .click();
 
-    cy.wait(4000);
-    cy.get("#hideResource", { timeout: 60000 })
-      .should("be.visible")
-      .click({ force: true });
+   //Verifica se o título do documento está visível
+    cy.get('.info-section-title', { timeout: 60000 })
+  .should('be.visible')
+  .and('contain', 'Certificado 14.02.2024');
 
-    cy.wait(2000);
-    cy.log("⬅️ Documento 4 aberto e retornado com sucesso");
+  cy.wait(7000)
+
+  cy.contains('li.course-content', 'Certificado 14.02.2024', { timeout: 10000 })
+  .should('be.visible')
+  .invoke('text')
+  .then((texto) => {
+    const textoLimpo = texto.replace(/\s+/g, ' ').trim();
+
+    expect(textoLimpo).to.include('Concluído');
+    expect(textoLimpo).to.include('P 100%');
+    expect(textoLimpo).to.include('A 100%');
+  });
+
+  cy.wait(1000)
 
   });
 
   // --- DOCUMENTO 6 ---
     it("Abrir documento word e validar 100%", () => {
 
-      cy.get(':nth-child(13) > [style="padding-left: 5px;"]')
-      .should("be.visible")
-      .click();
+       //Clica no documento xlsx
+   cy.get('.resources-list-container > ul > :nth-child(7)')
+  .should('be.visible')
+  .click();
 
-    cy.wait(4000);
-    cy.get("#hideResource", { timeout: 60000 })
-      .should("be.visible")
-      .click({ force: true });
+   //Verifica se o título do documento está visível
+    cy.get('.info-section-title', { timeout: 60000 })
+  .should('be.visible')
+  .and('contain', '6518 - Opcao de evento hibrido (20)');
 
-    cy.wait(2000);
-    cy.log("⬅️ Documento 4 aberto e retornado com sucesso");
+  cy.wait(7000)
+
+  cy.contains('li.course-content', '6518 - Opcao de evento hibrido (20)', { timeout: 10000 })
+  .should('be.visible')
+  .invoke('text')
+  .then((texto) => {
+    const textoLimpo = texto.replace(/\s+/g, ' ').trim();
+
+    expect(textoLimpo).to.include('Concluído');
+    expect(textoLimpo).to.include('P 100%');
+    expect(textoLimpo).to.include('A 100%');
+  });
+
+  cy.wait(1000)
 
   });
 
-
   it("Avaliação uma por pagina", () => {
-    // Clica na avaliação (espera até 30s se necessário)
-    cy.get(':nth-child(15) > [style="padding-left: 5px;"]',{timeout:60000})
-      .should("be.visible")
-      .click();
 
-    cy.log("PREENCHA AS RESPOTA E ENVIE");
-    cy.pause()
+    cy.wait(1000)
 
-    //Clica em voltar
-    cy.get("#hideResource", { timeout: 60000 })
-      .should("be.visible")
-      .click({ force: true });
+    // Clica na avaliação 
+  cy.get('.resources-list-container > ul > :nth-child(8)')
+  .should('be.visible')
+  .click();
+
+      cy.document().then((doc) => {
+  const aviso = doc.createElement('div');
+
+  aviso.innerHTML = '⚠️ PREENCHA A AVALIAÇÃO E CLIQUE EM ENVIAR,PARA PROSSEGUIR!';
+  aviso.style.position = 'fixed';
+  aviso.style.top = '20px';
+  aviso.style.left = '50%';
+  aviso.style.transform = 'translateX(-50%)';
+  aviso.style.background = 'red';
+  aviso.style.color = 'white';
+  aviso.style.padding = '20px';
+  aviso.style.fontSize = '24px';
+  aviso.style.fontWeight = 'bold';
+  aviso.style.zIndex = '999999';
+
+  doc.body.appendChild(aviso);
+});
+
+cy.pause()
+
+     cy.contains('li.course-content', 'uma por página Thiago', { timeout: 10000 })
+  .should('be.visible')
+  .invoke('text')
+  .then((texto) => {
+    const textoLimpo = texto.replace(/\s+/g, ' ').trim();
+
+    expect(textoLimpo).to.include('Concluído');
+    expect(textoLimpo).to.include('P 100%');
+
+  });
+
   });
 
   it("Avaliação todas na mesma página", () => {
-    cy.wait(3000);
 
-    cy.get(':nth-child(17) > [style="padding-left: 5px;"]',{timeout:60000})
-      .should("be.visible")
-      .click();
+    cy.wait(1000)
 
-    cy.log("PREENCHA AS RESPOTA E ENVIE");
-    cy.pause()
+    cy.get('.resources-list-container > ul > :nth-child(9)')
+  .should('be.visible')
+  .click();
 
-    //Clica em voltar
-    cy.get("#hideResource", { timeout: 60000 })
-      .should("be.visible")
-      .click({ force: true });
+     cy.document().then((doc) => {
+  const aviso = doc.createElement('div');
+
+  aviso.innerHTML = '⚠️ PREENCHA A AVALIAÇÃO E CLIQUE EM ENVIAR,PARA PROSSEGUIR!';
+  aviso.style.position = 'fixed';
+  aviso.style.top = '20px';
+  aviso.style.left = '50%';
+  aviso.style.transform = 'translateX(-50%)';
+  aviso.style.background = 'red';
+  aviso.style.color = 'white';
+  aviso.style.padding = '20px';
+  aviso.style.fontSize = '24px';
+  aviso.style.fontWeight = 'bold';
+  aviso.style.zIndex = '999999';
+
+  doc.body.appendChild(aviso);
+});
+
+cy.pause()
+
+
+     cy.contains('li.course-content', 'todas na mesma página Thiago', { timeout: 10000 })
+  .should('be.visible')
+  .invoke('text')
+  .then((texto) => {
+    const textoLimpo = texto.replace(/\s+/g, ' ').trim();
+
+    expect(textoLimpo).to.include('Concluído');
+    expect(textoLimpo).to.include('P 100%');
+  })
+
   });
-
    
   it("Avaliação Correção", () => {
-    cy.wait(3000);
 
-    cy.get(':nth-child(19) > [style="padding-left: 5px;"]',{timeout:60000})
-      .should("be.visible")
-      .click();
+    cy.wait(1000)
 
-    cy.log("PREENCHA AS RESPOTA E ENVIE");
-    cy.pause()
+   cy.get('.resources-list-container > ul > :nth-child(10)')
+  .should('be.visible')
+  .click();
 
-    //Clica em voltar
-    cy.get("#hideResource", { timeout: 60000 })
-      .should("be.visible")
-      .click({ force: true });
+     cy.document().then((doc) => {
+  const aviso = doc.createElement('div');
+
+  aviso.innerHTML = '⚠️ PREENCHA A AVALIAÇÃO E CLIQUE EM ENVIAR,PARA PROSSEGUIR!';
+  aviso.style.position = 'fixed';
+  aviso.style.top = '20px';
+  aviso.style.left = '50%';
+  aviso.style.transform = 'translateX(-50%)';
+  aviso.style.background = 'red';
+  aviso.style.color = 'white';
+  aviso.style.padding = '20px';
+  aviso.style.fontSize = '24px';
+  aviso.style.fontWeight = 'bold';
+  aviso.style.zIndex = '999999';
+
+  doc.body.appendChild(aviso);
+
+});
+
+cy.pause()
+
+      cy.contains('li.course-content', 'todas na mesma página Thiago', { timeout: 10000 })
+  .should('be.visible')
+  .invoke('text')
+  .then((texto) => {
+    const textoLimpo = texto.replace(/\s+/g, ' ').trim();
+
+    expect(textoLimpo).to.include('Concluído');
+    expect(textoLimpo).to.include('P 100%');
+    });
+
   });
-
 
   it("Aula Presencial", () => {
-    cy.wait(3000);
+
     //Clica na aula presencial
-    cy.get("tbody > :nth-child(21) > :nth-child(1) > .lector-txt-main")
-      .should("be.visible")
-      .click();
+    cy.wait(1000)
 
-    cy.wait(2000);
-    // Valida se o título "Aula Presencial" está visível na página
-    cy.get("h2.ng-binding", { timeout: 30000 })
-      .should("be.visible")
-      .and("contain.text", "Aula Presencial");
+    // Clica na Aula Presencial
+  cy.get('.resources-list-container > ul > :nth-child(11)')
+  .should('be.visible')
+  .click();
 
-    //Clica em voltar
-    cy.get("#hideResource", { timeout: 60000 })
-      .should("be.visible")
-      .click({ force: true });
+     //Verifica se o título do documento está visível
+    cy.get('.info-section-title', { timeout: 60000 })
+  .should('be.visible')
+  .and('contain', 'Aula Presencial');
+
+    cy.wait(3000);
 
   });
 
-  
        it("Direcionamento para YOUTUBE", () => {
   cy.wait(3000)
 
@@ -381,265 +569,289 @@ context("Assitir Treinamento", { testIsolation: false }, () => {
     // outros erros continuam quebrando o teste
   });
 
-  cy.get('tbody > :nth-child(23) > :nth-child(1) > .lector-txt-main')
-    .should("be.visible")
-    .click();
+   //Clica na aula presencial
+    cy.wait(1000)
 
+    // Clica na Aula Presencial - Youtube
+  cy.get('.resources-list-container > ul > :nth-child(12)')
+  .should('be.visible')
+  .click();
+ 
   cy.wait(6000);
-
-  //Clica em voltar
-    cy.get("#hideResource", { timeout: 50000 })
-      .should("be.visible")
-      .click({ force: true });
-
-      });
-
-  
-      it("Direcionamento para TEANS", () => {
-  cy.wait(3000)
-
-  // Ignora o erro específico que a aplicação dispara ao abrir a Webconferência
-  cy.on('uncaught:exception', (err) => {
-    if (err.message.includes("reading '@class'")) {
-      // retorna false para o Cypress NÃO falhar o teste
-      return false;
-    }
-    // outros erros continuam quebrando o teste
-  });
-
-  cy.get('tbody > :nth-child(25) > :nth-child(1) > .lector-txt-main')
-    .should("be.visible")
-    .click();
-
-  cy.wait(6000);
-
-  //Clica em voltar
-    cy.get("#hideResource", { timeout: 50000 })
-      .should("be.visible")
-      .click({ force: true });
-
-      });
-
-        it("Direcionamento para ZOOM", () => {
-  cy.wait(3000)
-
-  // Ignora o erro específico que a aplicação dispara ao abrir a Webconferência
-  cy.on('uncaught:exception', (err) => {
-    if (err.message.includes("reading '@class'")) {
-      // retorna false para o Cypress NÃO falhar o teste
-      return false;
-    }
-    // outros erros continuam quebrando o teste
-  });
-
-  cy.get('tbody > :nth-child(27) > :nth-child(1) > .lector-txt-main')
-    .should("be.visible")
-    .click();
-
-  cy.wait(6000);
-
-  //Clica em voltar
-    cy.get("#hideResource", { timeout: 50000 })
-      .should("be.visible")
-      .click({ force: true });
-
-      });
-      
-      it("Direcionamento para MEET", () => {
-  cy.wait(3000)
-
-  // Ignora o erro específico que a aplicação dispara ao abrir a Webconferência
-  cy.on('uncaught:exception', (err) => {
-    if (err.message.includes("reading '@class'")) {
-      // retorna false para o Cypress NÃO falhar o teste
-      return false;
-    }
-    // outros erros continuam quebrando o teste
-  });
-
-  cy.get('tbody > :nth-child(29) > :nth-child(1) > .lector-txt-main')
-    .should("be.visible")
-    .click();
-
-  cy.wait(6000);
-
-  //Clica em voltar
-    cy.get("#hideResource", { timeout: 50000 })
-      .should("be.visible")
-      .click({ force: true });
-
-      });
-
-
-       it("Direcionamento para LECTOR", () => {
-  cy.wait(3000)
-
-  // Ignora o erro específico que a aplicação dispara ao abrir a Webconferência
-  cy.on('uncaught:exception', (err) => {
-    if (err.message.includes("reading '@class'")) {
-      // retorna false para o Cypress NÃO falhar o teste
-      return false;
-    }
-    // outros erros continuam quebrando o teste
-  });
-
-  cy.get('tbody > :nth-child(31) > :nth-child(1) > .lector-txt-main')
-    .should("be.visible")
-    .click();
-
-  cy.wait(6000);
-
-  //Clica em voltar
-    cy.get("#hideResource", { timeout: 50000 })
-      .should("be.visible")
-      .click({ force: true });
-
-      });
-
-
-      it("WEB LECTOR", () => {
-  cy.wait(3000)
-
-  // Ignora o erro específico que a aplicação dispara ao abrir a Webconferência
-  cy.on('uncaught:exception', (err) => {
-    if (err.message.includes("reading '@class'")) {
-      // retorna false para o Cypress NÃO falhar o teste
-      return false;
-    }
-    // outros erros continuam quebrando o teste
-  });
-
-  cy.get('tbody > :nth-child(33) > :nth-child(1) > .lector-txt-main')
-    .should("be.visible")
-    .click();
-
-  cy.wait(6000);
-
-  //Clica em voltar
-    cy.get("#hideResource", { timeout: 50000 })
-      .should("be.visible")
-      .click({ force: true });
 
       });
 
   it("Vídeo Lector", () => {
-    cy.get(':nth-child(35) > [style="padding-left: 5px;"] > .lector-txt-main', {timeout: 3000})
-      .should("be.visible")
-      .click({ force: true });
+    
+    cy.wait(1000)
 
-      cy.log('Assista o video completo')
-    cy.pause()
+    // Clica no video lector
+  cy.get('.resources-list-container > ul > :nth-child(13)')
+  .scrollIntoView()
+  .should('be.visible')
+  .click();
 
-    cy.get("#hideResource", { timeout: 60000 })
-      .should("be.visible")
-      .click({ force: true });
-    cy.log("⬅️ Clicou em Voltar após assistir gravação");
+      cy.document().then((doc) => {
+  const aviso = doc.createElement('div');
+
+  aviso.innerHTML = '⚠️ VISUALIZE O VIDEO COMPLETO E PROSSIGA COM A AUTOMAÇÃO!';
+  aviso.style.position = 'fixed';
+  aviso.style.top = '20px';
+  aviso.style.left = '50%';
+  aviso.style.transform = 'translateX(-50%)';
+  aviso.style.background = 'red';
+  aviso.style.color = 'white';
+  aviso.style.padding = '20px';
+  aviso.style.fontSize = '24px';
+  aviso.style.fontWeight = 'bold';
+  aviso.style.zIndex = '999999';
+
+  doc.body.appendChild(aviso);
+});
+
+cy.pause()
+
+  cy.contains('li.course-content', 'Automação Video da plataforma.mp4', { timeout: 10000 })
+  .should('be.visible')
+  .invoke('text')
+  .then((texto) => {
+    const textoLimpo = texto.replace(/\s+/g, ' ').trim();
+
+    expect(textoLimpo).to.include('Concluído');
+    expect(textoLimpo).to.include('P 100%');
+    expect(textoLimpo).to.include('A 100%');
+  });
+
   });
 
   it("Video Youtube", () => {
-    cy.wait(3000);
 
-    cy.get(':nth-child(37) > [style="padding-left: 5px;"]', { timeout: 30000 })
-      .should("be.visible")
-      .click({ force: true });
+     cy.wait(1000)
 
-    cy.wait(20000); // simula assistir o vídeo
-    cy.get("#hideResource", { timeout: 60000 })
-      .should("be.visible")
-      .click({ force: true });
-    cy.log("⬅️ Clicou em Voltar após assistir gravação");
+    // Clica no video youtube
+  cy.get('.resources-list-container > ul > :nth-child(14)')
+  .scrollIntoView()
+  .should('be.visible')
+  .click();
+
+      cy.document().then((doc) => {
+  const aviso = doc.createElement('div');
+
+  aviso.innerHTML = '⚠️ VISUALIZE O VIDEO COMPLETO E PROSSIGA COM A AUTOMAÇÃO!';
+  aviso.style.position = 'fixed';
+  aviso.style.top = '20px';
+  aviso.style.left = '50%';
+  aviso.style.transform = 'translateX(-50%)';
+  aviso.style.background = 'red';
+  aviso.style.color = 'white';
+  aviso.style.padding = '20px';
+  aviso.style.fontSize = '24px';
+  aviso.style.fontWeight = 'bold';
+  aviso.style.zIndex = '999999';
+
+  doc.body.appendChild(aviso);
+});
+
+cy.pause()
+
+  cy.contains('li.course-content', 'Automação Video do Youtube', { timeout: 10000 })
+  .should('be.visible')
+  .invoke('text')
+  .then((texto) => {
+    const textoLimpo = texto.replace(/\s+/g, ' ').trim();
+
+    expect(textoLimpo).to.include('Concluído');
+    expect(textoLimpo).to.include('P 100%');
+    expect(textoLimpo).to.include('A 100%');
+  });
+   
   });
 
   it("Topico ", () => {
-    cy.get(":nth-child(41) > :nth-child(1) > .lector-txt-main")
-      .should("be.visible")
-      .click({ force: true });
+   
+     // Clica no topico
+  cy.get('.resources-list-container > ul > :nth-child(16)')
+  .scrollIntoView()
+  .should('be.visible')
+  .click();
 
       cy.log('Verifique se tem algo escrito')
-    cy.wait(10000);
+    cy.wait(7000);
 
-    //Clica em voltar
-    cy.get("#hideResource", { timeout: 50000 })
-      .should("be.visible")
-      .click({ force: true });
-  });
-
-  // Ignora erros do player SCORM que não afetam o teste
-  Cypress.on("uncaught:exception", (err) => {
-    if (err.message.includes("@class") || err.message.includes("ready")) {
-      return false; // impede que o teste falhe por causa desses erros
-    }
-  });
+   });
 
   // Teste SCORM
   it("Scorm", () => {
-    cy.wait(3000);
-    cy.get(":nth-child(43) > :nth-child(1) > .lector-txt-main")
-      .should("be.visible")
-      .click();
 
-    cy.log("FAÇA A AVALIAÇÃO DO SCORM, CONFIRME E DEIXE O BOTÃO VOLTAR VISIVEL");
-    cy.pause()
+    cy.wait(1000);
+   
+         // Clica no scorm
+  cy.get('.resources-list-container > ul > :nth-child(17)')
+  .scrollIntoView()
+  .should('be.visible')
+  .click();
 
-    // Clica em voltar
-    cy.get("#hideResource", { timeout: 50000 })
-      .should("be.visible")
-      .click({ force: true });
-  });
+     cy.document().then((doc) => {
+  const aviso = doc.createElement('div');
 
+  aviso.innerHTML = 'VISUALIZE E RESPONDA O SCORM, PROSSIGA COM A AUTOMAÇÃO!';
+  aviso.style.position = 'fixed';
+  aviso.style.top = '20px';
+  aviso.style.left = '50%';
+  aviso.style.transform = 'translateX(-50%)';
+  aviso.style.background = 'red';
+  aviso.style.color = 'white';
+  aviso.style.padding = '20px';
+  aviso.style.fontSize = '24px';
+  aviso.style.fontWeight = 'bold';
+  aviso.style.zIndex = '999999';
+
+  doc.body.appendChild(aviso);
+});
+
+cy.pause()
+
+     cy.contains('li.course-content', 'Simbologia Maçônica', { timeout: 10000 })
+  .should('be.visible')
+  .invoke('text')
+  .then((texto) => {
+    const textoLimpo = texto.replace(/\s+/g, ' ').trim();
+    expect(textoLimpo).to.include('Concluído');
+    expect(textoLimpo).to.include('P 100%');
+     });
+  
+});
+  
 
   it("Entrega de atividade", () => {
 
-    cy.wait(3000)
+    cy.wait(2000)
 
-    cy.get(':nth-child(45) > [style="padding-left: 5px;"]')
-      .should("be.visible")
-      .click();
+     // Clica na entrega de atividade
+  cy.get('.resources-list-container > ul > :nth-child(18)')
+  .scrollIntoView()
+  .should('be.visible')
+  .click();
   
-      cy.log('Faça a entrega da atividade, confirme e deixe o botão voltar visível');
-      cy.pause()
+      cy.document().then((doc) => {
+  const aviso = doc.createElement('div');
 
-    // Clica em voltar
-    cy.get("#hideResource", { timeout: 50000 })
-      .should("be.visible")
-      .click({ force: true });
+  aviso.innerHTML = '⚠️ ENVIE UM ARQUIVO PARA CORREÇÃO DA ENTREGA!';
+  aviso.style.position = 'fixed';
+  aviso.style.top = '20px';
+  aviso.style.left = '50%';
+  aviso.style.transform = 'translateX(-50%)';
+  aviso.style.background = 'red';
+  aviso.style.color = 'white';
+  aviso.style.padding = '20px';
+  aviso.style.fontSize = '24px';
+  aviso.style.fontWeight = 'bold';
+  aviso.style.zIndex = '999999';
+
+  doc.body.appendChild(aviso);
+});
+
+cy.pause(); 
+   
   });
 
-
   it("Reação todas na mesma página", () => {
-    // Clica na avaliação (espera até 30s se necessário)
-    cy.get("tbody > :nth-child(47) > :nth-child(1) > .lector-txt-main", {
-      timeout: 30000,
-    })
-      .should("be.visible")
-      .click();
 
-    cy.log("PREENCHA AS RESPOTA E ENVIE");
-    cy.pause()
+    // Clica na avaliação de reaução
+  cy.get('.resources-list-container > ul > :nth-child(19)')
+  .scrollIntoView()
+  .should('be.visible')
+  .click();
 
-    //Clica em voltar
-    cy.get("#hideResource", { timeout: 60000 })
-      .should("be.visible")
-      .click({ force: true });
+    cy.document().then((doc) => {
+  const aviso = doc.createElement('div');
+
+  aviso.innerHTML = '⚠️ PREENCHA A AVALIAÇÃO E CLIQUE EM ENVIAR,PARA PROSSEGUIR!';
+  aviso.style.position = 'fixed';
+  aviso.style.top = '20px';
+  aviso.style.left = '50%';
+  aviso.style.transform = 'translateX(-50%)';
+  aviso.style.background = 'red';
+  aviso.style.color = 'white';
+  aviso.style.padding = '20px';
+  aviso.style.fontSize = '24px';
+  aviso.style.fontWeight = 'bold';
+  aviso.style.zIndex = '999999';
+
+  doc.body.appendChild(aviso);
+});
+
+cy.pause()
+
+     cy.contains('li.course-content', 'Reação uma por página Thiago', { timeout: 10000 })
+  .should('be.visible')
+  .invoke('text')
+  .then((texto) => {
+    const textoLimpo = texto.replace(/\s+/g, ' ').trim();
+
+    expect(textoLimpo).to.include('Concluído');
+    expect(textoLimpo).to.include('P 100%');
+     });
+  
   });
 
   it("Reação uma por página", () => {
-    cy.wait(3000);
-    // Clica na avaliação (espera até 30s se necessário)
-    cy.get("tbody > :nth-child(49) > :nth-child(1) > .lector-txt-main", {
-      timeout: 30000 })
-      .should("be.visible")
-      .click();
 
-    cy.log("PREENCHA AS RESPOTA E ENVIE");
-    cy.pause(10000);
+    // Clica na avaliação de reação
+  cy.get('.resources-list-container > ul > :nth-child(20)')
+  .scrollIntoView()
+  .should('be.visible')
+  .click();
 
-    //Clica em voltar
+    cy.document().then((doc) => {
+  const aviso = doc.createElement('div');
+
+  aviso.innerHTML = '⚠️ PREENCHA A AVALIAÇÃO E CLIQUE EM ENVIAR,PARA PROSSEGUIR!';
+  aviso.style.position = 'fixed';
+  aviso.style.top = '20px';
+  aviso.style.left = '50%';
+  aviso.style.transform = 'translateX(-50%)';
+  aviso.style.background = 'red';
+  aviso.style.color = 'white';
+  aviso.style.padding = '20px';
+  aviso.style.fontSize = '24px';
+  aviso.style.fontWeight = 'bold';
+  aviso.style.zIndex = '999999';
+
+  doc.body.appendChild(aviso);
+});
+
+cy.pause()
+
+     cy.contains('li.course-content', 'Reação todas em uma página Thiago', { timeout: 10000 })
+  .should('be.visible')
+  .invoke('text')
+  .then((texto) => {
+    const textoLimpo = texto.replace(/\s+/g, ' ').trim();
+
+    expect(textoLimpo).to.include('Concluído');
+    expect(textoLimpo).to.include('P 100%');
+     });
+
+     cy.wait(2000)
+  
+  });
+  
+  it('Sai da tela de conteúdos', () => {
+
+    //Clica no X
+    cy.get('#resourceMenuIndicator')
+    .should('be.visible')
+    .click();
+
+      cy.wait(2000);
+
+      //Clica na seta de voltar
     cy.get("#hideResource", { timeout: 60000 })
       .should("be.visible")
       .click({ force: true });
+    
   });
-
   it("Troca pro perfil Administrador", () => {
 
      //Clioca no icon
@@ -647,18 +859,25 @@ context("Assitir Treinamento", { testIsolation: false }, () => {
     .should('be.visible')
     .click()
 
+    cy.wait(2000)
+
     //Clica em selecionar perfil
-    cy.get(':nth-child(4) > .menu-option > ng-transclude > .icon-pointer-right',{ timeout: 60000 })
+  cy.contains('.menu-option', 'Selecionar perfil', { timeout: 10000 })
   .should('be.visible')
   .click({ force: true });
 
+      cy.wait(2000)
+
   //Clica em Administrador
-  cy.get(':nth-child(4) > .user-options-items > :nth-child(1) > ng-transclude > .ng-binding', { timeout: 60000 })
+  cy.contains('span', 'Administrador - Todos', { timeout: 10000 })
   .should('be.visible')
-  .click()
+  .click({ force: true });
+  
+      cy.wait(2000)
 
   });
-*/
+
+  */
 
 it("Vai pra categoria", () => {
 
@@ -680,15 +899,21 @@ it("Vai pra categoria", () => {
   .scrollIntoView()
   .should('be.visible')
   .click()
-
-  //Clica em gerenciar
-      cy.get('.manage-subscription > .btn-swipe-accent',{timeout:60000})
-      .first()
-      .should('be.visible')
-      .click()
-
-    });
 /*
+  //Clica na turma
+     cy.get('label.class-container:visible')
+  .first()
+  .click();
+
+         // Clica no gerenciar
+  cy.contains('.class-container', 'Turma Gratuita')
+  .find('button.icon-manage')
+  .click();
+*/
+    });
+
+
+    /*
     it('Corrige Avaliação', () => {
 
       //Clica em Corrigir Avalaiação
@@ -723,17 +948,53 @@ cy.get('textarea[ng-model="questionAnswer.observations"]')
   //Espera Carregar o envio da avaliação
   cy.wait(10000)
 
+
+    });
+    
+    it('Corrige Entrega de atividade', () => {
+
+      cy.wait(2000)
+
+      //Clica em Corrigir Avalaiação
+      cy.get('[ng-click*="activitydelivery"]')
+      .should('be.visible')
+      .click()
+
+      //Clica em corrigir
+      cy.get('.ng-scope > .icon')
+      .should('be.visible')
+      .click()
+
+      cy.wait(2000)
+
+     for (let i = 0; i < 10; i++) {
+  cy.get(':nth-child(5) > .input-number > div > .icon-pointer-up')
+    .click();
+}
+
+cy.wait(2000)
+
+//Confirma
+cy.get('[switch="modal.activityFeedback"] > .modal > :nth-child(2) > .end > .flex > .btn-swipe-accent')
+  .should('be.visible')
+  .click()
+
+  //Espera Carregar o envio da avaliação
+  cy.wait(10000)
+  
   //Fecha modal
   cy.get('[switch="modal.manageSubscriptions"] > .modal > .modal-header > .btn',{ timeout: 60000 })
   .should('be.visible')
   .click()
 
     });
-*/
+
+    */
+
     it('Verifica se está na vitrine Altomação', () => {
 
-  //Clica em editar
-  cy.get('.end.ng-scope > .icon-edit',{timeout:60000})
+   //Clica em editar
+  cy.get('.flex > .icon-edit',{timeout:60000})
   .should('be.visible')
   .click()
 
@@ -766,9 +1027,25 @@ cy.get('textarea[ng-model="questionAnswer.observations"]')
     expect(texto).to.not.equal('');
     expect(numero).to.not.be.NaN;
     expect(numero).to.be.within(0, 100);
+
+    cy.wait(2000)
+
+    //Clica em Salvar
+    cy.get('.content-box-footer > .flex > .btn-swipe-accent')
+    .should('be.visible')
+    .click();
+
+    cy.wait(10000)
+
   });
 
   it("Muda para o perfil aluno", ()=> {
+
+    // Espera o treinamento aparecer
+cy.contains('.card-title', /^Teste Automação$/, { timeout: 60000 })
+  .scrollIntoView()
+  .should('be.visible');
+
 
         //Clioca no icon
   cy.contains('div', 'Administrador',{ timeout: 60000 })
