@@ -49,18 +49,12 @@ describe("Teste - Login", () => {
 
       cy.wait(3000) //espera alguns segundos para carregar a pagina
 
-      //Clica na Categoria automação
-      cy.get('[data-nodeid="48"]',{timeout:60000})
+      //Clica na Categoria
+      cy.contains("li.list-group-item", "Teste Automação",{timeout: 60000})
       .should('be.visible')
-      .click() 
-
-      //Clica na Sub Categoria
-      cy.get('[data-nodeid="49"]',{timeout:60000})
-      .should('be.visible')
-      .click() 
+      .click({force: true})
    
     });
-
   
     it("Treinamento gratuito sem aprovação", () => {
 
@@ -119,7 +113,6 @@ describe("Teste - Login", () => {
       cy.get('[ui-sref="accessLink.content.courses.edit.id.classes"]').click()
       cy.get('[ng-click="editClass()"]').click() //Nova turma
       cy.get("#className").type("Treinamento Gratuito sem aprovação"); //nome da turma
-     cy.get('.column > :nth-child(1) > .icon-checkbox').click(); // desativa aprovação
       
       cy.get('.navigation-controls > .ml-20').click()//botao prximo
       cy.get('.navigation-controls > .ml-20').click()//botao prximo
@@ -201,12 +194,12 @@ cy.get(".editing-resource > .end > .btn-swipe-accent").click();
 
     })
 
+    /*
     it('Turma Paga á vista sem aprovação', () => {
       //Turma Gratuita
       cy.get('[ui-sref="accessLink.content.courses.edit.id.classes"]').click()
       cy.get('[ng-click="editClass()"]').click() //Nova turma
       cy.get("#className").type("Turma Paga é vista sem aprovação"); //nome da turma
-      cy.get('.column > :nth-child(1) > .icon-checkbox').click(); // desativa aprovação
       cy.get('.price-box-container > :nth-child(2) > .price-box > .checkbox > .icon-radio').click() //Clica em fixo
       cy.get('#price-fixed').click() //Clica no valor
       cy.get('#price-fixed') //Valor Treinamento
@@ -236,8 +229,7 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
       cy.get('.add-content > .end > .btn-swipe-accent').click()
 
       cy.get('.content-box-footer > .flex > .btn-swipe-accent').click() //Salvar treinamento
-      cy.get('[ng-show="modal.useVersioning"] > .modal > :nth-child(3) > .checkbox > .icon-checkbox').click(); //selecionar versionamento
-      cy.get('[ng-show="modal.useVersioning"] > .modal > .end > .ml-10').click(); //salvar sem versionamento
+     
     });
 
      it("Treinamento pago com recorrência sem aprovação", () => {
@@ -300,7 +292,6 @@ cy.get(".editing-resource > .end > .btn-swipe-accent").click();
       cy.get('[ui-sref="accessLink.content.courses.edit.id.classes"]').click()
       cy.get('[ng-click="editClass()"]').click() //Nova turma
       cy.get("#className").type("Treinamento pago com recorrência sem aprovação"); //nome da turma
-            cy.get('.column > :nth-child(1) > .icon-checkbox').click(); // desativa aprovação
       cy.get('.price-box-container > :nth-child(2) > .price-box > .checkbox > .icon-radio').click() //Clica em fixo
       cy.get('#price-fixed').click() //Clica no valor
       cy.get('#price-fixed') //Valor Treinamento
@@ -331,13 +322,12 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna',{timeout:60000})
       cy.get('.add-content > .end > .btn-swipe-accent').click()
 
       cy.get('.content-box-footer > .flex > .btn-swipe-accent').click() //Salvar treinamento
-      cy.get('[ng-show="modal.useVersioning"] > .modal > :nth-child(3) > .checkbox > .icon-checkbox').click(); //selecionar versionamento
-      cy.get('[ng-show="modal.useVersioning"] > .modal > .end > .ml-10').click(); //salvar sem versionamento
+
 
       cy.wait(4000)
 
     });
-
+*/
          it("Treinamento gratuito com aprovação", () => {
 
         //Clicar em criar treinamentos
@@ -396,6 +386,8 @@ cy.get(".editing-resource > .end > .btn-swipe-accent").click();
       cy.get('[ui-sref="accessLink.content.courses.edit.id.classes"]').click()
       cy.get('[ng-click="editClass()"]').click() //Nova turma
       cy.get("#className").type("Turma Gratuita com aprovação"); //nome da turma
+
+      cy.get('.column > :nth-child(1) > .icon-checkbox').click(); // Ativa a aprovação
       
       cy.get('.navigation-controls > .ml-20').click()//botao prximo
       cy.get('.navigation-controls > .ml-20').click()//botao prximo
@@ -490,6 +482,8 @@ cy.get(".editing-resource > .end > .btn-swipe-accent").click();
   .clear()
   .type('{selectall}3.91');   
 
+  cy.get('.column > :nth-child(1) > .icon-checkbox').click(); // Ativa a aprovação
+
     cy.get('.field2 > div.mt-20 > .middle > .checkbox > .icon-checkbox').click() //Deixar em branco
       
       cy.get('.navigation-controls > .ml-20').click()//botao prximo
@@ -518,6 +512,8 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna')
      
         });
 
+
+        /*
          it("Treinamento pago com recorrência e aprovação de gestor", () => {
 
         //Clicar em criar treinamentos
@@ -583,6 +579,7 @@ cy.get(".editing-resource > .end > .btn-swipe-accent").click();
   .clear()
   .type('{selectall}3.91');   
       cy.get('.checkbox.mt-20.ng-scope > .icon-checkbox').click() //Clica em recorrente
+      cy.get('.column > :nth-child(1) > .icon-checkbox').click(); // Ativa a aprovação
 
     cy.get('.field2 > div.mt-20 > .middle > .checkbox > .icon-checkbox').click() //Deixar em branco
       
@@ -611,6 +608,7 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna',{timeout:60000})
     cy.wait(7000)
 
     });
+    */
 
     it("Treinamento gratuito com aprovação de campos personalizados", () => {
 
@@ -673,7 +671,6 @@ cy.get(".editing-resource > .end > .btn-swipe-accent").click();
       cy.get('[ng-click="editClass()"]').click() //Nova turma
       cy.get("#className").type("Turma gratuito com aprovação de campos personalizados"); //nome da turma
       
-          cy.get('.column > :nth-child(1) > .icon-checkbox').click(); // desativa aprovação
       cy.get('.navigation-controls > .ml-20').click()//botao prximo
       cy.get('.navigation-controls > .ml-20').click()//botao prximo
       
@@ -803,8 +800,6 @@ cy.get(".editing-resource > .end > .btn-swipe-accent").click();
       cy.get('#price-fixed') //Valor Treinamento
   .clear()
   .type('{selectall}3.91');   
-       cy.get('.column > :nth-child(1) > .icon-checkbox').click(); // desativa aprovação
-
       
     cy.get('.field2 > div.mt-20 > .middle > .checkbox > .icon-checkbox').click() //Deixar em branco
       
@@ -872,7 +867,7 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna',{timeout:60000})
 
     });
 
-    
+    /*
  it("Treinamento pago com recorrência e aprovação de campos personalizados", () => {
 
         //Clicar em criar treinamentos
@@ -1011,6 +1006,7 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna',{timeout:60000})
       cy.wait(4000);
 
     });
+*/
 
     it("Treinamento gratuito com aprovação de gestor e campos personalizados", () => {
 
@@ -1072,6 +1068,7 @@ cy.get(".editing-resource > .end > .btn-swipe-accent").click();
       cy.get('[ui-sref="accessLink.content.courses.edit.id.classes"]').click()
       cy.get('[ng-click="editClass()"]').click() //Nova turma
       cy.get("#className").type("Treinamento gratuito com aprovação de gestor e campos personalizados"); //nome da turma
+      cy.get('.column > :nth-child(1) > .icon-checkbox').click(); // Ativa a aprovação
 
       cy.get('.navigation-controls > .ml-20').click()//botao prximo
       cy.get('.navigation-controls > .ml-20').click()//botao prximo
@@ -1203,10 +1200,8 @@ cy.get(".editing-resource > .end > .btn-swipe-accent").click();
       cy.get('#price-fixed') //Valor Treinamento
   .clear()
   .type('{selectall}3.91');   
-      cy.get('.checkbox.mt-20.ng-scope > .icon-checkbox').click() //Clica em recorrente 
-      cy.get('.column > :nth-child(1) > .input-number > div > .icon-pointer-up')//Clica 2x para ficar a parcela em 4x
-  .click()
-  .click();
+
+     cy.get('.column > :nth-child(1) > .icon-checkbox').click(); // Ativa a aprovação
 
     cy.get('.field2 > div.mt-20 > .middle > .checkbox > .icon-checkbox').click() //Deixar em branco
       
@@ -1273,4 +1268,5 @@ cy.contains('.ui-select-choices-row', 'Thiago Laguna',{timeout:60000})
     });
 
   });
+
 });

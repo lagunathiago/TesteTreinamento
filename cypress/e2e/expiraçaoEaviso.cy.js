@@ -66,13 +66,6 @@ describe("Teste - Login", () => {
       cy.get("#courseName", {timeout:60000}).click(); // Clica pra digitar
       cy.get("#courseName").type("Aviso de expiração Automação"); //  Nome no Treinamento
 
-      cy.get('label.thumb-placeholder[aspect="square"] input[type="file"]',)
-      .selectFile("cypress/fixtures/images6.png", { force: true });
-
-      cy.log("AJUSTE A IMAGEM MANUALMENTE");
-      cy.wait(6000); // Aguarda alguns segudos para ajustar a imagem
-      cy.get('button[ng-click="cropper.save()"]').click(); // Confirma em confirmar para salvar a imagem
-
       //Clica em "Enviar e-mail aos usuários sobre expiração da turma"
       cy.get('[class-expiration-message=""] > .checkbox > .icon-checkbox', {timeout:60000})
       .should('be.visible')
@@ -121,13 +114,34 @@ describe("Teste - Login", () => {
       cy.wait(2000);
       cy.get('[ng-click="editClass()"]').click(); //Nova turma
       cy.get("#className").type("Turma Gratuita"); //nome da turma
-      cy.get(".column > :nth-child(1) > .icon-checkbox").click(); // desativa aprovação
+
+ cy.document().then((doc) => {
+  const aviso = doc.createElement('div');
+
+  aviso.innerHTML = '⚠️ COLOQUE O PERÍODO DE EXPIRAÇÃO(REALIZAÇÃO) DE 1 DIA, EX: 23/12/2025 15:00 ATÉ 24/12/2025 15:00!';
+
+  aviso.style.position = 'fixed';
+  aviso.style.top = '20px';
+  aviso.style.left = '50%';
+  aviso.style.transform = 'translateX(-50%)';
+
+  aviso.style.width = '1000px'; // aumenta a largura
+  aviso.style.background = 'red';
+  aviso.style.color = 'white';
+  aviso.style.padding = '20px';
+  aviso.style.fontSize = '24px';
+  aviso.style.fontWeight = 'bold';
+  aviso.style.textAlign = 'center';
+
+  aviso.style.zIndex = '999999';
+  aviso.style.borderRadius = '10px';
+
+  doc.body.appendChild(aviso);
+});
+
+cy.pause();
 
       cy.wait(3000);
-
-      cy.log('INSERA A DATA DE INCRIÇÃO E A DATA DE REALIZAÇÃO')
-      cy.pause()
-
 
       //vai ate as permisaoes
       cy.get(':nth-child(3) > .dot', {timeout:60000})
@@ -150,7 +164,6 @@ describe("Teste - Login", () => {
       //Clica em salvar
        cy.get('.content-box-footer > .flex > .btn-swipe-accent').click()
       
-
     });
 
 
@@ -166,12 +179,6 @@ describe("Teste - Login", () => {
       cy.get("#courseName", {timeout:60000}).click(); // Clica pra digitar
       cy.get("#courseName").type("Lista de Incrito Automação"); //  Nome no Treinamento
 
-      cy.get('label.thumb-placeholder[aspect="square"] input[type="file"]',)
-      .selectFile("cypress/fixtures/images6.png", { force: true });
-
-      cy.log("AJUSTE A IMAGEM MANUALMENTE");
-      cy.wait(6000); // Aguarda alguns segudos para ajustar a imagem
-      cy.get('button[ng-click="cropper.save()"]').click(); // Confirma em confirmar para salvar a imagem
 
       //clica no box lista de espera
       cy.get('[send-subscription-interval-end-mail=""] > .checkbox > .icon-checkbox',{timeout:60000})
@@ -234,12 +241,34 @@ describe("Teste - Login", () => {
       cy.wait(2000);
       cy.get('[ng-click="editClass()"]').click(); //Nova turma
       cy.get("#className").type("Turma Gratuita"); //nome da turma
-      cy.get(".column > :nth-child(1) > .icon-checkbox").click(); // desativa aprovação
 
       cy.wait(3000);
 
-      cy.log('INSERA A DATA DE INCRIÇÃO E A DATA DE REALIZAÇÃO')
-      cy.pause()
+      cy.document().then((doc) => {
+  const aviso = doc.createElement('div');
+
+  aviso.innerHTML = '⚠️ INSIRA A DATA E HORA DO PERIODO DE INCRIÇÃO!,PARA RECEBER O E-MAIL';
+
+  aviso.style.position = 'fixed';
+  aviso.style.top = '20px';
+  aviso.style.left = '50%';
+  aviso.style.transform = 'translateX(-50%)';
+
+  aviso.style.width = '1000px'; // aumenta a largura
+  aviso.style.background = 'red';
+  aviso.style.color = 'white';
+  aviso.style.padding = '20px';
+  aviso.style.fontSize = '24px';
+  aviso.style.fontWeight = 'bold';
+  aviso.style.textAlign = 'center';
+
+  aviso.style.zIndex = '999999';
+  aviso.style.borderRadius = '10px';
+
+  doc.body.appendChild(aviso);
+});
+      cy.pause();
+
 
       //vai ate as permisaoes
       cy.get(':nth-child(3) > .dot', {timeout:60000})
@@ -261,8 +290,11 @@ describe("Teste - Login", () => {
       
       //Clica em salvar
        cy.get('.content-box-footer > .flex > .btn-swipe-accent').click()
+
+       cy.wait(10000)
     
     });
+
 
 it('Muda para o perfil aluno', () => {
   
@@ -272,9 +304,10 @@ it('Muda para o perfil aluno', () => {
   .click({ force: true });
 
   //Clica em Perfil
-  cy.get('.icon-pointer-right',{ timeout: 60000 })
+cy.contains('div', 'Selecionar perfil')
   .should('be.visible')
-  .click({ force: true });
+  .click();
+  cy.wait(2000)
 
   //Aluno
  cy.contains('span','Aluno - Todos')
@@ -283,23 +316,19 @@ it('Muda para o perfil aluno', () => {
 
     });
 
-    
-
      it('Vai até a vitrine', () => {
-
-        //Clica em conteúdos
-        cy.get('.active > .ng-binding',{timeout:60000})
-        .should('be.visible')
-        .click()
+      
+ //Clica em conteúdos
+cy.contains('button.showcase-navigation', 'Explorar', { timeout: 60000 })
+  .should('be.visible')
+  .click({ force: true });
 
         //Vai até a vitrine
-        cy.get('.showcase-navigation-menu > :nth-child(2) > .showcase-menu-name',{timeout:60000})
-        .should('be.visible')
-        .click()
+        cy.contains('span', 'teste automoção')
+  .closest('button')
+  .click();
 
-    });
-
-  it('Clica no treinamento Lista de Incrito Automação', ()=> {
+  cy.wait(2000)
 
         //Clica em Ver Tudo
         cy.get('.carousel-container > .showcase-title-container > .middle > .show-all',{timeout:60000})
@@ -307,23 +336,39 @@ it('Muda para o perfil aluno', () => {
         .should('be.visible')
         .click()
 
+    });
+
+  it('Clica no treinamento Lista de Incrito Automação', ()=> {
+
       //Clica no Treinamento
        cy.contains('.showcase-card-title', 'Lista de Incrito Automação', { timeout: 60000 })
   .should('be.visible')
   .scrollIntoView()
   .click()
 
-  //Clica em Fazer Incrição
-        cy.get('.classes-actions > [ng-click="subscribeClass(class);"]', { timeout: 60000 })
-        .should('be.visible')
-        .click()
+ // Clica na turma
+    cy.get('label.class-container')
+  .first()
+  .click();
 
-  cy.wait(3000)
+      cy.wait(2000)
 
-   //Volta pra vitrine
-        cy.get('.showcase-head-2 > .btn', {timeout:60000})
-        .should('be.visible')
-        .click()
+      //Clica em fazer incrição
+      cy.get('.selected > .class-info > .classes-actions > .btn-swipe-accent')
+      .should('be.visible')
+      .click();
+
+  cy.wait(4000)
+
+          //Clica em voltar
+    cy.get("#hideResource", { timeout: 20000 })
+      .should("be.visible")
+      .click({ force: true });
+
+      //Voltar novamente
+      cy.get('.breadcrumbs-path > .icon-undo')
+      .should('be.visible')
+      .click()
 
     });
     
@@ -342,19 +387,25 @@ it('Muda para o perfil aluno', () => {
   .scrollIntoView()
   .click()
 
-  //Clica em Fazer Incrição
-        cy.get('.classes-actions > [ng-click="subscribeClass(class);"]', { timeout: 60000 })
-        .should('be.visible')
-        .click()
+    // Clica na turma
+    cy.get('label.class-container')
+  .first()
+  .click();
+
+      cy.wait(2000)
+
+      //Clica em fazer incrição
+      cy.get('.selected > .class-info > .classes-actions > .btn-swipe-accent')
+      .should('be.visible')
+      .click();
 
   cy.wait(3000)
 
-   //Volta pra vitrine
-        cy.get('.showcase-head-2 > .btn', {timeout:60000})
-        .should('be.visible')
-        .click()
+          //Clica em voltar
+    cy.get("#hideResource", { timeout: 20000 })
+      .should("be.visible")
+      .click({ force: true });
 
-        cy.log(`VEREFIQUE SE OS EMIALS DE EXPIRAÇÃO E LISTA DE ESPERA CHEGUEM NO HORÁRIO QUE VOCE COLOCOU`)
 
     });
   });

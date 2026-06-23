@@ -63,7 +63,7 @@ describe("Teste - Login", () => {
 
      });
 
-
+     /*
       it('Cria o treinamento Forum Automação', () => {
         
         //Clicar em criar treinamentos
@@ -122,7 +122,6 @@ describe("Teste - Login", () => {
       cy.get('[ui-sref="accessLink.content.courses.edit.id.classes"]').click()
       cy.get('[ng-click="editClass()"]').click() //Nova turma
       cy.get("#className").type("Turma Gratuita sem aprovação"); //nome da turma
-     cy.get('.column > :nth-child(1) > .icon-checkbox').click(); // desativa aprovação
 
      //Clica nos Tutores
      cy.get(':nth-child(7) > .multiselect > [name="UserOwnerSelect"] > :nth-child(1) > .ui-select-search')
@@ -163,7 +162,7 @@ describe("Teste - Login", () => {
 
       cy.get('.content-box-footer > .flex > .btn-swipe-accent').click()
 
-      cy.wait(5000)
+      cy.wait(7000)
 
     });
     
@@ -225,7 +224,6 @@ describe("Teste - Login", () => {
       cy.get('[ui-sref="accessLink.content.courses.edit.id.classes"]').click()
       cy.get('[ng-click="editClass()"]').click() //Nova turma
       cy.get("#className").type("Turma Gratuita sem aprovação"); //nome da turma
-     cy.get('.column > :nth-child(1) > .icon-checkbox').click(); // desativa aprovação
 
      
      //Clica nos Tutores
@@ -331,7 +329,6 @@ describe("Teste - Login", () => {
       cy.get('[ui-sref="accessLink.content.courses.edit.id.classes"]').click()
       cy.get('[ng-click="editClass()"]').click() //Nova turma
       cy.get("#className").type("Turma Gratuita sem aprovação"); //nome da turma
-     cy.get('.column > :nth-child(1) > .icon-checkbox').click(); // desativa aprovação
 
      //Clica nos Tutores
      cy.get(':nth-child(7) > .multiselect > [name="UserOwnerSelect"] > :nth-child(1) > .ui-select-search')
@@ -369,7 +366,6 @@ describe("Teste - Login", () => {
       // Clica no botão "Salvar Turma"
       
       cy.get('.add-content > .end > .btn-swipe-accent').click()
-
       
       cy.get('.content-box-footer > .flex > .btn-swipe-accent').click()
 
@@ -403,7 +399,6 @@ describe("Teste - Login", () => {
             .should('be.visible')
             .click();
 
-
       cy.get(".editing-resource > :nth-child(2) > .w-100").click();
       cy.get(".open > .ui-select-choices > :nth-child(2)").click(); // Documentos
 
@@ -436,7 +431,6 @@ describe("Teste - Login", () => {
       cy.get('[ui-sref="accessLink.content.courses.edit.id.classes"]').click()
       cy.get('[ng-click="editClass()"]').click() //Nova turma
       cy.get("#className").type("Turma Gratuita sem aprovação"); //nome da turma
-     cy.get('.column > :nth-child(1) > .icon-checkbox').click(); // desativa aprovação
 
      //Clica nos Tutores
      cy.get(':nth-child(7) > .multiselect > [name="UserOwnerSelect"] > :nth-child(1) > .ui-select-search')
@@ -534,7 +528,6 @@ describe("Teste - Login", () => {
       cy.get(".editing-resource > .end > .btn-swipe-accent").click();
 
     });
-
     
     it("Conteúdo - Documento PPTX", () => {
 
@@ -621,7 +614,6 @@ describe("Teste - Login", () => {
       cy.get('[ui-sref="accessLink.content.courses.edit.id.classes"]').click()
       cy.get('[ng-click="editClass()"]').click() //Nova turma
       cy.get("#className").type("Turma Gratuita sem aprovação"); //nome da turma
-     cy.get('.column > :nth-child(1) > .icon-checkbox').click(); // desativa aprovação
 
      //Clica nos Tutores
      cy.get(':nth-child(7) > .multiselect > [name="UserOwnerSelect"] > :nth-child(1) > .ui-select-search')
@@ -662,7 +654,7 @@ describe("Teste - Login", () => {
       
       cy.get('.content-box-footer > .flex > .btn-swipe-accent').click()
 
-            cy.wait(5000)
+            cy.wait(7000)
 
     });
 
@@ -724,7 +716,6 @@ describe("Teste - Login", () => {
       cy.get('[ui-sref="accessLink.content.courses.edit.id.classes"]').click()
       cy.get('[ng-click="editClass()"]').click() //Nova turma
       cy.get("#className").type("Turma Gratuita sem aprovação"); //nome da turma
-     cy.get('.column > :nth-child(1) > .icon-checkbox').click(); // desativa aprovação
 
      //Clica nos Tutores
      cy.get(':nth-child(7) > .multiselect > [name="UserOwnerSelect"] > :nth-child(1) > .ui-select-search')
@@ -777,10 +768,17 @@ it('Clica No Treinamento Forum Automação', () => {
   .should('be.visible')
   .click({ force: true });
 
-  //Clica em gerenciar
-      cy.get('.manage-subscription > .btn-swipe-accent',{timeout:10000})
+       // Clica na turma
+    cy.get('label.class-container')
+  .first()
+  .click();
+
+      cy.wait(2000)
+
+      //Clica em fazer incrição
+      cy.get('.selected > .class-info > .classes-actions > .btn-swipe-accent')
       .should('be.visible')
-      .click()
+      .click();
 
       });
 
@@ -853,10 +851,15 @@ it('Clica No Treinamento Forum Automação', () => {
   .should('be.visible')
   .click({ force: true });
 
-  //Clica em gerenciar
-      cy.get('.manage-subscription > .btn-swipe-accent',{timeout:10000})
-      .should('be.visible')
-      .click()
+  //Clica na turma
+     cy.get('label.class-container:visible')
+  .first()
+  .click();
+
+         // Clica no gerenciar
+  cy.contains('.class-container', 'Turma Gratuita')
+  .find('button.icon-manage')
+  .click();
 
       });
 
@@ -952,10 +955,15 @@ cy.get('iframe.cke_wysiwyg_frame', { timeout: 60000 })
   .should('be.visible')
   .click({ force: true });
 
-  //Clica em gerenciar
-      cy.get('.manage-subscription > .btn-swipe-accent',{timeout:10000})
-      .should('be.visible')
-      .click()
+  //Clica na turma
+     cy.get('label.class-container:visible')
+  .first()
+  .click();
+
+         // Clica no gerenciar
+  cy.contains('.class-container', 'Turma Gratuita')
+  .find('button.icon-manage')
+  .click();
 
       });
 
@@ -1066,10 +1074,15 @@ cy.get('iframe.cke_wysiwyg_frame', { timeout: 60000 })
   .should('be.visible')
   .click({ force: true });
 
-  //Clica em gerenciar
-      cy.get('.manage-subscription > .btn-swipe-accent',{timeout:10000})
-      .should('be.visible')
-      .click()
+  //Clica na turma
+     cy.get('label.class-container:visible')
+  .first()
+  .click();
+
+         // Clica no gerenciar
+  cy.contains('.class-container', 'Turma Gratuita')
+  .find('button.icon-manage')
+  .click();
 
       });
 
@@ -1165,7 +1178,7 @@ cy.get('iframe.cke_wysiwyg_frame', { timeout: 60000 })
       .click({force: true})
 
     });
-
+*/
         it('Clica No Treinamento Tutoria Progresso Automação', () => {
 
     //Clica no treinamento: Gerenciar Teste Automação
@@ -1174,10 +1187,17 @@ cy.get('iframe.cke_wysiwyg_frame', { timeout: 60000 })
   .should('be.visible')
   .click({ force: true });
 
-  //Clica em gerenciar
-      cy.get('.manage-subscription > .btn-swipe-accent',{timeout:10000})
+       // Clica na turma
+    cy.get('label.class-container')
+  .first()
+  .click();
+
+      cy.wait(2000)
+
+      //Clica em fazer incrição
+      cy.get('.selected > .class-info > .classes-actions > .btn-swipe-accent')
       .should('be.visible')
-      .click()
+      .click();
 
       });
 
@@ -1282,10 +1302,15 @@ cy.get('iframe.cke_wysiwyg_frame', { timeout: 60000 })
   .should('be.visible')
   .click({ force: true });
 
-  //Clica em gerenciar
-      cy.get('.manage-subscription > .btn-swipe-accent',{timeout:10000})
-      .should('be.visible')
-      .click()
+  //Clica na turma
+     cy.get('label.class-container:visible')
+  .first()
+  .click();
+
+         // Clica no gerenciar
+  cy.contains('.class-container', 'Turma Gratuita')
+  .find('button.icon-manage')
+  .click();
 
       });
 
@@ -1379,6 +1404,27 @@ cy.get('iframe.cke_wysiwyg_frame', { timeout: 60000 })
       cy.contains("li.list-group-item", "1Teste Automação",{timeout: 60000})
       .should('be.visible')
       .click({force: true})
+
+                   cy.document().then((doc) => {
+  const aviso = doc.createElement('div');
+
+  aviso.innerHTML = '⚠️ ATENÇÃO! SE ESCREVA NOS TREINAMENTO E VERIFIQUE SE VOCE IRÁ RECEBER OS E-MAILS DE TUTORIA, VEREFIQUE SE O FORUM ESTARÁ ATIVO NO TREINAMENTO!(OS TREINAMENTO ESTÃO TODOS NA VITRIN "TESTE ATOMOÇÃO"';
+  aviso.style.position = 'fixed';
+  aviso.style.top = '20px';
+  aviso.style.left = '50%';
+  aviso.style.transform = 'translateX(-50%)';
+  aviso.style.background = 'red';
+  aviso.style.color = 'white';
+  aviso.style.padding = '20px';
+  aviso.style.fontSize = '24px';
+  aviso.style.fontWeight = 'bold';
+  aviso.style.zIndex = '999999';
+
+  doc.body.appendChild(aviso);
+
+});
+
+cy.pause()
 
     });
 

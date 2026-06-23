@@ -723,8 +723,9 @@ cy.contains('button.showcase-navigation', 'Explorar', { timeout: 60000 })
         .scrollIntoView()
         .should('be.visible')
         .click();
+      
     });
-
+    
     it('Verefica que o "Selecionar um campo personalizado esteja desabilitado"', () => {
  
 cy.get('.ui-select-container[disabled="disabled"]')
@@ -767,5 +768,7 @@ cy.get('.ui-select-container[disabled="disabled"]')
         .should('be.visible');
 
     });
+
   });
+
 });

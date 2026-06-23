@@ -52,17 +52,15 @@ describe("Teste - Login", () => {
 
      it("Clica vai ate a categoria", () => {
 
-        // Clicando na aba Treinamento
+      // Clicando na aba Treinamento
       cy.get('[title="Treinamentos"] > .sideitem',{timeout:60000})
-        .scrollIntoView()
-        .should('be.visible')
-        .click()
+      .should('be.visible')
+      .click();
 
       //Clica na Categoria
       cy.contains("li.list-group-item", "1Teste Automação",{timeout: 60000})
-        .scrollIntoView()
-        .should('be.visible')
-        .click({force: true})
+      .should('be.visible')
+      .click({force: true})
 
      });
 
@@ -116,9 +114,26 @@ describe("Teste - Login", () => {
         .should('be.visible')
         .click({ force: true })
 
-        cy.log('DESCREVA UM DESCRIÇÃO PARA ONILNE/PRESECIAL/CONTEUDO')
-        cy.pause()
-        cy.log('DESCREVA UM DESCRIÇÃO PARA ONILNE/PRESECIAL/CONTEUDO')
+             cy.document().then((doc) => {
+  const aviso = doc.createElement('div');
+
+  aviso.innerHTML = '⚠️ DESCREVA UM DESCRIÇÃO PARA ONILNE/PRESECIAL/CONTEUDO!';
+  aviso.style.position = 'fixed';
+  aviso.style.top = '20px';
+  aviso.style.left = '50%';
+  aviso.style.transform = 'translateX(-50%)';
+  aviso.style.background = 'red';
+  aviso.style.color = 'white';
+  aviso.style.padding = '20px';
+  aviso.style.fontSize = '24px';
+  aviso.style.fontWeight = 'bold';
+  aviso.style.zIndex = '999999';
+
+  doc.body.appendChild(aviso);
+
+});
+
+cy.pause()
 
           cy.wait(1000)
           
@@ -159,18 +174,31 @@ describe("Teste - Login", () => {
         .scrollIntoView()
         .type("Turma Gratuita sem aprovação"); //nome da turma
 
-      cy.get('.column > :nth-child(1) > .icon-checkbox')
-        .scrollIntoView()
-        .click(); // desativa aprovação
-
       cy.wait(3000);
 
            cy.get(".navigation-controls > .ml-20")
         .scrollIntoView()
         .click(); //botao prximo
 
+              cy.document().then((doc) => {
+  const aviso = doc.createElement('div');
+
+  aviso.innerHTML = '⚠️REALIZE O AGENDAMENTO E COLOQUE LIMITE DE 1 VAGA!';
+  aviso.style.position = 'fixed';
+  aviso.style.top = '20px';
+  aviso.style.left = '50%';
+  aviso.style.transform = 'translateX(-50%)';
+  aviso.style.background = 'red';
+  aviso.style.color = 'white';
+  aviso.style.padding = '20px';
+  aviso.style.fontSize = '24px';
+  aviso.style.fontWeight = 'bold';
+  aviso.style.zIndex = '999999';
+
+  doc.body.appendChild(aviso);
+});
+
         cy.pause()
-        cy.log('REALIZE O AGENDAMENTO, E INSIRA APENAS UMA VAGA PRESENCIAL')
 
       cy.get('.navigation-controls > .ml-20')
         .scrollIntoView()
@@ -207,7 +235,7 @@ describe("Teste - Login", () => {
         .scrollIntoView()
         .click()
 
-        cy.wait(8000)
+        cy.wait(10000)
 
     });
 
@@ -220,7 +248,7 @@ describe("Teste - Login", () => {
 
     cy.get('form.ng-pristine > [type="text"]', { timeout: 60000 })
       .should("be.visible")
-      .type("thiagosuporte2@uorak.com");
+      .type("0904Teste4@mailto.plus");
 
     cy.get("ng-transclude > .border", { timeout: 60000 })
       .should("be.visible")
@@ -235,21 +263,24 @@ describe("Teste - Login", () => {
 
      it('Vai até a vitrine', () => {
 
-        //Clica em conteúdos
+ //Clica em conteúdos
         cy.get('.active > .ng-binding',{timeout:60000})
         .should('be.visible')
         .click()
 
         //Vai até a vitrine
-        cy.get('.showcase-navigation-menu > :nth-child(2) > .showcase-menu-name',{timeout:60000})
-        .should('be.visible')
-        .click()
+        cy.contains('span', 'teste automoção')
+  .closest('button')
+  .click();
+
+  cy.wait(2000)
 
         //Clica em Ver Tudo
         cy.get('.carousel-container > .showcase-title-container > .middle > .show-all',{timeout:60000})
         .last()
         .should('be.visible')
         .click()
+
 
     });
 
@@ -266,16 +297,23 @@ describe("Teste - Login", () => {
 
   it('Se escreve como Presensial', ()=> {
   
-   //Clica em Fazer Incrição
-        cy.get('[ng-click="subscribeClass(class);"]', { timeout: 60000 })
-        .should('be.visible')
-        .click()
+   // Clica na turma
+    cy.get('label.class-container')
+  .first()
+  .click();
 
-        //clica para escolher o tipo de modalidade
-        cy.get('[ng-show="modal.hybridEventsChoice"] > .modal > .modal-body > .default-table > tbody > tr > .p-5 > .ui-select-container',{timeout:60000})
-        .click()
+      cy.wait(2000)
+
+      //Clica em fazer incrição
+      cy.get('.selected > .class-info > .classes-actions > .btn-swipe-accent')
+      .should('be.visible')
+      .click();
 
         cy.wait(1000)
+
+        cy.get('[ng-show="modal.hybridEventsChoice"] > .modal > .modal-body > .default-table > tbody > tr > .p-5 > .ui-select-container')
+        .should('be.visible')
+        .click()
 
         //Prescial
         cy.get('.open > .ui-select-choices > :nth-child(2)',{timeout:60000})
@@ -288,13 +326,6 @@ describe("Teste - Login", () => {
         .click()
 
         cy.wait(7000)
-
-        //Clica em acessar
-  cy.get('.classes-actions > .btn-swipe-accent.ng-scope', { timeout: 60000 })
-        .should('be.visible')
-        .click()
-
-        cy.wait(1000)
 
         cy.contains('Evento Híbrido (Presencial)', { timeout: 20000 })
   .should('be.visible');
@@ -332,15 +363,15 @@ describe("Teste - Login", () => {
 
      it('Vai até a vitrine', () => {
 
-        //Clica em conteúdos
+ //Clica em conteúdos
         cy.get('.active > .ng-binding',{timeout:60000})
         .should('be.visible')
         .click()
 
         //Vai até a vitrine
-        cy.get('.showcase-navigation-menu > :nth-child(2) > .showcase-menu-name',{timeout:60000})
-        .should('be.visible')
-        .click()
+        cy.contains('span', 'teste automoção')
+  .closest('button')
+  .click();
 
         //Clica em Ver Tudo
         cy.get('.carousel-container > .showcase-title-container > .middle > .show-all',{timeout:60000})
@@ -363,15 +394,24 @@ describe("Teste - Login", () => {
   
   it('Verifica ao atingir o limite de vaga é derecionado para online', ()=> {
 
-   //Clica em Fazer Incrição
-        cy.get('[ng-click="subscribeClass(class);"]', { timeout: 60000 })
-        .should('be.visible')
-        .click()
+    
+   // Clica na turma
+    cy.get('label.class-container')
+  .first()
+  .click();
 
-        cy.wait(1000)
+      cy.wait(2000)
+
+      //Clica em fazer incrição
+      cy.get('.selected > .class-info > .classes-actions > .btn-swipe-accent')
+      .should('be.visible')
+      .click();
 
  cy.get('[ng-show="modal.hybridEventsChoice"] > .modal > .modal-body > .default-table > tbody > tr > .p-5')
   .should('not.be.enabled')
+
+          cy.contains('Não há mais vagas presenciais disponíveis', { timeout: 60000 })
+  .should('be.visible');
 
   cy.wait(1000)
 
@@ -380,31 +420,34 @@ describe("Teste - Login", () => {
         .click()
 
         cy.wait(7000)
-
-        //Clica em acessar
-  cy.get('.classes-actions > .btn-swipe-accent.ng-scope', { timeout: 60000 })
-        .should('be.visible')
-        .click()
-
-        cy.wait(8000)
-
-        cy.contains('Não há mais vagas presenciais disponíveis', { timeout: 60000 })
-  .should('be.visible');
+        
 
   cy.contains('Evento Híbrido (Online)', { timeout: 60000 })
   .should('be.visible');
 
-        //Clica em concluir
-      cy.get('.resource-button-preview', { timeout: 60000 })
-      .scrollIntoView()
-      .should("be.visible")
-      .click({ force: true });
+  cy.get('#resourceMenuIndicator')
+  .should('be.visible')
+  .click()
 
-      //clica em ok
-      cy.get('[switch="modal.courseFinished"] > .modal > :nth-child(2) > .end > .flex > .btn-swipe-accent', { timeout: 60000 })
-      .scrollIntoView()
-      .should("be.visible")
-      .click({ force: true });
+   cy.wait(1000)
+
+  cy.get('.resource-check')
+  .should('be.visible')
+  .click()
+
+   cy.wait(1000)
+
+  cy.get('.resource-button-preview')
+  .should('be.visible')
+  .click()
+
+  cy.wait(1000)
+
+  cy.get('[switch="modal.courseFinished"] > .modal > :nth-child(2) > .end > .flex > .btn-swipe-accent')
+  .should('be.visible')
+  .click()
+
+
 
     });
 
