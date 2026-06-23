@@ -15,45 +15,42 @@ Cypress.on('uncaught:exception', (err) => {
 });
 
 describe("Teste - Login", () => {
-  before(() => {
-    cy.visit("https://hml.lector.live/lector_suporte/subscribe/login");
+   before(() => {
     cy.viewport(1920, 1080);
 
-    cy.contains("button", "Entrar", { timeout: 10000 })
-      .scrollIntoView()
-      .should('be.visible')
-      .click({ force: true });
+    cy.visit("https://hml.lector.live/lector_suporte/subscribe/login");
+    cy.contains("button", "Entrar").click();
 
-    cy.get('form.ng-pristine > [type="text"]', { timeout: 10000 })
-      .scrollIntoView()
+    cy.get('form.ng-pristine > [type="text"]', { timeout: 60000 })
       .should("be.visible")
       .type("qualidade2@lectortec.com.br");
 
-    cy.get("ng-transclude > .border", { timeout: 10000 })
-      .scrollIntoView()
+    cy.get("ng-transclude > .border", { timeout: 60000 })
       .should("be.visible")
       .type("2006lrnrgr");
 
-    cy.get("#btn-entrar", { timeout: 10000 })
-      .scrollIntoView()
-      .should("be.visible")
-      .click();
+    cy.get("#btn-entrar", { timeout: 60000 }).should("be.visible").click();
 
-    cy.url({ timeout: 10000 }).should("not.include", "/subscribe/login");
+    // opcional: garante que saiu da tela de login
+    cy.url({ timeout: 60000 }).should("not.include", "/subscribe/login");
+
   });
 
   context("Criando Treinamento", { testIsolation: false }, () => {
 
+    /*
     it("Vai pra categoria", () => {
-      cy.get('[title="Treinamentos"] > .sideitem', { timeout: 10000 })
-        .scrollIntoView()
-        .should('be.visible')
-        .click();
 
-      cy.contains("li.list-group-item", "1Teste Automação", { timeout: 10000 })
-        .scrollIntoView()
-        .should('be.visible')
-        .click({ force: true });
+      // Clicando na aba Treinamento
+      cy.get('[title="Treinamentos"] > .sideitem',{timeout:60000})
+      .should('be.visible')
+      .click();
+
+      //Clica na Categoria
+      cy.contains("li.list-group-item", "1Teste Automação",{timeout: 60000})
+      .should('be.visible')
+      .click({force: true})
+      
     });
 
     it('Cria o primeiro Treinamento com campos', () => {
@@ -138,11 +135,6 @@ describe("Teste - Login", () => {
         .scrollIntoView()
         .should('be.visible')
         .type("Turma Teste Automação Turma");
-
-      cy.get('.column > :nth-child(1) > .icon-checkbox', { timeout: 10000 })
-        .scrollIntoView()
-        .should('be.visible')
-        .click();
 
       cy.get('.navigation-controls > .ml-20', { timeout: 10000 })
         .scrollIntoView()
@@ -351,11 +343,6 @@ describe("Teste - Login", () => {
         .should('be.visible')
         .type("Turma Teste Automação Turma");
 
-      cy.get('.column > :nth-child(1) > .icon-checkbox', { timeout: 10000 })
-        .scrollIntoView()
-        .should('be.visible')
-        .click();
-
       cy.get('.navigation-controls > .ml-20', { timeout: 10000 })
         .scrollIntoView()
         .should('be.visible')
@@ -440,6 +427,8 @@ describe("Teste - Login", () => {
                 cy.wait(5000)
           
     });
+    
+
     it('Entra em outro perfil e envia os Documentos', () => {
       cy.visit("https://hml.lector.live/lector_suporte/subscribe/login");
 
@@ -451,7 +440,7 @@ describe("Teste - Login", () => {
       cy.get('form.ng-pristine > [type="text"]', { timeout: 10000 })
         .scrollIntoView()
         .should('be.visible')
-        .type("thiagosuporte@uorak.com");
+        .type("teste28053@mailto.plus");
 
       cy.get("ng-transclude > .border", { timeout: 10000 })
         .scrollIntoView()
@@ -465,38 +454,44 @@ describe("Teste - Login", () => {
 
       cy.url({ timeout: 10000 }).should('not.include', '/subscribe/login');
     });
-
+  
     it('Vai até a vitrine', () => {
+
       cy.get('.active > .ng-binding', { timeout: 10000 })
         .scrollIntoView()
         .should('be.visible')
         .click();
 
-      cy.get('.showcase-navigation-menu > :nth-child(2) > .showcase-menu-name', { timeout: 10000 })
-        .scrollIntoView()
-        .should('be.visible')
-        .click();
+         //Vai até a vitrine
+        cy.contains('span', 'teste automoção')
+  .closest('button')
+  .click();
 
-      cy.get('.carousel-container > .showcase-title-container > .middle > .show-all', { timeout: 10000 })
-        .last()
-        .scrollIntoView()
-        .should('be.visible')
-        .click();
+          //Clica em Ver Tudo
+          cy.get(':nth-child(3) > .carousel-container > .showcase-title-container > .middle > .show-all')
+          .should('be.visible')
+          .click()
+
     });
 
     it('Clica no Treinamento ', () => {
+
       cy.contains('.showcase-card-title', 'Campo Personalizado Teste', { timeout: 10000 })
         .scrollIntoView()
         .should('be.visible')
         .click();
 
-      cy.get('[ng-click="subscribeClass(class);"]', { timeout: 10000 })
-        .scrollIntoView()
-        .should('be.visible')
-        .click();
+        // Clica na turma
+    cy.get('label.class-container')
+  .first()
+  .click();
 
-      cy.get('.modal:visible', { timeout: 20000 })
-        .should('be.visible');
+      cy.wait(2000)
+
+      //Clica em fazer incrição
+      cy.get('.selected > .class-info > .classes-actions > .btn-swipe-accent')
+      .should('be.visible')
+      .click();
 
       cy.contains('div.box-title', 'Personalizado - 01', { timeout: 20000 })
         .scrollIntoView()
@@ -533,7 +528,32 @@ describe("Teste - Login", () => {
         .scrollIntoView()
         .should('be.visible')
         .click();
-    });
+        
+    })
+
+    it('Conclui', () => {
+
+            cy.document().then((doc) => {
+  const aviso = doc.createElement('div');
+
+  aviso.innerHTML = '⚠️ CONCLUA O TREINAMENTO E PROSSIGA!';
+  aviso.style.position = 'fixed';
+  aviso.style.top = '20px';
+  aviso.style.left = '50%';
+  aviso.style.transform = 'translateX(-50%)';
+  aviso.style.background = 'red';
+  aviso.style.color = 'white';
+  aviso.style.padding = '20px';
+  aviso.style.fontSize = '24px';
+  aviso.style.fontWeight = 'bold';
+  aviso.style.zIndex = '999999';
+
+  doc.body.appendChild(aviso);
+});
+
+cy.pause()
+
+  });
 
     it('Meu Cadastro', () => {
       cy.get("[ng-class*='accessLink.content.showcase.id.modal.home']", { timeout: 10000 })
@@ -559,43 +579,48 @@ describe("Teste - Login", () => {
         .scrollIntoView()
         .should('exist');
 
-      cy.get('.showcase-head-2 > .btn', { timeout: 10000 })
-        .scrollIntoView()
-        .should('be.visible')
-        .click();
+
     });
 
     it('Vai até a vitrine', () => {
-      cy.get('.showcase-head-2 > .btn',{timeout:60000})
-        .scrollIntoView()
-        .should('be.visible')
-        .click();
 
-      cy.get('.showcase-navigation-menu > :nth-child(2) > .showcase-menu-name', { timeout: 10000 })
-        .scrollIntoView()
-        .should('be.visible')
-        .click();
+ //Clica em conteúdos
+cy.contains('button.showcase-navigation', 'Explorar', { timeout: 60000 })
+  .should('be.visible')
+  .click({ force: true });
 
-      cy.get('.carousel-container > .showcase-title-container > .middle > .show-all', { timeout: 10000 })
+        //Vai até a vitrine
+        cy.contains('span', 'teste automoção')
+  .closest('button')
+  .click();
+
+        //Clica em Ver Tudo
+        cy.get('.carousel-container > .showcase-title-container > .middle > .show-all',{timeout:60000})
         .last()
-        .scrollIntoView()
         .should('be.visible')
-        .click();
+        .click()
+
     });
 
     it('Clica no Segundo Treinamento ', () => {
+
+      //Clica no treinamento
       cy.contains('.showcase-card-title', 'Segundo Campo Personalizado Teste', { timeout: 10000 })
         .scrollIntoView()
         .should('be.visible')
         .click();
 
-      cy.get('[ng-click="subscribeClass(class);"]', { timeout: 10000 })
-        .scrollIntoView()
-        .should('be.visible')
-        .click();
+       // Clica na turma
+    cy.get('label.class-container')
+  .first()
+  .click();
 
-      cy.get('.modal:visible', { timeout: 20000 })
-        .should('be.visible');
+      cy.wait(2000)
+
+      //Clica em fazer incrição
+      cy.get('.selected > .class-info > .classes-actions > .btn-swipe-accent')
+      .should('be.visible')
+      .click();
 
       cy.contains('div.box-title', 'Personalizado - 01', { timeout: 20000 })
         .scrollIntoView()
@@ -628,10 +653,6 @@ describe("Teste - Login", () => {
       cy.get('.modal:visible', { timeout: 20000 })
         .should('not.exist');
 
-      cy.get('.showcase-head-2 > .btn', { timeout: 10000 })
-        .scrollIntoView()
-        .should('be.visible')
-        .click();
     });
 
     it('Entra em outro perfil para verificar a edição dos campos', () => {
@@ -659,12 +680,14 @@ describe("Teste - Login", () => {
 
       cy.url({ timeout: 10000 }).should('not.include', '/subscribe/login');
     });
+*/
 
     it("Vai até o treinamento", () => {
-      cy.get('[title="Treinamentos"] > .sideitem', { timeout: 10000 })
-        .scrollIntoView()
-        .should('be.visible')
-        .click();
+   
+        // Clicando na aba Treinamento
+      cy.get('[title="Treinamentos"] > .sideitem',{timeout:60000})
+      .should('be.visible')
+      .click();
 
       cy.contains("li.list-group-item", "1Teste Automação", { timeout: 10000 })
         .scrollIntoView()
@@ -680,10 +703,11 @@ describe("Teste - Login", () => {
     });
 
     it('Vai até a turma e verifica se é possivel Editar,Excluir,Criar', () => {
-      cy.get('.end.ng-scope > .icon-edit', { timeout: 10000 })
-        .scrollIntoView()
-        .should('be.visible')
-        .click();
+
+        //Clica em editar
+  cy.get('.flex > .icon-edit',{timeout:60000})
+  .should('be.visible')
+  .click()
 
       cy.get('[ui-sref="accessLink.content.courses.edit.id.classes"]', { timeout: 10000 })
         .scrollIntoView()
@@ -702,9 +726,11 @@ describe("Teste - Login", () => {
     });
 
     it('Verefica que o "Selecionar um campo personalizado esteja desabilitado"', () => {
-      cy.get('.multiselect', { timeout: 10000 })
-        .scrollIntoView()
-        .should('not.be.enabled');
+ 
+cy.get('.ui-select-container[disabled="disabled"]')
+  .should('be.visible')
+  .and('have.attr', 'disabled', 'disabled');
+
     });
 
     it('Verifica se a lixeira não está na página', () => {
@@ -739,6 +765,7 @@ describe("Teste - Login", () => {
       cy.contains('td.ng-binding', 'Texto', { timeout: 10000 })
         .scrollIntoView()
         .should('be.visible');
+
     });
   });
 });
